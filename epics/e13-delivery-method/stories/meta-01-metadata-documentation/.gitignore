@@ -1,0 +1,7 @@
+# Local inputs, exports, tool state, and generated outputs for META-01.
+/private/
+/generated/
+.sf/
+.sfdx/
+.env
+.env.*

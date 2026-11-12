@@ -1,9 +1,10 @@
 # META-01: Export and explore the Salesforce data model
 
-Guide: [Create new work](https://github.com/aispanda/Reusable-Delivery/blob/9d32dccc738cc544481a6da257c13d438115f122/new/DELIVERY.md) at `9d32dccc738cc544481a6da257c13d438115f122`, route NEW.  
-Revision/status/as-of: Draft 0.4, 12 November 2026. Reusable experiment. Hardis generation and live checks NOT RUN.  
+Guide: [Create new work](https://github.com/aispanda/Reusable-Delivery/blob/fa771b9e1de0a1bdb6003d72d345b9a8bd5557db/new/DELIVERY.md) at `fa771b9e1de0a1bdb6003d72d345b9a8bd5557db`, route NEW.  
+Revision/status/as-of: Draft 0.5, 12 November 2026. Reusable experiment. Hardis generation and live checks NOT RUN.  
 Origin: B2B Commerce delivery conversation, workbook and explorer discussion.  
-Accountable owner: Pending assignment.
+Accountable owner: Pending assignment.  
+Working branch: `docs/meta-01-free-tool-pilot`.
 
 ## Current state
 
@@ -40,13 +41,20 @@ The [dependency checklist](roadmap.md) puts access verification first for live w
 
 | Step | Action / AC IDs | Dependencies | One executor; planned model/tool | State / result link |
 |---|---|---|---|---|
-| S-01 | Verify platform access to the intended development org | Org and authorized identity; Headless 360 and CLI access | Automation, Headless 360 and Salesforce CLI. Operator pending. | Pending |
+| S-00 | Prepare the story branch and verify that restricted inputs and generated output are ignored | Dedicated story branch; local Git checkout | Automation, Git | Branch and ignore rules published; verify the executor's checkout before work |
+| S-01 | Verify platform access to the intended development org | S-00; org and authorized identity; Headless 360 and CLI access | Automation, Headless 360 and Salesforce CLI. Operator pending. | Pending |
 | S-02 | Capture baseline metadata for `Case` and `OrderSummary`; check API coverage, AC-01 | S-01 | Automation, read-only Salesforce API runner. Identity/version pending. | Pending |
-| S-03 | Generate and verify the local Hardis docs and workbook. Reconcile supported gaps, AC-01–03 | S-02 for live reconciliation. Local documentation generation can run independently. | Automation, SFDX Hardis and local report tooling. Versions pending. | Pending |
+| S-03 | Generate and verify the local Hardis docs and workbook. Reconcile supported gaps, AC-01–03 | S-00 for local generation; S-02 for live reconciliation. | Automation, SFDX Hardis and local report tooling. Versions pending. | Pending |
 | S-04 | Run the repeatable checks for API reconciliation, refresh, failure recovery and graph consistency, AC-01–03 | S-03 | Automation, project check command pending | Pending |
 | S-05 | Independently review the draft implementation and check evidence, AC-01–03 | S-04; reviewed revision and evidence | Human, independent reviewer pending | Pending |
 
-### Next step: S-01
+### Branch, commits, and private files
+
+- Check out `docs/meta-01-free-tool-pilot` before development. Commit each meaningful change to code, docs, tests or configuration on this branch. Include `META-01` in commit messages and record relevant commit links and check results in the checklist. Keep `main` for reviewed changes.
+- Put org or client inputs, raw metadata exports, evidence, and local tool workspaces in this story’s ignored `private/` folder or approved restricted storage outside the checkout. Put generated workbooks and sites in ignored `generated/` until reviewed. Commit only sanitized source, synthetic fixtures, examples, and evidence summaries.
+- Use [the story’s `.gitignore`](.gitignore). Before the first change, verify with `git check-ignore` on sample paths. Before each commit, inspect the staged files and diff for client or org details. Ignore rules do not remove already tracked files. If you find one, stop publication and record the issue without copying its contents.
+
+### First live step: S-01
 
 - **Owner and executor:** Accountable owner and operator pending. Planned tools are Headless 360 and Salesforce CLI. Verify the executing tool versions.
 - **Inputs:** Intended development org, authorized identity and the current platform-access instructions in the pinned guide.
@@ -54,7 +62,7 @@ The [dependency checklist](roadmap.md) puts access verification first for live w
 - **Check:** Both probes target the intended org and return the expected response. Retain restricted evidence and record a concise result in the story.
 - **Authority and boundary:** Read-only experiment. Org writes, package installs and security configuration changes require separate authority.
 - **Limits and recovery:** Use one probe per tool. If either fails, record the exact sanitized error and the smallest remediation. Recheck after access is restored.
-- **Actual:** NOT RUN for this story.
+- **Actual:** NOT RUN for this story. If a probe fails, use only the matching recovery guide linked from the pinned NEW guide.
 
 ## Review and decisions
 
@@ -66,6 +74,7 @@ The [dependency checklist](roadmap.md) puts access verification first for live w
 
 - Live metadata checks depend on verified access to the intended development org. The local source-based generation step can proceed independently once its tools are available.
 - 12 November 2026. Prepared the reusable story and checklist using the pinned NEW template.
+- 12 November 2026. Added the branch, commit, and private-file checks. Updated the guide pin to include the platform recovery links.
 
 ## Alternative routes and benchmarks
 
