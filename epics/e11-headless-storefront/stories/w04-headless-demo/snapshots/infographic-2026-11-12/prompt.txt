@@ -1,0 +1,117 @@
+Create one exceptionally polished, high-resolution editorial infographic for ABCMed stakeholders. Use case: infographic-diagram. Asset: shareable portrait business poster, approximately 3:4 aspect ratio, render at the highest practical resolution for legible text. This is an explanation of a delivery process, NOT a storefront mockup.
+
+STYLE: sophisticated information design, flat vector-like illustration, warm white background, deep navy typography, teal and blue structure, small amber accents for pending work. Strong editorial typography, generous margins, crisp alignment, simple icons, carefully organized visual hierarchy. A bold title readable at thumbnail size, larger section headings, concise bullet copy. Avoid decorative complexity, photorealism, gradients, faux logos, tiny type, and unnecessary words. Use plain language. Render all specified text accurately. Visualize relationships, not just a wall of boxes.
+
+READING ORDER: top mission, a small target architecture, the central eight-step process, a short division-of-work band, a five-tool artifact map, a dated progress footer. Use much of the poster for the process. The final infographic should feel useful to business leaders, buyers, designers, engineers and testers.
+
+EXACT CONTENT:
+
+TITLE:
+"ABCMed"
+"A better storefront, built from verified facts"
+
+SUBTITLE:
+"Preserve existing functionality. Improve the experience. Make each new page repeatable."
+
+SMALL TARGET-ARCHITECTURE STRIP, explicitly labeled "Target architecture":
+"Salesforce commerce" ↔ "APIs" ↔ "React storefront"
+Under Salesforce: "Products • prices • accounts • carts • orders"
+Under React: "New buyer experience • planned Cloud Run hosting"
+Small definition: "Headless means the customer interface is separate from the commerce backend."
+
+CENTRAL HEADING:
+"The repeatable process — and why each step matters"
+Treat these stages as the workflow, NOT eight completed milestones.
+Eight numbered stages in two clean columns, 1–4 on left under "DEFINE & DESIGN", 5–8 on right under "REVIEW & BUILD". Each column flows down; connect step 4 to step 5 clearly. Each card has one owner badge, a concrete activity, and a brief WHY line. Do not combine two owners on a stage.
+
+1. "Observe what exists"
+Owner badge: "AI analyst"
+"Inspect real screens, data, permissions and actions."
+WHY line: "Protect existing capabilities."
+
+2. "Specify each page"
+Owner badge: "AI specification author"
+"Record fields, copy, actions, states and shared patterns in JSON."
+WHY line: "Replace assumptions with explicit rules."
+
+3. "Validate the specification"
+Owner badge: "Automation"
+"Check required fields, allowed actions and conflicting rules."
+WHY line: "Catch gaps before drawing."
+
+4. "Create the wireframes"
+Owner badge: "AI page owner"
+"Render desktop and mobile layouts using shared SLDS 2 patterns."
+WHY line: "Design once; reuse consistently."
+
+5. "Review independently"
+Owner badge: "Independent AI reviewer"
+"Check functionality, clarity, access rules and missing states."
+WHY line: "Catch the author's blind spots."
+
+6. "Build the page"
+Owner badge: "Same AI page owner"
+"Use the reviewed design, JSON and reusable React components."
+WHY line: "Reduce interpretation and repeated work."
+
+7. "Run repeatable tests"
+Owner badge: "Automation"
+"Check interactions, content and screen sizes."
+WHY line: "Detect regressions quickly."
+
+8. "Audit the experience"
+Owner badge: "Independent QA agent"
+"Compare build to wireframe; assess usability beyond the design."
+WHY line: "Test whether the experience actually works."
+
+A restrained feedback-loop arrow from review/test/audit back to page owner, labeled:
+"Findings → same owner fixes → affected checks run again"
+Small gate below the loop:
+"Human product owner decides business choices and acceptance."
+"Live Salesforce integration checks are required before release."
+
+DIVISION OF WORK BAND:
+"Rules handle repetition. AI handles interpretation. People make business decisions."
+Three short columns:
+"DETERMINISTIC" / "Shared tokens, templates, JSON validation and repeatable tests"
+"BOUNDED AI" / "Evidence review, design decisions, implementation and targeted fixes"
+"HUMAN" / "Priorities, business exceptions and acceptance"
+Tiny supporting line: "Storybook: reusable component reference • Playwright: browser testing"
+These tools are planned workflow roles, not a claim that all tooling is deployed.
+
+ARTIFACT MAP heading:
+"Where the work lives"
+Five plainly labeled objects:
+"Google Sheets" / "LIVE page and state register"
+"JSON" / "Detailed page contracts"
+"Google Drive" / "Wireframes and review evidence"
+"ClickUp" / "Stories, owners and dependencies"
+"GitHub" / "Versioned files + dated spreadsheet snapshots"
+Connect the live sheet to artifacts with thin link lines, not a cycle of automatic sync.
+Caption: "The GitHub spreadsheet is a frozen copy. Google Sheets remains the live register."
+
+BOTTOM STATUS PANEL, distinguish from target process:
+"Verified delivery snapshot • 12 November 2026"
+Main count "162 page/state records — not 162 separate pages"
+Four visually distinct metrics:
+"21 reviewed*"
+"90 need refresh"
+"48 missing"
+"3 await review"
+Supporting line:
+"42 desktop/mobile wireframe links for the reviewed records."
+Footnote:
+"*20 page/component states + 1 review index. Another 14 gap items need reconciliation."
+Very clear concluding status statement:
+"Current output: local previews using sample data."
+"Live Salesforce integration, human acceptance and deployment remain pending."
+
+Do not imply the full site is built or deployed. Do not say all requirements are verified. Keep the visual attractive but evidence-oriented. Preserve the difference between target architecture, workflow and current progress. Do not add any unsupported claims, stock graphs, fabricated percentages, URLs or QR codes.
+
+Include a compact, readable four-audience benefits strip near the top, with no guarantee of measured results:
+"WHY IT MATTERS"
+"Buyers: clearer journeys"
+"Business: preserved capabilities"
+"Design: consistent patterns"
+"Engineering: explicit data and action rules"
+Make room by using compact typography for the tools strip, not by shrinking the main steps.
