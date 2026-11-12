@@ -1,8 +1,10 @@
 # W04 Design and build the first headless storefront demo
 
-**Partial migration draft.** Requirements/source authority remains SRC17; this portfolio page does not supersede its original story or constitute design/build acceptance. Accountable owner, dates and live status remain in ClickUp. Sync: Pending — deferred by instruction. This batch performs source reconciliation and documentation only, with no org actions, implementation or ClickUp writeback.
+**Partial migration draft.** Requirements/source authority remains SRC17; this portfolio page does not supersede its original story or constitute design/build acceptance. Accountable owner, dates and live status remain in ClickUp. Sync: Pending — deferred by instruction. The writer reconciled sources and prepared this documentation for coordinator publication.
 
-Guide: [migrate/DELIVERY.md](https://github.com/aispanda/Reusable-Delivery/blob/769a5099cb7412e9f307a38286f8e2adf74448a8/migrate/DELIVERY.md), commit `769a5099cb7412e9f307a38286f8e2adf74448a8`, route MIGRATE. Publication base: `74bb883329189dd3801460865b5ee91a1a76a43a`. This is the first W04 migration draft, not an upgrade of accepted W04 work. [Batch boundaries](../../../../BATCH.md) apply; later QA planning does not authorize execution now.
+Guide: [migrate/DELIVERY.md](https://github.com/aispanda/Reusable-Delivery/blob/9d32dccc738cc544481a6da257c13d438115f122/migrate/DELIVERY.md), commit `9d32dccc738cc544481a6da257c13d438115f122`, route MIGRATE. The earlier migration draft recorded publication base `74bb883329189dd3801460865b5ee91a1a76a43a`. This update retains its scope and review history. [Batch boundaries](../../../../BATCH.md) apply; later QA planning does not authorize execution now.
+
+Guide history: prior MIGRATE guide `769a5099cb7412e9f307a38286f8e2adf74448a8`. The updated guide adds explicit role evidence for user-dependent checks. Existing criterion and execution IDs are unchanged.
 
 ## Outcome and boundaries
 
@@ -19,7 +21,7 @@ Free components, GitHub and Cloud Run are the stated delivery direction. No paid
 | Historical design evidence | Retained v2.3 manifest hash `af1390def0a4e4a5a58c63279f8928f7004dbfba55fb2c898be87f9b9136250d` matches local bytes. Static-review report and earlier source records remain scoped evidence. | Hash match proves identity, not visual correctness, live integration or human acceptance. Review packets and all images not independently re-audited in this batch. |
 | Current design artifact | Local README and latest source turn point to replacement gallery; gallery SHA256 `cad7e0c86238dd859e0d6bc07e8bd0a50008cad0ae7c6509dac1af963d62a202`. Sitemap has25 entries. | Latest author reported22 page groups/24 responsive views and blocked visual browser preview. No fresh visual or runtime check in this batch. Current gallery is not automatically covered by v2.3 reviews. |
 
-The current task returned no attachment or attached-Doc entries in the bulk response; this is not a complete inventory of linked sources. Source description hash, local artifact hashes and reviewed chat scope are in the restricted inventory. An independent reviewer verified all 13 criteria against the original description and checked the recorded conflicts against available evidence. Approved portable retrieval and full source-preservation review remain Pending. BATCH requires an explicit original-story/code authority decision before W04 migration acceptance.
+The current task returned no attachment or attached-Doc entries in the bulk response; this is not a complete inventory of linked sources. Source description hash, local artifact hashes and reviewed chat scope are in the restricted inventory. Approved portable retrieval of private sources and independent reviewer access remain Pending. BATCH requires an explicit original-story/code authority decision before W04 migration acceptance.
 
 ## Acceptance criteria — original IDs preserved
 
@@ -67,9 +69,21 @@ The latest two originating-chat turns describe read-only guest/buyer storefront 
 
 An older local HTML concept is explicitly synthetic, resets local state and is not connected to Salesforce. Historical v2.2/v2.3 Jev/Claude/UX and artifact checks are retained as reported scoped results, including uncertainty and repair history; they do not establish browser interaction, WCAG conformance, account isolation, deployment or acceptance. Latest source-thread tool summaries are not complete raw execution payloads. No review or acceptance check was rerun in this documentation batch.
 
+## Role-dependent evidence
+
+| Identity used | Intended role | Target resource access | Observed outcome |
+|---|---|---|---|
+| Guest browser session | Public visitor | Public catalog, search and product details | Public prices and browsing controls visible. Buyer resource isolation remains NOT RUN. |
+| Authorized demo buyer session | Signed-in buyer | Buyer-visible order and quote details | Details opened. Start Reorder and Duplicate to Cart were visible. Resulting cart state and quote PDF access remain Pending. |
+| Second buyer | Different buying account | First buyer's product, price, address, cart and order data | NOT RUN. Identity and test resource assignments remain Pending. |
+
 ## Source execution IDs and bounded planning
 
 The following outline preserves source step IDs and proposed executors. These are historical/planned identities, not current dispatch records. Resolve exact model IDs/reasoning, tool versions, permissions, inputs, runtime and dependencies before execution. Earlier completed results retain their evidence scope; the new gallery needs affected rechecks. Duplicate S16 descriptions are unresolved source refinements, not two concurrently assigned executors. The original numbering is retained.
+
+| Prerequisite | Dependencies | Executor | State / evidence |
+|---|---|---|---|
+| Verify platform access | Approved target and authorized tool connections | Pending assignment by coordinator | NOT RUN. Record Headless 360 MCP discovery, describe and minimal read-only dispatch, then Salesforce CLI org list and minimal read-only API result against the intended alias. Keep target identifiers restricted. Required before Salesforce-dependent discovery, build, review, tests or writes. |
 
 - S04a — LLM, independent Codex — Map the buyer journey and its branches. Output: ordered journey map. TARGET_STORE journey workbook
 - S04b — LLM, independent Codex — Check Salesforce capabilities and available org evidence. Output: configuration matrix. Commerce Connect APIs
@@ -118,4 +132,4 @@ Public supporting references: [Salesforce Commerce APIs](https://developer.sales
 
 ## Next documentation contract — W04-MAP
 
-Executor: sole assigned E11 writer; exact actual model/reasoning metadata not exposed. Accountable assignment remains with the coordinator/ClickUp record. Input: original full task, relevant decisions, linked workbooks/proposal, source/code authority and restricted retrieval arrangement. Output: reconciled criterion/decision/source map and next reviewed bundle identity. Check: preserve AC-01–13 and all material differences, distinguish historical evidence from current unrun checks, and obtain independent source-based documentation review. Stop before missing-source completeness claims or implementation; source-tool writes and deployment remain outside this batch. Preserve local candidate on interruption; only coordinator publishes. Completion gate: outstanding authority decision, source completeness, privacy and reviewer access resolved. No source is superseded and no live delivery or overall migration completion is claimed.
+Executor: sole assigned E11 writer; exact actual model/reasoning metadata not exposed. The ClickUp connector quota blocks a fresh original read. Prior source-based review is retained at its earlier revision. Independent review of the guide update passed for partial publication. Fresh original-source review remains Pending. Accountable assignment remains with the coordinator/ClickUp record. Input: original full task, relevant decisions, linked workbooks/proposal, source/code authority and restricted retrieval arrangement. Output: reconciled criterion/decision/source map and next reviewed bundle identity. Check: preserve AC-01–13 and all material differences, distinguish historical evidence from current unrun checks, and obtain independent source-based documentation review. Stop before missing-source completeness claims or implementation; source-tool writes and deployment remain outside this batch. Preserve local candidate on interruption; only coordinator publishes. Completion gate: outstanding authority decision, source completeness, privacy and reviewer access resolved. No source is superseded and no live delivery or overall migration completion is claimed.
