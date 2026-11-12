@@ -1,0 +1,60 @@
+# Folder manifest
+
+Proposed hierarchy. Story content migration is pending. IDs stay stable if display titles change. E12 and W05 are deferred and have no folders.
+
+- epics/e01-customer-ordering/ — Customer ordering
+  - o01-customer-orders/ — Place separate orders for each customer
+  - o02-authorized-catalog/ — Shop the customer's authorized catalog
+  - o03-external-pricing/ — View externally calculated prices
+  - o04-po-checkout/ — Complete regular checkout with a purchase-order reference
+  - w01-variant-labels/ — Fix readable storefront variant labels
+  - w02-tax/ — Display and calculate tax consistently
+  - w03-buyer-journey/ — Validate purchase-order checkout through order details
+- epics/e02-consignment/ — Consignment ordering
+  - o05-consignment-eligibility/ — Choose consignment checkout when eligible
+  - o06-consignment-fill-up/ — Review and submit a consignment fill-up
+- epics/e03-order-submission/ — Order submission
+  - o07-order-confirmation/ — Receive confirmation only after external acceptance
+  - o08-uncertain-orders/ — Handle an unconfirmed order without duplicate submission
+- epics/e04-post-order/ — Post-order experience
+  - o09-order-history/ — View storefront-originated orders
+  - o10-invoice-access/ — Open authorized invoice documents
+  - o11-customer-care/ — Reach customer care for post-order help
+- epics/e05-procurement/ — Procurement workaround
+  - o12-cart-export/ — Export a cart for manual procurement use
+- epics/e06-buyer-access/ — Buyer access and administration (proposed grouping)
+  - d01-account-switching/ — Switch between authorized buyer accounts
+  - d02-admin-buyer-access/ — Verify administrator Login as Buyer
+- epics/e07-repeat-purchasing/ — Collaborative and repeat purchasing (proposed grouping)
+  - d08-repeat-buying/ — Verify Quick Order and repeat buying tools
+  - d10-shared-carts/ — Enable collaborative purchasing with shared carts
+- epics/e08-order-servicing/ — Order Management servicing readiness (proposed grouping)
+  - d03-servicing-readiness/ — Verify Order Management and prepare safe demo fixtures
+  - d11-assisted-ordering/ — Evaluate Order on Behalf Of
+- epics/e09-returns-settlement/ — Returns, exchanges and settlement (proposed grouping)
+  - d04-return-request/ — Let a buyer request a return
+  - d05-managed-rma/ — Process a fulfilled return with managed RMA
+  - d06-exchanges/ — Demonstrate even and RMA exchanges
+  - d07-credits-refunds/ — Reconcile return credits and refunds
+- epics/e10-shipment-tracking/ — Shipment tracking integration (proposed grouping)
+  - d09-shipment-demo/ — Show shipment tracking for a fictional order
+- epics/e10-a-shipment-foundation/ — Trustworthy Salesforce shipment foundation
+  - a1-shipment-model/ — Confirm model and identity before configuration
+  - a2-shipment-fields/ — Configure external shipment identity and display fields
+  - a3-shipment-access/ — Secure the integration and buyer access
+- epics/e10-b-dispatch-ingestion/ — Reliable twice-daily dispatch ingestion
+  - b1-dispatch-polling/ — Poll ERP dispatch updates
+  - b2-shipment-upsert/ — Resolve parents and upsert shipments
+  - b3-dispatch-recovery/ — Reconcile and recover failed work
+- epics/e10-c-carrier-visibility/ — Carrier progress and buyer visibility
+  - c1-carrier-events/ — Ingest carrier status safely
+  - c2-buyer-tracking/ — Show shipment details to the right buyer
+  - c3-tracking-efficiency/ — Delta updates, carrier options and request budget
+  - c4-exception-alerts/ — Actionable exception alerts
+- epics/e11-headless-storefront/ — Headless storefront experience (proposed grouping)
+  - w04-headless-demo/ — Design and build the first headless storefront demo
+- epics/e13-delivery-method/ — Delivery tooling and method (proposed grouping)
+  - w06-workflow-refiner/ — Build and verify workflow writer/reviewer/refiner
+  - w07-delivery-guide/ — Maintain shared delivery template and execution guide
+- epics/e14-cms-integration/ — CMS content integration (proposed grouping)
+  - w08-cms-middleware/ — Connect CMS content through integration middleware
