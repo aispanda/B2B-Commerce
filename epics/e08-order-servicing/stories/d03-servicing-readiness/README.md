@@ -1,8 +1,8 @@
 # D03 — Verify Order Management and prepare safe demo fixtures
 
-Guide: `migrate/DELIVERY.md` at `769a5099cb7412e9f307a38286f8e2adf74448a8`; route MIGRATE. This documentation migration retains an already authorized historical demo extension; it authorizes no new implementation.
+Guide: [Migration platform access check](https://github.com/aispanda/Reusable-Delivery/blob/1b612704b10c3923a253450e0191f9a78c36c38a/migrate/DELIVERY.md#platform-access-check) for this pilot. The earlier migration draft used `769a5099cb7412e9f307a38286f8e2adf74448a8` and preserves the previously authorized demo history.
 
-Revision: migration draft 1, reconciled from 11 November 2026 source records. Classification: Demo readiness. Original requirements remain authoritative. Sync: **Pending — deferred by instruction** under the documentation-only batch override. Owner, dates and live task status remain in ClickUp; accountable implementation owner and future executor are Pending assignment.
+Revision: migration draft 2. Reconciled from 11 November 2026 source records with the later read-only platform access pilot recorded below. Classification: Demo readiness. Original requirements remain authoritative. Sync: **Pending — deferred by instruction** under the documentation-only batch override. Owner, dates and live task status remain in ClickUp; accountable implementation owner and future executor are Pending assignment.
 
 ## Current state
 
@@ -10,7 +10,7 @@ Initial discovery documented active cancel, return, RMA and credit/refund flow c
 
 These are historical source reports, not fresh Salesforce verification by this migration writer. The currently retrieved task description and local model snapshot still say no demo records were built; that statement predates the later source-chat execution and is superseded for the split-shipment demo only. The original readiness criteria, finance baseline, fixture reservations and independent acceptance are not thereby complete.
 
-Independent runtime acceptance: **NOT RUN** in this migration. Human final acceptance: required by the source story; **Pending**. Migration completion: **Pending** current comments, attachment-byte/guide traceability, required restricted-context retrieval and full source-preservation review. No org operation or acceptance execution occurred in this batch.
+Independent runtime acceptance: **NOT RUN** in this migration. Human final acceptance: required by the source story; **Pending**. Migration completion: **Pending** current comments, attachment-byte/guide traceability, required restricted-context retrieval and full source-preservation review. The initial documentation batch used source records. The later Salesforce reads are recorded in the platform access pilot below.
 
 ## Outcome and scope
 
@@ -59,16 +59,23 @@ Keep existing progress complete as historical reported work; do not recreate fix
 
 | Step | Reconciled state | Next evidence; future executor |
 |---|---|---|
+| OM-00 | Verify platform access — Passed for the read-only pilot | One executor: Codex pilot session. Headless 360 MCP and Salesforce CLI verified against the intended developer environment. Recheck for a new executor environment or changed authorization. [Pilot evidence](#platform-access-pilot) |
 | OM-01 | Bounded discovery completed historically; readiness partial | Read-only exact tier, persona grants and current eligibility evidence; owner/executor Pending |
 | OM-02 | Original servicing demo readiness not accepted | Isolated fixture, finance baseline, active-flow inputs and permitted effects; owner/executor Pending |
 | OM-03 | Independent acceptance NOT RUN | Fresh comparison with all three unchanged criteria; independent checker Pending |
 | OM-04.1–03 | Historical connection/schema/fixture work progressed enough to build the demo; not all preflight checks evidenced | Preserve successful access/build history; audit missing side-effect and supported-path proof rather than restart automatically |
 | OM-04.4–05 | Source reports order/summary and split-shipment records created | Verify existing records/relationships before any repair; implementation executor Pending |
 | OM-04.6 | Source reports totals and six relationship pairs verified | Independent quantities, lifecycle/intermediate-state and financial checks NOT RUN |
-| OM-04.7 | Related-list/product visibility partly reported; Shipment Date page visibility unresolved | Intended-persona page check and field access/layout evidence; executor Pending |
+| OM-04.7 | Related-list/product visibility partly reported. Shipment Date metadata verified in this pilot. | Field access, layout and page visibility for the intended user remain pending. Future executor Pending. |
 | OM-04.8 | Independent demo acceptance NOT RUN | Frozen unchanged criteria plus additional user outcome, actual runtime evidence, then human decision |
 
 Fixture policy remains proposed until actual reservations are recorded: separate pre-fulfillment exchange/cancel allocations; separate fulfilled return, exchange and reship allocations; coordinate one RMA close with its credit reconciliation; keep shipment populated/empty controls and any future test-card fixture distinct. A populated shipment is not a reservation or authorization to service it.
+
+### Platform access pilot
+
+- **Headless 360 MCP**. On 2026-11-12 05:37 UTC, Discover and Describe identified the API limits operation. `dispatch_readonly` returned HTTP 200 and the expected limits response. The Codex executor reached the configured server through a local tool context.
+- **Salesforce CLI 2.157.8**. The org list matched the intended developer environment and a read-only API limits request succeeded. The environment and account details remain in the restricted project context.
+- **Next read, OM-04.7**. After both checks passed, a scoped Headless 360 schema query confirmed one field labeled Shipment Date on Shipment with type Date. The field definition is evidence for this step. Intended-user page visibility and runtime acceptance remain pending.
 
 ### Next documentation step
 
