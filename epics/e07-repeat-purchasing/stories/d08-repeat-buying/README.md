@@ -1,6 +1,8 @@
 # D08 Verify Quick Order and repeat buying tools
 
-Guide: [migrate/DELIVERY.md](https://github.com/aispanda/Reusable-Delivery/blob/4b5406c3d74f7f56071d193ba3359218d4b70d4d/migrate/DELIVERY.md) @ `4b5406c3d74f7f56071d193ba3359218d4b70d4d`; route MIGRATE
+Guide: [migrate/DELIVERY.md](https://github.com/aispanda/Reusable-Delivery/blob/769a5099cb7412e9f307a38286f8e2adf74448a8/migrate/DELIVERY.md), commit `769a5099cb7412e9f307a38286f8e2adf74448a8`, route MIGRATE.
+
+Guide upgrade: the earlier draft used `4b5406c3d74f7f56071d193ba3359218d4b70d4d`. For later authorized REPEAT-02/03, assign the operator and independent checker and record cart, price, reorder, template and export evidence against AC-01–03. Prior evidence and unrun checks retain the scope recorded below.
 
 **Partial migration draft — not an authoritative replacement.** Original ClickUp requirements and evidence remain authoritative. Sync: Pending — deferred by instruction. This batch performs documentation only; no implementation, org access, fixtures, login, acceptance execution or remote writeback. Accountable owner, dates and live status remain in ClickUp. Independent source-preservation review and human acceptance: Pending. Actual writer: assigned E07 Codex agent; exact runtime model/reasoning not exposed to this agent, not inferred.
 

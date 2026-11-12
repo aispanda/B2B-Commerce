@@ -4,7 +4,7 @@ Migration pending. Placeholder pages identify intended scope; they do not establ
 
 Use [the Excel navigation register](B2B-Commerce-Delivery-Register.xlsx) and [folder manifest](FOLDER-MANIFEST.md) to find an epic or story. Owners, dates and live delivery status remain in ClickUp. Private task links, source mappings and private implementation links are excluded.
 
-See [the documentation batch brief](BATCH.md) for writer scope, source-access gates and the explicit guide override. Operational guide: [migrate/DELIVERY.md at 4b5406c3d74f7f56071d193ba3359218d4b70d4d](https://github.com/aispanda/Reusable-Delivery/blob/4b5406c3d74f7f56071d193ba3359218d4b70d4d/migrate/DELIVERY.md).
+See [the documentation batch brief](BATCH.md) for writer scope, source-access gates and the explicit guide override. The batch brief also pins the operational guide for all drafts in the batch.
 
 ## Source authority
 

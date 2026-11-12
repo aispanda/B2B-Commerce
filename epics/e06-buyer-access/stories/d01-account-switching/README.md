@@ -2,7 +2,9 @@
 
 [E06 Buyer access and administration](../../README.md)
 
-Guide: [migrate/DELIVERY.md](https://github.com/aispanda/Reusable-Delivery/blob/4b5406c3d74f7f56071d193ba3359218d4b70d4d/migrate/DELIVERY.md), commit `4b5406c3d74f7f56071d193ba3359218d4b70d4d`, route MIGRATE.
+Guide: [migrate/DELIVERY.md](https://github.com/aispanda/Reusable-Delivery/blob/769a5099cb7412e9f307a38286f8e2adf74448a8/migrate/DELIVERY.md), commit `769a5099cb7412e9f307a38286f8e2adf74448a8`, route MIGRATE.
+
+Guide upgrade: the earlier draft used `4b5406c3d74f7f56071d193ba3359218d4b70d4d`. For later authorized ACC-02/03, assign the operator and independent checker and record evidence for authorized switching and unauthorized account denial. Prior evidence and unrun checks retain the scope recorded below.
 
 Migration draft 0.1. Original sources retain requirements authority. Owners, dates and live delivery status: per ClickUp. Sync: **Pending — deferred by instruction**. Documentation only: no ClickUp writeback, org changes, browser login/session switch, implementation or acceptance execution.
 

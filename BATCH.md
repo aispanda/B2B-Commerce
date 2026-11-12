@@ -4,7 +4,7 @@ This batch creates **migration drafts**. Original sources retain requirements au
 
 ## Guide and explicit batch override
 
-Use route MIGRATE from [migrate/DELIVERY.md at 4b5406c3d74f7f56071d193ba3359218d4b70d4d](https://github.com/aispanda/Reusable-Delivery/blob/4b5406c3d74f7f56071d193ba3359218d4b70d4d/migrate/DELIVERY.md). Record this path and commit in each draft. The coordinator verified this published revision through a commit-specific file read. REVIEWED-FILES.sha256.json records exact candidate bytes and the guide hashes. Hashes identify content, not acceptance.
+Use route MIGRATE from [migrate/DELIVERY.md at `769a509`](https://github.com/aispanda/Reusable-Delivery/blob/769a5099cb7412e9f307a38286f8e2adf74448a8/migrate/DELIVERY.md). Record this path and full commit in each draft. The [previously reviewed setup](REVIEWED-FILES.sha256.json) used guide commit `4b5406c3d74f7f56071d193ba3359218d4b70d4d`. The guide upgrade applies the [code quality rules](https://github.com/aispanda/Reusable-Delivery/blob/769a5099cb7412e9f307a38286f8e2adf74448a8/CODE-QUALITY.md) to planning later authorized implementation. In each affected story, record checks against the acceptance criteria, their executors and the evidence expected. Carry forward valid results at their recorded scope and mark unrun checks as NOT RUN.
 
 The user's documentation-only batch instruction overrides guide steps 2 and 5 wherever they would cause ClickUp writeback. **No ClickUp writeback or field changes. Sync: Pending — deferred by instruction.** Existing descriptions and originals remain current. GitHub stories remain migration drafts until a separately authorized and verified authority transition. Do not claim synchronization or overall migration completion.
 
