@@ -99,3 +99,10 @@ Future authorized runtime planning must name one executor and expected evidence 
 
 Maker checks cover source attribution, arithmetic, unchanged criteria and sanitization. The writer is Codex; exact model version/reasoning was not exposed reliably in this task. An independent reviewer verified all three criteria against the original description and checked the reported execution chronology. Full source-preservation review remains Pending. Runtime and human acceptance are recorded separately. No implementation tests apply to this documentation-only change.
 
+## Buyer order access diagnosis
+
+On 12 November 2026, the executor verified Headless 360 and Salesforce CLI against the same development environment. The read-only access check confirmed that the intended demo buyer belongs to the order's account and can read a separate order already observed in the buyer's Order History. Salesforce reported no read access for that buyer on the administrator-owned demo order or its summary. External Order access is private in this environment, and the summary inherits access from its parent order.
+
+The record-access check identifies a blocker before any Shipment Date can be observed in the storefront. Storefront filtering, access to the shipment records, and access to the Shipment Date field remain separate checks. The prior administrator page result still applies to the internal administrator session only.
+
+The proposed next step is to verify whether the buyer's license, profile and record relationships support access limited to the intended test contact and order. The shared order also contains three additional test shipments. Before testing a sharing change, verify which related records would be exposed and use a dedicated fictional fixture if the intended scope cannot be isolated. Include a different contact on the same account and an unrelated buyer as negative controls. The read-only diagnosis made no access or record changes. Buyer visibility and runtime acceptance remain pending.
