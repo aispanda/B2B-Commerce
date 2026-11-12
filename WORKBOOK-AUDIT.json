@@ -1,0 +1,772 @@
+{
+  "workbook": "B2B-Commerce-Delivery-Register.xlsx",
+  "sha256": "f422de71f67d6a95ec8634e93a7972e9c0a9354bfa1878c2f4f5e1d354bb4486",
+  "method": "ZIP package and every XML/relationship part parsed from the actual saved XLSX; shared strings and all serialized text scanned against restricted mapping identifiers and known private patterns. No private matching values included in this report.",
+  "sheets": [
+    {
+      "name": "Epics",
+      "state": "visible"
+    },
+    {
+      "name": "Stories",
+      "state": "visible"
+    }
+  ],
+  "hiddenColumns": [],
+  "hiddenRows": [],
+  "commentOrPersonParts": [],
+  "propertyParts": [],
+  "authorMetadata": "No docProps/core.xml, app.xml, custom properties or person/comment parts exist in this export. No author identity was rewritten.",
+  "externalDataOrEmbeddedCodeParts": [],
+  "formulaCount": 0,
+  "nativeHyperlinks": {
+    "Epics": 16,
+    "Stories": 131
+  },
+  "hyperlinkTargets": [
+    {
+      "sheet": "Epics",
+      "cell": "F6",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e01-customer-ordering"
+    },
+    {
+      "sheet": "Epics",
+      "cell": "F7",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e02-consignment"
+    },
+    {
+      "sheet": "Epics",
+      "cell": "F8",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e03-order-submission"
+    },
+    {
+      "sheet": "Epics",
+      "cell": "F9",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e04-post-order"
+    },
+    {
+      "sheet": "Epics",
+      "cell": "F10",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e05-procurement"
+    },
+    {
+      "sheet": "Epics",
+      "cell": "F11",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e06-buyer-access"
+    },
+    {
+      "sheet": "Epics",
+      "cell": "F12",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e07-repeat-purchasing"
+    },
+    {
+      "sheet": "Epics",
+      "cell": "F13",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e08-order-servicing"
+    },
+    {
+      "sheet": "Epics",
+      "cell": "F14",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e09-returns-settlement"
+    },
+    {
+      "sheet": "Epics",
+      "cell": "F15",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-shipment-tracking"
+    },
+    {
+      "sheet": "Epics",
+      "cell": "F16",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-a-shipment-foundation"
+    },
+    {
+      "sheet": "Epics",
+      "cell": "F17",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-b-dispatch-ingestion"
+    },
+    {
+      "sheet": "Epics",
+      "cell": "F18",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-c-carrier-visibility"
+    },
+    {
+      "sheet": "Epics",
+      "cell": "F19",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e11-headless-storefront"
+    },
+    {
+      "sheet": "Epics",
+      "cell": "F21",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e13-delivery-method"
+    },
+    {
+      "sheet": "Epics",
+      "cell": "F22",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e14-cms-integration"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G6",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e01-customer-ordering/stories/o01-customer-orders"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J6",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e01-customer-ordering"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H6",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e01-customer-ordering/stories/o01-customer-orders/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G7",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e01-customer-ordering/stories/o02-authorized-catalog"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J7",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e01-customer-ordering"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H7",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e01-customer-ordering/stories/o02-authorized-catalog/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G8",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e01-customer-ordering/stories/o03-external-pricing"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J8",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e01-customer-ordering"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H8",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e01-customer-ordering/stories/o03-external-pricing/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G9",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e01-customer-ordering/stories/o04-po-checkout"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J9",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e01-customer-ordering"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H9",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e01-customer-ordering/stories/o04-po-checkout/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G10",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e02-consignment/stories/o05-consignment-eligibility"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J10",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e02-consignment"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H10",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e02-consignment/stories/o05-consignment-eligibility/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G11",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e02-consignment/stories/o06-consignment-fill-up"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J11",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e02-consignment"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H11",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e02-consignment/stories/o06-consignment-fill-up/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G12",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e03-order-submission/stories/o07-order-confirmation"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J12",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e03-order-submission"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H12",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e03-order-submission/stories/o07-order-confirmation/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G13",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e03-order-submission/stories/o08-uncertain-orders"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J13",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e03-order-submission"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H13",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e03-order-submission/stories/o08-uncertain-orders/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G14",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e04-post-order/stories/o09-order-history"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J14",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e04-post-order"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H14",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e04-post-order/stories/o09-order-history/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G15",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e04-post-order/stories/o10-invoice-access"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J15",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e04-post-order"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H15",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e04-post-order/stories/o10-invoice-access/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G16",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e04-post-order/stories/o11-customer-care"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J16",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e04-post-order"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H16",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e04-post-order/stories/o11-customer-care/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G17",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e05-procurement/stories/o12-cart-export"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J17",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e05-procurement"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H17",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e05-procurement/stories/o12-cart-export/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G18",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e06-buyer-access/stories/d01-account-switching"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J18",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e06-buyer-access"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H18",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e06-buyer-access/stories/d01-account-switching/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G19",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e06-buyer-access/stories/d02-admin-buyer-access"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J19",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e06-buyer-access"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H19",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e06-buyer-access/stories/d02-admin-buyer-access/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G20",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e08-order-servicing/stories/d03-servicing-readiness"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J20",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e08-order-servicing"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H20",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e08-order-servicing/stories/d03-servicing-readiness/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G21",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e09-returns-settlement/stories/d04-return-request"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J21",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e09-returns-settlement"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H21",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e09-returns-settlement/stories/d04-return-request/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G22",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e09-returns-settlement/stories/d05-managed-rma"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J22",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e09-returns-settlement"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H22",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e09-returns-settlement/stories/d05-managed-rma/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G23",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e09-returns-settlement/stories/d06-exchanges"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J23",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e09-returns-settlement"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H23",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e09-returns-settlement/stories/d06-exchanges/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G24",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e09-returns-settlement/stories/d07-credits-refunds"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J24",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e09-returns-settlement"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H24",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e09-returns-settlement/stories/d07-credits-refunds/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G25",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e07-repeat-purchasing/stories/d08-repeat-buying"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J25",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e07-repeat-purchasing"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H25",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e07-repeat-purchasing/stories/d08-repeat-buying/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G26",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-shipment-tracking/stories/d09-shipment-demo"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J26",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-shipment-tracking"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H26",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e10-shipment-tracking/stories/d09-shipment-demo/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G27",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e07-repeat-purchasing/stories/d10-shared-carts"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J27",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e07-repeat-purchasing"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H27",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e07-repeat-purchasing/stories/d10-shared-carts/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G28",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e08-order-servicing/stories/d11-assisted-ordering"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J28",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e08-order-servicing"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H28",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e08-order-servicing/stories/d11-assisted-ordering/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G29",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e01-customer-ordering/stories/w01-variant-labels"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J29",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e01-customer-ordering"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H29",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e01-customer-ordering/stories/w01-variant-labels/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G30",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e01-customer-ordering/stories/w02-tax"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J30",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e01-customer-ordering"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H30",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e01-customer-ordering/stories/w02-tax/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G31",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e01-customer-ordering/stories/w03-buyer-journey"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J31",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e01-customer-ordering"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H31",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e01-customer-ordering/stories/w03-buyer-journey/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G32",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e11-headless-storefront/stories/w04-headless-demo"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J32",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e11-headless-storefront"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H32",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e11-headless-storefront/stories/w04-headless-demo/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G34",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e13-delivery-method/stories/w06-workflow-refiner"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J34",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e13-delivery-method"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H34",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e13-delivery-method/stories/w06-workflow-refiner/README.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G35",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e13-delivery-method/stories/w07-delivery-guide"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J35",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e13-delivery-method"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H35",
+      "url": "https://github.com/aispanda/Reusable-Delivery/blob/main/DELIVERY.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "I35",
+      "url": "https://github.com/aispanda/Reusable-Delivery"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G36",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-a-shipment-foundation/stories/a1-shipment-model"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J36",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-a-shipment-foundation"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H36",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration/blob/main/story/user-story.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "I36",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G37",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-a-shipment-foundation/stories/a2-shipment-fields"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J37",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-a-shipment-foundation"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H37",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration/blob/main/story/user-story.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "I37",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G38",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-a-shipment-foundation/stories/a3-shipment-access"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J38",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-a-shipment-foundation"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H38",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration/blob/main/story/user-story.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "I38",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G39",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-b-dispatch-ingestion/stories/b1-dispatch-polling"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J39",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-b-dispatch-ingestion"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H39",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration/blob/main/story/user-story.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "I39",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G40",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-b-dispatch-ingestion/stories/b2-shipment-upsert"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J40",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-b-dispatch-ingestion"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H40",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration/blob/main/story/user-story.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "I40",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G41",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-b-dispatch-ingestion/stories/b3-dispatch-recovery"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J41",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-b-dispatch-ingestion"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H41",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration/blob/main/story/user-story.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "I41",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G42",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-c-carrier-visibility/stories/c1-carrier-events"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J42",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-c-carrier-visibility"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H42",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration/blob/main/story/user-story.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "I42",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G43",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-c-carrier-visibility/stories/c2-buyer-tracking"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J43",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-c-carrier-visibility"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H43",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration/blob/main/story/user-story.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "I43",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G44",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-c-carrier-visibility/stories/c3-tracking-efficiency"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J44",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-c-carrier-visibility"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H44",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration/blob/main/story/user-story.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "I44",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G45",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-c-carrier-visibility/stories/c4-exception-alerts"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J45",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e10-c-carrier-visibility"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H45",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration/blob/main/story/user-story.md"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "I45",
+      "url": "https://github.com/aispanda/salesforce-shipment-tracking-integration"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "G46",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e14-cms-integration/stories/w08-cms-middleware"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "J46",
+      "url": "https://github.com/aispanda/B2B-Commerce/tree/main/epics/e14-cms-integration"
+    },
+    {
+      "sheet": "Stories",
+      "cell": "H46",
+      "url": "https://github.com/aispanda/B2B-Commerce/blob/main/epics/e14-cms-integration/stories/w08-cms-middleware/README.md"
+    }
+  ],
+  "unexpectedHyperlinkTargets": [],
+  "restrictedValueFindings": [],
+  "linkExplanation": "16 Epics links and 131 Stories links = 147 native link relationships. 125 target proposed portfolio paths and remain pending; 22 point to existing public guides/repositories. Relationship existence and permitted targets checked, not remote destination availability.",
+  "limitations": [
+    "Excel application UI interaction not tested.",
+    "Pending portfolio destinations are unpublished and not remotely verified.",
+    "This audit does not establish source completeness or migration acceptance.",
+    "Repository history and future commit metadata must be checked separately before publication."
+  ]
+}
