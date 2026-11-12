@@ -1,6 +1,6 @@
 {
   "workbook": "B2B-Commerce-Delivery-Register.xlsx",
-  "sha256": "f422de71f67d6a95ec8634e93a7972e9c0a9354bfa1878c2f4f5e1d354bb4486",
+  "sha256": "9941f770de996e14a8048c2f2a3bd3400a49a88318f4c1741fea6b663e202a0b",
   "method": "ZIP package and every XML/relationship part parsed from the actual saved XLSX; shared strings and all serialized text scanned against restricted mapping identifiers and known private patterns. No private matching values included in this report.",
   "sheets": [
     {
@@ -762,11 +762,19 @@
   ],
   "unexpectedHyperlinkTargets": [],
   "restrictedValueFindings": [],
-  "linkExplanation": "16 Epics links and 131 Stories links = 147 native link relationships. 125 target proposed portfolio paths and remain pending; 22 point to existing public guides/repositories. Relationship existence and permitted targets checked, not remote destination availability.",
+  "linkExplanation": "147 native hyperlinks: 125 portfolio folder/README destinations verified against the complete published GitHub tree; labels updated to Open. The 22 existing external guide/repository links are unchanged. Story migration remains pending.",
   "limitations": [
     "Excel application UI interaction not tested.",
-    "Pending portfolio destinations are unpublished and not remotely verified.",
-    "This audit does not establish source completeness or migration acceptance.",
+    "Published scaffold paths verified; story migration, source completeness and acceptance remain pending.",
+    "The new publication-label workbook has not received a new Claude substantive review; prior review applies to the historical snapshot.",
     "Repository history and future commit metadata must be checked separately before publication."
-  ]
+  ],
+  "publicationVerification": {
+    "commit": "b6032925db5eac0148ae6e33e7c4da15f2419ba5",
+    "treeSha256": "c8619ef5afb328336ae338e2e099316153a1aa84a3093b599b9fa91bab50ee8f",
+    "verifiedPortfolioTargets": 125,
+    "evidence": "Coordinator exact text readback and full tree at this commit; this update validates each target path and type against that tree.",
+    "workbookBinaryUpload": "Pending coordinator upload; this report audits the local final binary."
+  },
+  "historicalReviewedWorkbookSha256": "f422de71f67d6a95ec8634e93a7972e9c0a9354bfa1878c2f4f5e1d354bb4486"
 }
