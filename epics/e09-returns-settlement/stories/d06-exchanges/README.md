@@ -1,6 +1,6 @@
 # D06: Demonstrate even and RMA exchanges
 
-**Migration draft; original task remains authoritative.** Guide: [migrate/DELIVERY.md at `9d32dccc738cc544481a6da257c13d438115f122`](https://github.com/aispanda/Reusable-Delivery/blob/9d32dccc738cc544481a6da257c13d438115f122/migrate/DELIVERY.md), route MIGRATE. The portfolio batch previously specified `769a5099cb7412e9f307a38286f8e2adf74448a8`; the rollout explicitly selects the newer pinned guide while retaining the batch write and review boundaries.
+**Migration draft; original task remains authoritative.** Current guide: [migrate/DELIVERY.md at `56695c71dd26986eea09ebfa23e60826f1ee9359`](https://github.com/aispanda/Reusable-Delivery/blob/56695c71dd26986eea09ebfa23e60826f1ee9359/migrate/DELIVERY.md), route MIGRATE. Earlier work and reviews used `9d32dccc738cc544481a6da257c13d438115f122`; the earlier batch baseline was `769a5099cb7412e9f307a38286f8e2adf74448a8`. Preserve those review scopes and the batch write and review boundaries.
 
 **Revision / as of:** Published partial migration draft, 12 November 2026 UTC. Documentation: limited independent review and repair recheck passed. Full source-preservation acceptance remains pending. Implementation: blocked. Scenario tests: NOT RUN. Human acceptance: required by the existing execution record; decision Pending. Accountable implementation owner: Pending. Origin: original task and execution records, restricted mapping Pending. ClickUp synchronization: Pending — explicitly deferred.
 
@@ -65,6 +65,14 @@ One executor per bounded step. Assign a named human or exact AI model and reason
 - Original user authority permits story execution subject to its existing prerequisites; this migration rollout itself authorizes documentation only. Do not expand shared permissions, run a payment/refund, consume another story's fixture or alter shared pages without the applicable authority and safety checks.
 - Role-dependent test plan: test identity Pending; intended role Customer Care agent; access to target Order Summary Pending; actual action visibility and behavior NOT RUN. The setup read used the connected administrative context only.
 
+### Bounded Jev and Claude review — 12 November 2026
+
+TypeSafe **jev-1.14.0** evaluated nine typed questions over a sanitized summary, not the complete story or source evidence. Its results supported the pending test and acceptance states, distinct test records, no-live-payment boundary, and separation of administrator and intended-user access. The model's judgments do not establish Salesforce behavior or source completeness.
+
+**Claude Opus 5.5 Medium** reviewed a sanitized summary against the guide change and recommended clarifying the draft's publication history, recording the newer guide revision, and checking role-dependent access. The contradictory publication line is corrected below. On follow-up, Claude agreed that the previously observed administrator probes apply to that executor and environment; Customer Care role, target-record access and scenario behavior remain unverified. The review did not inspect the full story, source attachments or org. The review details remain in restricted working evidence; accessibility to a successor remains pending.
+
+**Guide change and affected checks:** Compared with `9d32dccc738cc544481a6da257c13d438115f122`, the current guide adds conditional Salesforce MCP/CLI recovery instructions: consult the matching recovery guide when a check fails, and skip recovery guides when both pass. The earlier administrator probes remain historical evidence for their session; repeat the platform check if the executor environment or authorization changes. This documentation update has not received a fresh independent review; source-preservation acceptance, scenario tests and human acceptance remain pending.
+
 ## Blockers and source history
 
 | Source / revision | Destination or disposition | Difference and limit |
@@ -74,7 +82,7 @@ One executor per bounded step. Assign a named human or exact AI model and reason
 | D06 GitHub placeholder blob `3231ba9041a625bed22357f34dd8d591600999c3` | Target story path retained | Placeholder had no criteria; this draft adds them from the source, without changing meaning. |
 | Template v1.3 and Field Guide | Superseded as format guidance for this migration only; historical source remains | Exact previous GitHub-guide revision is N/A: this story previously used the ClickUp template. The batch baseline `769a509` is recorded above; the new guide adds platform access checks and role-sensitive evidence. |
 
-**Known gaps:** Historical setup observations require refreshing before implementation. Current access checks show only tool connectivity and administrative context. License, safe fixtures, price equality, supported setup path and RMA settlement remain unresolved. A named owner and exact executor are required before operational steps. The existing local source map identifies the task as SRC04; its approved restricted storage, access owner and authorized-reader retrieval test remain Pending. Durable platform-access evidence, complete attachment/linked-document inventory and fresh independent source-based review are Pending. ClickUp writeback is deferred; no public story has been changed or migration completion claimed.
+**Known gaps:** Historical setup observations require refreshing before implementation. Current access checks show only tool connectivity and administrative context. License, safe fixtures, price equality, supported setup path and RMA settlement remain unresolved. A named owner and exact executor are required before operational steps. The existing local source map identifies the task as SRC04; its approved restricted storage, access owner and authorized-reader retrieval test remain Pending. Durable platform-access evidence, complete attachment/linked-document inventory and fresh independent source-based review are Pending. The partial GitHub migration draft has been published; ClickUp writeback and migration completion remain pending.
 
 ## Consolidation checkpoint — 12 November 2026
 
