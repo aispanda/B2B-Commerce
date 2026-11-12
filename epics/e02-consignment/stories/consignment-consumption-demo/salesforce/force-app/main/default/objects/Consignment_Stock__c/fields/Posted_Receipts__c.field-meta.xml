@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Posted_Receipts__c</fullName>
+    <description>Counts boxes received on posted receipts.</description>
+    <inlineHelpText>A recorded receipt enters this total when it is posted.</inlineHelpText>
+    <label>Posted Receipts</label>
+    <summarizedField>Consignment_Movement__c.Quantity__c</summarizedField>
+    <summaryFilterItems>
+        <field>Consignment_Movement__c.Posting_Status__c</field>
+        <operation>equals</operation>
+        <value>Posted Receipt</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Consignment_Movement__c.Consignment_Stock__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <type>Summary</type>
+</CustomField>

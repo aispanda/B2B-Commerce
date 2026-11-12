@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Demo_Invoice_Reference__c</fullName>
+    <description>Captures the fictional invoice reference used for the demonstration.</description>
+    <inlineHelpText>Enter a fictional reference when marking Billed (Demo).</inlineHelpText>
+    <label>Demo Invoice Reference</label>
+    <length>80</length>
+    <type>Text</type>
+</CustomField>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Consignment_Movement__c</entityName>
+    <fieldName>Posting_Status__c</fieldName>
+    <masterLabel>Consignment Usage Posting</masterLabel>
+    <pathAssistantSteps>
+        <fieldNames>Consignment_Stock__c</fieldNames>
+        <fieldNames>Quantity__c</fieldNames>
+        <fieldNames>Event_Date__c</fieldNames>
+        <fieldNames>Source_Reference__c</fieldNames>
+        <info>&lt;p&gt;Enter the hospital report line. Each box contains one infusion set. This usage awaits posting.&lt;/p&gt;</info>
+        <picklistValueName>Reported</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Consignment_Stock__c</fieldNames>
+        <fieldNames>Quantity__c</fieldNames>
+        <fieldNames>Source_Reference__c</fieldNames>
+        <fieldNames>Unit_Rate__c</fieldNames>
+        <info>&lt;p&gt;Match the report to the hospital site and SKU. Confirm the quantity and rate before posting.&lt;/p&gt;</info>
+        <picklistValueName>Verified</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Quantity__c</fieldNames>
+        <fieldNames>Demo_Charge_Before_Tax__c</fieldNames>
+        <fieldNames>Billing_Status__c</fieldNames>
+        <info>&lt;p&gt;Confirm the stock balance fell by the posted quantity. Billing can now review the charge.&lt;/p&gt;</info>
+        <picklistValueName>Posted Usage</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Source_Reference__c</fieldNames>
+        <fieldNames>Review_Note__c</fieldNames>
+        <info>&lt;p&gt;Use this for an invalid report that has not been posted. Voided reports leave confirmed stock unchanged.&lt;/p&gt;</info>
+        <picklistValueName>Voided</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>Consumption</recordTypeName>
+</PathAssistant>

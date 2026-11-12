@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Demo_Charge_Before_Tax__c</fullName>
+    <description>Displays the illustrative charge on posted usage.</description>
+    <formula>IF(ISPICKVAL(Posting_Status__c, "Posted Usage"), Quantity__c * Unit_Rate__c, NULL)</formula>
+    <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+    <inlineHelpText>Multiply boxes used by the stored unit rate. The value is before tax.</inlineHelpText>
+    <label>Demo Charge Before Tax</label>
+    <precision>18</precision>
+    <scale>2</scale>
+    <type>Currency</type>
+</CustomField>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Consignment_Stock__c</fullName>
+    <description>Groups this event with its hospital, site and SKU stock position.</description>
+    <inlineHelpText>Choose the stock position that matches the report or shipment.</inlineHelpText>
+    <label>Consignment Stock</label>
+    <referenceTo>Consignment_Stock__c</referenceTo>
+    <relationshipLabel>Consignment Movements</relationshipLabel>
+    <relationshipName>Consignment_Movements</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>true</writeRequiresMasterRead>
+</CustomField>

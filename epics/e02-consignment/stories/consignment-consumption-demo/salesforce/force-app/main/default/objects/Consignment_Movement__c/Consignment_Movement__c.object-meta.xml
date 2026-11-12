@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Records one receipt or hospital usage report line for Consignment Stock. Event Key identifies the source event. Quantity affects stock after posting. Validation preserves posted evidence and lets billing advance separately for simulated charges.</description>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <label>Consignment Movement</label>
+    <nameField>
+        <displayFormat>CMV-{0000}</displayFormat>
+        <label>Consignment Movement Number</label>
+        <startingNumber>1</startingNumber>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Consignment Movements</pluralLabel>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stock_Key__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>Stable import key for one hospital, location, and SKU.</description>
+    <externalId>true</externalId>
+    <inlineHelpText>Use the same key when reloading this stock position.</inlineHelpText>
+    <label>Stock Key</label>
+    <length>160</length>
+    <required>true</required>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

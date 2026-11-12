@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Usage_Awaiting_Posting__c</fullName>
+    <description>Counts reported boxes that the coordinator has yet to post.</description>
+    <inlineHelpText>These boxes are excluded from the confirmed stock balance until posting.</inlineHelpText>
+    <label>Usage Awaiting Posting</label>
+    <summarizedField>Consignment_Movement__c.Quantity__c</summarizedField>
+    <summaryFilterItems>
+        <field>Consignment_Movement__c.Posting_Status__c</field>
+        <operation>equals</operation>
+        <value>Reported,Verified</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Consignment_Movement__c.Consignment_Stock__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <type>Summary</type>
+</CustomField>

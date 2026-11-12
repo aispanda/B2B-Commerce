@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valid_Billing_Stage</fullName>
+    <active>true</active>
+    <description>Keeps billing separate from posting and requires the final demo reference.</description>
+    <errorConditionFormula>OR(
+    AND(
+        RecordType.DeveloperName = "Receipt",
+        OR(NOT(ISBLANK(TEXT(Billing_Status__c))), NOT(ISBLANK(Demo_Invoice_Reference__c)))
+    ),
+    AND(
+        RecordType.DeveloperName = "Consumption",
+        OR(
+            ISBLANK(TEXT(Billing_Status__c)),
+            AND(
+                ISNEW(),
+                NOT(ISPICKVAL(Billing_Status__c, "Not Ready"))
+            ),
+            AND(
+                NOT(ISNEW()),
+                ISCHANGED(Billing_Status__c),
+                OR(
+                    NOT(ISPICKVAL(PRIORVALUE(Posting_Status__c), "Posted Usage")),
+                    NOT(OR(
+                        AND(ISPICKVAL(PRIORVALUE(Billing_Status__c), "Not Ready"),
+                            ISPICKVAL(Billing_Status__c, "Ready to Bill")),
+                        AND(ISPICKVAL(PRIORVALUE(Billing_Status__c), "Ready to Bill"),
+                            ISPICKVAL(Billing_Status__c, "Billed (Demo)"))
+                    ))
+                )
+            ),
+            AND(
+                ISPICKVAL(Billing_Status__c, "Billed (Demo)"),
+                LEN(TRIM(Demo_Invoice_Reference__c)) = 0
+            ),
+            AND(
+                NOT(ISPICKVAL(Billing_Status__c, "Billed (Demo)")),
+                NOT(ISBLANK(Demo_Invoice_Reference__c))
+            )
+        )
+    )
+)</errorConditionFormula>
+    <errorMessage>Post the usage before changing billing. Advance to Ready to Bill, then enter a fictional invoice reference when marking Billed (Demo).</errorMessage>
+</ValidationRule>

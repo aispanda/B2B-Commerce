@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Receipt</fullName>
+    <active>true</active>
+    <description>Records confirmed delivery to the hospital stockroom.</description>
+    <label>Receipt</label>
+    <picklistValues>
+        <picklist>Posting_Status__c</picklist>
+        <values>
+            <fullName>Recorded</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Posted Receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voided</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

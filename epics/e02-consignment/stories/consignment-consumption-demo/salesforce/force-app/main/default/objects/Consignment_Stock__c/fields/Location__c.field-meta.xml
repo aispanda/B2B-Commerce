@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Location__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>Identifies the location for this stock position.</description>
+    <inlineHelpText>Select the location that matches the verified demo fulfillment.</inlineHelpText>
+    <label>Location</label>
+    <referenceTo>Location</referenceTo>
+    <relationshipLabel>Consignment Stock</relationshipLabel>
+    <relationshipName>Consignment_Stock_Positions</relationshipName>
+    <required>true</required>
+    <type>Lookup</type>
+</CustomField>

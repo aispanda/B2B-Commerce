@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stock_State__c</fullName>
+    <description>Summarizes the current confirmed stock balance.</description>
+    <formula>IF(Confirmed_On_Hand__c &lt; 0, "Check Balance", IF(Posted_Receipts__c = 0, "Awaiting Stock", IF(Confirmed_On_Hand__c = 0, "Depleted", "In Stock")))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Investigate a Check Balance result before making further postings.</inlineHelpText>
+    <label>Stock State</label>
+    <type>Text</type>
+</CustomField>

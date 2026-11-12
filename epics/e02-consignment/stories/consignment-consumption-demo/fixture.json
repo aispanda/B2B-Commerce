@@ -1,0 +1,61 @@
+{
+  "scenario": {
+    "hospital": "Riverside Demo Hospital",
+    "site": "Supply Room",
+    "sku": "INF-SET-DEMO",
+    "units": "Box",
+    "infusion_sets_per_box": 1,
+    "stock_key": "STOCK-DEMO-01",
+    "fill_up_order": "FILL-DEMO-01",
+    "optional_po": null,
+    "fill_up_due_cents": 0,
+    "currency": "USD",
+    "unit_rate_cents": 2400
+  },
+  "shipment_item": {
+    "fixture_alias": "SHIP-DEMO-01-L1",
+    "salesforce_id": null,
+    "quantity": 10,
+    "sku": "INF-SET-DEMO",
+    "shipment_status_before_receipt": "Shipped",
+    "shipment_status_at_receipt": "Delivered",
+    "receipt_date": "2026-11-09",
+    "receipt_reference": "DEMO-RECEIVING-001"
+  },
+  "movements": {
+    "receipt": {
+      "event_key": "REC/<resolved Shipment Item ID>",
+      "kind": "Receipt",
+      "event_date": "2026-11-09",
+      "quantity": 10,
+      "source_reference": "DEMO-RECEIVING-001"
+    },
+    "usage": {
+      "event_key": "USE/HOSP-DEMO-01/HOSP-USE-001/1",
+      "kind": "Consumption",
+      "event_date": "2026-11-11",
+      "quantity": 3,
+      "source_reference": "HOSP-USE-001/1",
+      "unit_rate_cents": 2400
+    },
+    "void_check": {
+      "event_key": "USE/HOSP-DEMO-01/HOSP-VOID-001/1",
+      "kind": "Consumption",
+      "event_date": "2026-11-11",
+      "quantity": 2,
+      "source_reference": "HOSP-VOID-001/1",
+      "unit_rate_cents": 2400
+    }
+  },
+  "demo_invoice_reference": "DEMO-INV-001",
+  "expected": {
+    "shipped": {"on_hand": 0, "pending": 0},
+    "received": {"on_hand": 10, "pending": 0},
+    "reported": {"on_hand": 10, "pending": 3},
+    "verified": {"on_hand": 10, "pending": 3},
+    "posted": {"on_hand": 7, "pending": 0, "bill_status": "Not Ready", "charge_cents": 7200},
+    "ready": {"on_hand": 7, "pending": 0, "bill_status": "Ready to Bill", "charge_cents": 7200},
+    "billed": {"on_hand": 7, "pending": 0, "bill_status": "Billed (Demo)", "charge_cents": 7200},
+    "voided": {"on_hand": 7, "pending": 0}
+  }
+}

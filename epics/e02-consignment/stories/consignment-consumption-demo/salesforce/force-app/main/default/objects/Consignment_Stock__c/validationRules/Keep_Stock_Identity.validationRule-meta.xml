@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Keep_Stock_Identity</fullName>
+    <active>true</active>
+    <description>Preserves the original key, account, location, product, and stocking unit.</description>
+    <errorConditionFormula>AND(
+    NOT(ISNEW()),
+    OR(ISCHANGED(Stock_Key__c), ISCHANGED(Account__c), ISCHANGED(Location__c),
+       ISCHANGED(Product__c), ISCHANGED(Stocking_Unit__c))
+)</errorConditionFormula>
+    <errorMessage>Use a separate stock position for a different account, location, product, stocking unit, or key.</errorMessage>
+</ValidationRule>

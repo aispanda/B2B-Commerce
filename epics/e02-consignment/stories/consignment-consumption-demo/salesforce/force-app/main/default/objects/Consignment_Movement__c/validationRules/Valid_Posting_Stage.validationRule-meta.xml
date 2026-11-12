@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valid_Posting_Stage</fullName>
+    <active>true</active>
+    <description>Limits each record type to its own stages and enforces the posting sequence.</description>
+    <errorConditionFormula>CASE(
+    RecordType.DeveloperName,
+    "Receipt",
+        IF(
+            ISNEW(),
+            IF(ISPICKVAL(Posting_Status__c, "Recorded"), 0, 1),
+            IF(
+                NOT(ISCHANGED(Posting_Status__c)), 0,
+                IF(AND(
+                    ISPICKVAL(PRIORVALUE(Posting_Status__c), "Recorded"),
+                    OR(ISPICKVAL(Posting_Status__c, "Posted Receipt"), ISPICKVAL(Posting_Status__c, "Voided"))
+                ), 0, 1)
+            )
+        ),
+    "Consumption",
+        IF(
+            ISNEW(),
+            IF(ISPICKVAL(Posting_Status__c, "Reported"), 0, 1),
+            IF(
+                NOT(ISCHANGED(Posting_Status__c)), 0,
+                IF(OR(
+                    AND(
+                        ISPICKVAL(PRIORVALUE(Posting_Status__c), "Reported"),
+                        OR(ISPICKVAL(Posting_Status__c, "Verified"), ISPICKVAL(Posting_Status__c, "Voided"))
+                    ),
+                    AND(
+                        ISPICKVAL(PRIORVALUE(Posting_Status__c), "Verified"),
+                        OR(ISPICKVAL(Posting_Status__c, "Posted Usage"), ISPICKVAL(Posting_Status__c, "Voided"))
+                    )
+                ), 0, 1)
+            )
+        ),
+    1
+) = 1</errorConditionFormula>
+    <errorDisplayField>Posting_Status__c</errorDisplayField>
+    <errorMessage>Follow the posting stages for the Receipt or Consumption record type. Only an unposted movement can be voided.</errorMessage>
+</ValidationRule>

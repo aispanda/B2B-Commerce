@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Holds one hospital supply room and infusion-set SKU in the consignment demo. Account, Location, Product, and Stock Key identify the position. Posted receipts and usage determine confirmed on hand. A separate roll-up shows usage awaiting posting.</description>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <label>Consignment Stock</label>
+    <nameField>
+        <displayFormat>CST-{0000}</displayFormat>
+        <label>Consignment Stock Number</label>
+        <startingNumber>1</startingNumber>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Consignment Stock</pluralLabel>
+    <sharingModel>Private</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

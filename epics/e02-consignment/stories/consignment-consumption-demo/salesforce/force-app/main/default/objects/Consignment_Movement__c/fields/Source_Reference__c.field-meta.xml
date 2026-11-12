@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Source_Reference__c</fullName>
+    <description>Identifies the hospital receipt confirmation or usage report line.</description>
+    <inlineHelpText>Enter the matching dated receiving reference or hospital report and line.</inlineHelpText>
+    <label>Source Reference</label>
+    <length>120</length>
+    <required>true</required>
+    <type>Text</type>
+</CustomField>

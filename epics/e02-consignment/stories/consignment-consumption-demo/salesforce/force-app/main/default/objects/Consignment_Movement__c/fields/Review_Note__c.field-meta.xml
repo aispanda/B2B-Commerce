@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Review_Note__c</fullName>
+    <description>Records the coordinator's review or void reason.</description>
+    <inlineHelpText>Add a short note when reviewing a discrepancy or voiding a draft.</inlineHelpText>
+    <label>Review Note</label>
+    <type>TextArea</type>
+</CustomField>
