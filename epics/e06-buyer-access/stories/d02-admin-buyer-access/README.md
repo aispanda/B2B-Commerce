@@ -127,3 +127,9 @@ Historical next step recorded by the prior writer: the coordinator provides the 
 
 - Consolidation source read: E06-A and E06-B reread fully; relevant E06-C login/resumed-session passages reread, not the whole file. Local hashes checked separately. The historical reports record earlier native Field Guide reads; this preserves those reads without claiming current native-page access. The source refresh, original-workbook and restricted portability gaps remain.
 - Human acceptance requirement: required; actual decision: Pending. Current exclusive E06 ownership is resolved, but publication, full preservation and live delivery remain separate pending work.
+
+## Buyer session prerequisites
+
+On 12 November 2026, Headless 360 and the Salesforce CLI reached the intended development environment. An administrator verified that the fictional buyer contact is linked to the expected account and that its external shopper user is active. The store is Live, and the administrator and shopper profiles are configured as site members.
+
+The fresh buyer login, buyer and account display, logout, and return to the administrator session remain NOT RUN. The next test requires a coordinated browser session and authority to switch into the fictional buyer. Record the test identity, intended role, resource access and observed result at each step. Full source refresh remains pending because the task connector reached its daily limit.
