@@ -1,6 +1,6 @@
 # BG01 official research and planned tests
 
-Read on 12 November 2026. This public document contains reusable platform research, not client configuration or installation evidence. Official Help article text was inspected; navigation/CSS error shells alone were not evidence. All transactional tests below are **NOT RUN**. Return to the [story](README.md).
+Read on 12 November 2026. This public document contains reusable platform research, not client configuration or installation evidence. Official Help article text was inspected; navigation/CSS error shells alone were not evidence. This file describes test plans and platform contracts. See the [story](README.md#current-state) for actual results.
 
 ## Core capability contracts
 
