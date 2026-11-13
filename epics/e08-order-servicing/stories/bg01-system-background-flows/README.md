@@ -1,7 +1,7 @@
 # BG01: Prepare system-driven Commerce and Order Management flows
 
 Guide: [migrate/DELIVERY.md](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/migrate/DELIVERY.md) @ `2b915c38dc21b793f9ed4aee9230c613991e79d1`. Route **MIGRATE** for this upgrade. Original route **NEW**.
-Revision/status/as-of: **1.2, 13 November 2026**. Documentation updated. Existing automation reused for order summaries, exceptions and settlement. Tax transaction flow configured and verified in the demo. Broader tests and human acceptance remain open.
+Revision/status/as-of: **1.3, 13 November 2026**. Documentation updated. Existing automation reused for order summaries, exceptions and settlement. Tax transaction and reversal flows configured and verified for one dummy PO. Broader tests and human acceptance remain open.
 Origin: **AUTH-BG01**, the human instruction to track system-driven flows separately. Original inventory and runtime evidence are retained in restricted project records.
 Accountable owner: **Pending**. The task has no assigned owner.
 
@@ -12,11 +12,11 @@ Accountable owner: **Pending**. The task has no assigned owner.
 | Create Order Summary | Existing capability confirmed for the agreed scope. Reuse the org’s current producer. |
 | Create Process Exception | **Complete (Default)**. The active flow maps supported events to Process Exception records. |
 | Create Tax Transaction | **Complete (Dummy UI Test)**. The standard template was copied and activated with human approval. A fresh dummy PO placed through the buyer browser received one provider transaction reference shared across its tax lines. Salesforce confirmed zero payment summaries and process exceptions. **BG-E04** records the browser confirmation and backend readback in the restricted project record. |
-| Record Tax Reversals | Standard template inactive. Automatic reversal **NOT RUN**. The fresh dummy PO has a recorded test transaction and is the proposed reversal fixture. |
+| Record Tax Reversals | **Complete (Dummy UI Test)** for a one-item cancellation. Salesforce created an activated change order with −$18.69 USD tax and reduced the Order Summary tax to zero. Stripe test mode accepted the reversal against the original provider reference. See restricted evidence **BG-E07**. Partial-order cancellation, return-triggered reversal and retry/failure cases remain open. |
 | Ensure Refunds for Excess Funds | **Complete (Dummy Test)** for full cancellation. The isolated gateway processed the expected simulated refund. Evidence **BG-E06** is retained in the restricted flow inventory. |
 | RMA Create Credit Memo and Ensure Refunds | **Complete (Dummy UI Test)** for one received unit. Lightning and backend reconciliation confirmed one posted credit memo and one simulated refund. See [D05](../../../e09-returns-settlement/stories/d05-managed-rma/README.md) for evidence scope and [the execution kit](../../../e09-returns-settlement/stories/d05-managed-rma/demo-kit/README.md) for replay. |
 
-Next eligible action is the read-only reversal audit in **S-04** once an executor is assigned. Independent implementation verification is **NOT RUN**. Human acceptance requirement and decision for full BG01 remain **Pending**. Demo results apply to the tested scenarios.
+Next eligible action is to prepare a separate multi-item dummy order for the partial-cancellation check in **S-07** once an executor is assigned. Independent implementation verification is **NOT RUN**. Human acceptance requirement and decision for full BG01 remain **Pending**. Demo results apply to the tested scenarios.
 
 ## Outcome and scope
 
@@ -31,7 +31,7 @@ The six flows above are core scope. Assess external-channel exceptions and B2C b
 | BG-AC01 | Every supplied inventory row has metadata type, launch/caller, scope disposition, source and uncertainty recorded. Core system flows, manual Screen flows and CheckoutFlow remain distinct. | Private workbook/JSON/query reconciliation; named omissions and retrieval gaps. | Inventory reconciled. Independent review and successor source access Pending. |
 | BG-AC02 | The chosen ingestion path creates one correctly linked order summary and related records, with intended lifecycle. Replayed activation or competing ingestion paths do not create duplicates. | Activation, missing prerequisite, duplicate and high-scale coexistence cases; original-order/delivery-group/summary links. | Existing managed summary coverage verified and accepted for reuse. Replay and high-scale coexistence NOT RUN. |
 | BG-AC03 | Supported exception events produce correctly categorized/correlated records visible to the designated operations role. Unsupported types, duplicate events and creation failures have explicit outcomes. | Event mapping, recognized/unrecognized types, role access, redacted error content and replay behavior. | Default active flow and event mapping verified. Intended-role, unsupported-event and replay tests NOT RUN. |
-| BG-AC04 | Eligible order completion records the correct external tax transaction; eligible return/cancellation records the corresponding reversal once, with correct original transaction, currency and amount. Tax calculation, reporting/reversal and cash refund are separately reconciled. | Nonzero/zero tax, partial return, cancellation, duplicate, timeout and unavailable-provider cases in test mode. | Automatic tax recording passed on a dummy PO (BG-E04). Reversal, zero-tax order, retry and failure cases NOT RUN. |
+| BG-AC04 | Eligible order completion records the correct external tax transaction; eligible return/cancellation records the corresponding reversal once, with correct original transaction, currency and amount. Tax calculation, reporting/reversal and cash refund are separately reconciled. | Nonzero/zero tax, partial return, cancellation, duplicate, timeout and unavailable-provider cases in test mode. | Automatic tax recording and one-item cancellation reversal passed (BG-E04/BG-E07). Partial-order cancellation, return-triggered reversal, zero-tax order, retry and failure cases NOT RUN. |
 | BG-AC05 | Eligible managed-RMA close processes intended quantities/change orders, creates correct credit and any fee invoice, and performs only the approved payment-credit/refund path. Ineligible and repeated-close cases have verified outcomes. | Return lines, change orders, invoices, credit, payment credit, refundable balances and provider results; partial receipt/rejection and partial failure. | One-unit managed return passed in Lightning. See [D05](../../../e09-returns-settlement/stories/d05-managed-rma/README.md). RMA-06 covers the open intended-user and eligibility checks. Other branches NOT RUN. |
 | BG-AC06 | Eligible cancellation completion refunds only currently owed excess funds. Zero/non-cancellation and duplicate/concurrent/delayed events cannot cause additional unintended refunds. | Actual trigger/filter inspection; zero/negative/positive inputs, replay and overlapping cancellation while refund is pending. | Full cancellation returned the expected dummy funds (BG-E06). Zero excess, overlapping events and failure cases NOT RUN. |
 | BG-AC07 | Checkout dependencies and related templates have include/defer/exclude decisions supported by actual architecture and license/package evidence. No background action becomes an independent buyer button. | Individual checkout caller/action mapping; external-channel, bot and routing applicability. | NOT RUN beyond the initial inventory and applicability assessment. |
@@ -53,24 +53,24 @@ Historical executor labels below reflect recorded roles. Exact historical AI mod
 | S-01 | Verify platform access. | Intended account and authority | AI documentation executor, Salesforce MCP/CLI and connectors | Read checks performed. Refresh in the actual executor’s context. |
 | S-02 | Reconcile the inventory and available source. BG-AC01 | S-01, inventory inputs | AI documentation executor, Sheets and Salesforce read tools | Complete at recorded scope. Source access gaps remain. |
 | S-03 | Publish and verify story links. BG-AC09 | S-01/02, publication authority | AI documentation executor, GitHub and ClickUp | Initial publication and link readback passed. |
-| S-04 | Inspect the reversal template’s filters, inputs, and test-order eligibility. BG-AC04 | Fresh S-01, restricted fixture access, named executor | Salesforce admin Pending, Flow Builder and CLI | Provider, Order Events and trigger observed. Filter and input audit remains open. |
-| S-05 | Confirm isolated reversal fixture and test boundaries. BG-AC04/08 | S-04, access and approval for test effects | Fixture coordinator Pending | Test-mode provider and original dummy transaction verified. Reversal readiness Pending. |
-| S-06 | Reuse or prepare the standard reversal flow and verify configuration. BG-AC04 | S-04/05, authority for reversal activation | Salesforce builder Pending | Tax transaction copy active. Reversal template inactive. |
-| S-07 | Run remaining functional and failure checks. BG-AC02–08 | S-05/06, isolated fixtures and scoped authority | QA executor Pending | Recorded demos above passed at their stated scope. Remaining checks NOT RUN. |
+| S-04 | Inspect the reversal template’s filters, inputs, and test-order eligibility. BG-AC04 | Fresh S-01, restricted fixture access, named executor | AI demo operator, Flow Builder and Salesforce CLI | Verified the event, active change-order decision, item mapping and original test tax reference. |
+| S-05 | Confirm isolated reversal fixture and test boundaries. BG-AC04/08 | S-04, access and approval for test effects | AI demo operator, Salesforce CLI | Verified the test-mode provider, original transaction and zero payment or fulfillment records for the tested fixture. |
+| S-06 | Reuse or prepare the standard reversal flow and verify configuration. BG-AC04 | S-04/05, authority for reversal activation | AI demo operator, Flow Builder | Both standard copies active with human approval. |
+| S-07 | Run remaining functional and failure checks. BG-AC02–08 | S-05/06, isolated fixtures and scoped authority | QA executor Pending | One-item cancellation passed in Lightning. Salesforce change order and Stripe test response verified (BG-E07). Further cases NOT RUN. |
 | S-07A | Resolve checkout callers, template applicability and related access gaps. BG-AC07/08 | Fresh S-01 and approved source access | Salesforce admin Pending | Initial inventory assessed. Architecture and role checks Pending. |
 | S-08 | Review implementation and evidence independently. BG-AC01–09 | Frozen criteria, S-06/07/07A evidence | Independent reviewer Pending | NOT RUN. |
 | S-09 | Record human acceptance and release decision, if required. | S-08 and confirmed policy | Human acceptance owner Pending | Pending. |
 
-### Next step: S-04
+### Next step: S-07
 
-- **Accountable owner and executor:** Pending. Assign one Salesforce administrator or one authorized AI executor with recorded model and reasoning.
-- **Tools:** Flow Builder for template inspection and Salesforce CLI for scoped, read-only checks. Recheck access under S-01.
-- **Inputs:** Current story and research, verified test-provider mode, Order Events status, restricted BG-E04 fixture and its original tax reference.
-- **Operation and output:** Record reversal event filters, action inputs, required order or change-order state, and evidence needed to reconcile the provider result.
-- **Check:** BG-AC04. Confirm the source event, exact input fields, original reference and expected amount/currency for the isolated fixture.
-- **Authority and boundary:** Read-only. Confirm authorization for any separate activation or cancellation/return with downstream effects.
-- **Limits and recovery:** Inspect one template and one fixture. Use one alternate read route if needed. Record the exact missing dependency before stopping.
-- **Actual:** Provider test mode, enabled Order Events and the event type were observed. Remaining audit checks **NOT RUN**.
+- **Accountable owner and executor:** Pending. Assign one verifier and record model and reasoning if AI.
+- **Tools:** Browser as the intended servicing user. Salesforce CLI or MCP for backend readback and Stripe test reporting for provider evidence.
+- **Inputs:** Separate isolated multi-item dummy order, verified original tax reference and amounts, test merchant and authority for the cancellation.
+- **Operation and output:** Cancel one taxable line and reconcile the Salesforce change order and provider result.
+- **Check:** BG-AC04. Confirm the reversal matches the original reference, amount and currency. Verify that the uncancelled line retains its tax.
+- **Authority and boundary:** Use only synthetic records and test providers. Verify that the intended user and test effects are authorized.
+- **Limits and recovery:** Submit once. Reconcile Salesforce and provider state before any retry.
+- **Actual:** NOT RUN for partial-order cancellation. The separate one-item cancellation passed (BG-E07).
 
 ## Review and decisions
 
@@ -78,11 +78,12 @@ Historical executor labels below reflect recorded roles. Exact historical AI mod
 |---|---|---|---|
 | AUTH-BG01 scope split | Human requester, system-driven flow scope | Keep manual screens in D04 and settlement ownership in linked stories. | Original scope and criteria retained. |
 | Tax flow activation | Human requester, transaction flow in the demo org | Approved and executed. | BG-E04, automatic dummy-order recording verified. |
+| Tax reversal activation | Human requester, reversal flow in the demo org | Approved and executed. | BG-E07, one-item dummy cancellation and test provider response verified. |
 | Documentation migration | Maker, current guide and prior BG01 revision | Preserve criteria and completed evidence. Keep org identifiers and raw test evidence in restricted project records. | Verify criteria, public links and ClickUp pointers on readback. |
 | Independent implementation review and human acceptance | Pending | Pending | NOT RUN for full BG01. |
 
 ## Blockers and history
 
-- **13 November 2026, BG-AC04:** Reversal filters, inputs and isolated test effects remain to be verified. Resume with S-04 once the executor can retrieve the original dummy transaction evidence. The transaction flow is active in the demo. The reversal template is inactive.
+- **13 November 2026, BG-AC04:** The one-item cancellation passed. Use a separate multi-item test fixture for partial cancellation. Return-triggered reversal and replay/failure behavior remain unverified.
 - **13 November 2026, BG-AC01/08:** A successor’s access to the restricted inventory and evidence has not been verified. The project source owner must provide approved access before successor execution.
 - **Guide upgrade:** Prior guide `56695c71dd26986eea09ebfa23e60826f1ee9359` → current guide `2b915c38dc21b793f9ed4aee9230c613991e79d1`. Applied current execution and verification rules to S-04/07, and the ClickUp link-only format to BG-AC09. The Files inventory is due at story closeout. Existing runtime results carry forward at their recorded scope.
