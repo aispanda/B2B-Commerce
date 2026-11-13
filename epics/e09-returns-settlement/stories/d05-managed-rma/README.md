@@ -26,3 +26,26 @@ As a Customer Care agent, I want to authorize a return, record receipt and close
 Reconciliation for this fixture requires one returned unit, a $12.50 Order Summary total, one posted $12.50 credit memo with $0 balance, one processed $12.50 refund against the simulated payment, $12.50 remaining refundable and zero process exceptions. The Refund page should show **Simulated refund - no money moved**. If the result is ambiguous, inspect the scheduled path and existing return, exception and financial records before retrying.
 
 See [review findings and rechecks](reviews.md).
+
+## Files
+
+### Story and reviews
+
+- [README.md](README.md) — Story, acceptance criteria, and execution steps
+- [reviews.md](reviews.md) — Review findings and verification scope
+
+### Scripts and configuration
+
+- [demo-kit/README.md](demo-kit/README.md) — Setup and execution commands
+- [.gitignore](demo-kit/.gitignore) — Keeps generated fixture state out of Git
+- [layouts.json](demo-kit/layouts.json) — Fields and related lists for demo layouts
+- [merge-layouts.py](demo-kit/merge-layouts.py) — Merges selections into target layouts
+- [run.py](demo-kit/run.py) — Checks prerequisites, creates fixtures, and verifies results
+- [sfdx-project.json](demo-kit/sfdx-project.json) — Salesforce project settings for the demo kit
+- [stages.apex](demo-kit/stages.apex) — Creates order, fulfillment, invoice, and payment records
+
+### Salesforce metadata
+
+- [DemoRmaRefundAdapter.cls](demo-kit/force-app/main/default/classes/DemoRmaRefundAdapter.cls) — Simulates refunds without external calls
+- [DemoRmaRefundAdapter.cls-meta.xml](demo-kit/force-app/main/default/classes/DemoRmaRefundAdapter.cls-meta.xml) — Declares Apex class version and status
+- [DemoRmaRefund.namedCredential-meta.xml](demo-kit/force-app/main/default/namedCredentials/DemoRmaRefund.namedCredential-meta.xml) — Defines the simulator’s placeholder endpoint
