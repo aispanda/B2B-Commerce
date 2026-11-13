@@ -1,6 +1,6 @@
 # D06: Demonstrate even and RMA exchanges
 
-**Migration draft; original task remains authoritative.** Current guide: [migrate/DELIVERY.md at `56695c71dd26986eea09ebfa23e60826f1ee9359`](https://github.com/aispanda/Reusable-Delivery/blob/56695c71dd26986eea09ebfa23e60826f1ee9359/migrate/DELIVERY.md), route MIGRATE. Earlier work and reviews used `9d32dccc738cc544481a6da257c13d438115f122`; the earlier batch baseline was `769a5099cb7412e9f307a38286f8e2adf74448a8`. Preserve those review scopes and the batch write and review boundaries.
+**Migration draft; original task remains authoritative.** Current guide: [migrate/DELIVERY.md at `32eccce86ce07ea0c9fa123402a9c2021a34716d`](https://github.com/aispanda/Reusable-Delivery/blob/32eccce86ce07ea0c9fa123402a9c2021a34716d/migrate/DELIVERY.md), route MIGRATE. The preceding guide was `56695c71dd26986eea09ebfa23e60826f1ee9359`. Earlier work and reviews used `9d32dccc738cc544481a6da257c13d438115f122`; the earlier batch baseline was `769a5099cb7412e9f307a38286f8e2adf74448a8`. Preserve those review scopes and the batch write and review boundaries.
 
 **Revision / as of:** Published partial migration draft, 12 November 2026 UTC. Documentation: limited independent review and repair recheck passed. Full source-preservation acceptance remains pending. Implementation: blocked. Scenario tests: NOT RUN. Human acceptance: required by the existing execution record; decision Pending. Accountable implementation owner: Pending. Origin: original task and execution records, restricted mapping Pending. ClickUp synchronization: Pending — explicitly deferred.
 
@@ -98,3 +98,13 @@ A fresh independent reviewer explicitly dispatched as **gpt-6.1-terra / xhigh**,
 - **Action and setup state:** The service status read returned HTTP 200 and reports both exchange actions not installed. The initial Order Management setup reports not executed. The response does not identify the Growth tier. The described automated setup includes shared order-related security/page changes; its high-scale task requires zero existing Order records among other readiness gates. A current read-only count returned three visible Order records. This is a conflict for that described automated route, not proof that every manual path is unsupported. No setup was run and no permissions or pages were changed.
 - **Variant candidate check:** Read-only queries returned six visible `ProductAttribute` variant relationships and 85 active `PricebookEntry` records, each query complete within its 200-record limit. Joining by parent, price book and listed unit price yielded zero groups of two distinct variants. This is a scoped listed-price observation, not a test of effective buyer pricing, currency, product eligibility, or access. Other equal-price groups contained no matching same-parent pair in this read. No catalog prices were changed.
 - **Next action:** Establish an authoritative supported setup path for an existing-order B2B org that respects shared access boundaries; obtain Growth entitlement evidence and a dedicated same-price fictional variant pair with current effective-price proof. Separately establish a reserved fulfilled line and safe RMA settlement. Continue with configuration and tests only when these conditions and existing authority are met. AC-01–03 remain NOT RUN.
+
+### Guide update — 13 November 2026
+
+The guide adds a Files index covering tracked story-folder files, with descriptions of at most eight words each. The existing evidence, acceptance criteria and unrun checks remain unchanged. Refresh this index when tracked files change; publication, runtime and acceptance claims retain their recorded scope.
+
+## Files
+
+**Story**
+
+- [README.md](./README.md) — Criteria, execution, evidence and current gaps.
