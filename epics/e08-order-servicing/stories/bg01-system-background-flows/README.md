@@ -1,5 +1,7 @@
 # BG01: Prepare system-driven Commerce and Order Management flows
 
+**Managed RMA demo evidence (13 November 2026).** The one-unit receipt-first scenario passed in Lightning with a posted credit memo and a processed simulated refund. Use the [D05 execution kit](../../../e09-returns-settlement/stories/d05-managed-rma/demo-kit/) to reproduce it in an eligible isolated org. This result covers the RMA demo slice. The broader background-flow work remains open.
+
 Guide: [migrate/DELIVERY.md](https://github.com/aispanda/Reusable-Delivery/blob/56695c71dd26986eea09ebfa23e60826f1ee9359/migrate/DELIVERY.md) @ `56695c71dd26986eea09ebfa23e60826f1ee9359`; route **NEW**, using its separate-new-scope rule. Revision 1.1, 12 November 2026. Public documentation only. Implementation, transactional tests and independent implementation verification: **NOT RUN**. Human acceptance: **Pending**.
 
 Origin: AUTH-BG01, the user's verified instruction to create a separate story for system-driven/autolaunched flows using the reusable delivery model. Accountable owner: **Pending — no named assignment supplied**. This new story has separate documentation authority; it does not change the older portfolio migration batch's restrictions for existing items.

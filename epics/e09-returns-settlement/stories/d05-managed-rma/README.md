@@ -1,5 +1,7 @@
 # D05: Process a fulfilled return with managed RMA
 
+**Demo handoff (13 November 2026).** The one-unit managed RMA passed through Lightning with a posted credit memo and a processed simulated refund. ClickUp is closed for this demo scope. The [execution kit](demo-kit/) contains the fixture commands, layout merge and reconciliation checks. Partial receipt, rejection, fees, store credit and live payments remain outside the passing run. The historical migration snapshot below retains its original scope.
+
 Guide: [migrate/DELIVERY.md](https://github.com/aispanda/Reusable-Delivery/blob/9d32dccc738cc544481a6da257c13d438115f122/migrate/DELIVERY.md) @ `9d32dccc738cc544481a6da257c13d438115f122`; route **MIGRATE**.
 
 Revision/status/as-of: **0.3 published partial migration draft, 12 November 2026 UTC**. Prior revision 0.2 local documentation review and repair recheck passed at their recorded scope; current revision 0.3 limited local consolidation review and repair recheck Pass; full migration-draft acceptance blocked; implementation unchanged; AC-01–AC-03 NOT RUN; delivery blocked by readiness. Original ClickUp revision 0.1 remains current and authoritative. Sync: **Pending — deferred by instruction** under [BATCH.md](https://github.com/aispanda/B2B-Commerce/blob/c72d64e0b45376048bb3d1b5f9579c76224e04c8/BATCH.md). This draft does not complete migration or authorize implementation.

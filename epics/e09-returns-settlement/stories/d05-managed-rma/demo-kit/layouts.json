@@ -1,0 +1,218 @@
+{
+  "ReturnOrderLineItem-Return Order Line Item Layout": {
+    "fields": {
+      "QuantityExpected": "Readonly",
+      "QuantityReceived": "Edit",
+      "QuantityRejected": "Edit",
+      "ReasonForRejection": "Edit",
+      "OrderItemSummaryId": "Readonly",
+      "OrderItemId": "Readonly",
+      "ChangeOrderItemId": "Readonly",
+      "Type": "Readonly",
+      "TypeCode": "Readonly",
+      "ReasonForChangeText": "Readonly",
+      "UnitPrice": "Readonly",
+      "GrossUnitPrice": "Readonly",
+      "TotalLineAmount": "Readonly",
+      "TotalLineTaxAmount": "Readonly",
+      "TotalAdjustmentAmount": "Readonly",
+      "TotalAdjustmentTaxAmount": "Readonly",
+      "TotalLineAmountWithTax": "Readonly",
+      "TotalAdjustmentAmountWithTax": "Readonly",
+      "TotalPrice": "Readonly",
+      "TotalTaxAmount": "Readonly",
+      "TotalAmount": "Readonly",
+      "CreatedDate": "Readonly",
+      "LastModifiedDate": "Readonly"
+    },
+    "relatedLists": {}
+  },
+  "ReturnOrder-Return Order Layout": {
+    "fields": {
+      "OrderSummaryId": "Readonly",
+      "OrderId": "Readonly",
+      "StatusCategory": "Readonly",
+      "LifeCycleType": "Readonly",
+      "GrandTotalAmount": "Readonly",
+      "TotalTaxAmount": "Readonly",
+      "ExpirationDate": "Readonly",
+      "TotalProductAmount": "Readonly",
+      "TotalProductTaxAmount": "Readonly",
+      "TotalProductAdjustAmount": "Readonly",
+      "TotalProductAdjustTaxAmount": "Readonly",
+      "TotalDeliveryAmount": "Readonly",
+      "TotalDeliveryTaxAmount": "Readonly",
+      "TotalDeliveryAdjustAmount": "Readonly",
+      "TotalDeliveryAdjustTaxAmount": "Readonly",
+      "TotalFeeAmount": "Readonly",
+      "TotalFeeTaxAmount": "Readonly",
+      "TotalFeeAdjustAmount": "Readonly",
+      "TotalFeeAdjustTaxAmount": "Readonly",
+      "TotalAmount": "Readonly",
+      "CreatedDate": "Readonly",
+      "LastModifiedDate": "Readonly"
+    },
+    "relatedLists": {
+      "ReturnOrderLineItems": [
+        "Name",
+        "Product2",
+        "QuantityExpected",
+        "QuantityReceived",
+        "QuantityRejected",
+        "QuantityReturned",
+        "ReasonForReturn",
+        "TotalAmount"
+      ],
+      "ProcessExceptions": [
+        "Name",
+        "Status",
+        "Severity",
+        "CreatedDate"
+      ]
+    }
+  },
+  "OrderItemSummary-Order Product Summary Layout": {
+    "fields": {
+      "StockKeepingUnit": "Readonly",
+      "QuantityAvailableToReturn": "Readonly",
+      "QuantityAvailableToCancel": "Readonly",
+      "QuantityAvailableToFulfill": "Readonly",
+      "QuantityAvailableToReship": "Readonly",
+      "QuantityNetOrdered": "Readonly",
+      "QuantityShipped": "Readonly",
+      "QuantityReshipped": "Readonly",
+      "AdjustedLineAmtWithTax": "Readonly",
+      "TotalAmtWithTax": "Readonly",
+      "TotalLineAmountWithTax": "Readonly"
+    },
+    "relatedLists": {}
+  },
+  "OrderPaymentSummary-Order Payment Summary Layout": {
+    "fields": {
+      "PaymentCreditedAmount": "Readonly",
+      "ReservedBalanceTotalAmount": "Readonly"
+    },
+    "relatedLists": {
+      "Refunds": [
+        "Name",
+        "Amount",
+        "Status",
+        "SfResultCode",
+        "ProcessingMode",
+        "EffectiveDate",
+        "GatewayResultCodeDescription"
+      ]
+    }
+  },
+  "CreditMemo-Credit Memo Layout": {
+    "fields": {
+      "Balance": "Readonly",
+      "TotalCreditAmountApplied": "Readonly",
+      "TotalCreditAmountUnapplied": "Readonly",
+      "NetRefundsApplied": "Readonly",
+      "NetCreditsApplied": "Readonly",
+      "TotalChargeTaxAmount": "Readonly",
+      "TotalAdjustmentTaxAmount": "Readonly",
+      "TotalChargeAmountWithTax": "Readonly",
+      "TotalAdjustmentAmountWithTax": "Readonly",
+      "Category": "Readonly",
+      "ReasonCode": "Readonly",
+      "CreationMode": "Readonly"
+    },
+    "relatedLists": {
+      "CreditMemoLines": [
+        "Name",
+        "Type",
+        "ChargeAmount",
+        "TaxAmount",
+        "AdjustmentAmount",
+        "LineAmount"
+      ],
+      "ProcessExceptions": [
+        "Name",
+        "Status",
+        "Severity",
+        "CreatedDate"
+      ]
+    }
+  },
+  "Payment-Payment Layout": {
+    "fields": {
+      "TotalApplied": "Readonly",
+      "TotalUnapplied": "Readonly",
+      "NetApplied": "Readonly",
+      "TotalPaymentCreditApplied": "Readonly",
+      "TotalPaymentCreditUnapplied": "Readonly",
+      "NetPaymentCreditApplied": "Readonly"
+    },
+    "relatedLists": {}
+  },
+  "OrderSummary-Order Summary Layout": {
+    "fields": {
+      "OrderLifeCycleType": "Readonly",
+      "OperationInProgress": "Readonly",
+      "ActiveProcessExceptionCount": "Readonly",
+      "TotalAdjustedFeeAmount": "Readonly",
+      "TotalAdjustedFeeTaxAmount": "Readonly"
+    },
+    "relatedLists": {}
+  },
+  "CreditMemoLine-Credit Memo Line Layout": {
+    "fields": {
+      "Status": "Readonly",
+      "LineAmount": "Readonly",
+      "GrossUnitPrice": "Readonly",
+      "ChargeTaxAmount": "Readonly",
+      "ChargeAmountWithTax": "Readonly",
+      "AdjustmentTaxAmount": "Readonly",
+      "AdjustmentAmountWithTax": "Readonly"
+    },
+    "relatedLists": {}
+  },
+  "OrderItem-Order Product Layout": {
+    "fields": {
+      "OriginalOrderItemId": "Readonly",
+      "Type": "Readonly",
+      "TotalLineAmount": "Readonly",
+      "TotalTaxAmount": "Readonly",
+      "RelatedOrderItemId": "Readonly",
+      "TypeCode": "Readonly",
+      "TotalLineTaxAmount": "Readonly",
+      "AdjustedLineAmtWithTax": "Readonly"
+    },
+    "relatedLists": {}
+  },
+  "Invoice-Invoice Layout": {
+    "fields": {
+      "Balance": "Readonly"
+    },
+    "relatedLists": {
+      "PaymentLinesInvoice": [
+        "Name",
+        "Amount",
+        "AppliedDate",
+        "Type"
+      ]
+    }
+  },
+  "Order-Commerce Order Layout": {
+    "fields": {
+      "OriginalOrderId": "Readonly",
+      "RelatedOrderType": "Readonly",
+      "TotalTaxAmount": "Readonly",
+      "RelatedOrderId": "Readonly",
+      "GrandTotalAmount": "Readonly"
+    },
+    "relatedLists": {}
+  },
+  "Order-Order Layout": {
+    "fields": {
+      "OriginalOrderId": "Readonly",
+      "RelatedOrderType": "Readonly",
+      "TotalTaxAmount": "Readonly",
+      "RelatedOrderId": "Readonly",
+      "GrandTotalAmount": "Readonly"
+    },
+    "relatedLists": {}
+  }
+}
