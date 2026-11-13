@@ -139,3 +139,25 @@ Executor: sole assigned E11 writer; exact actual model/reasoning metadata not ex
 The recorded guest and demo-buyer checks exercised the existing Salesforce storefront. The local headless gallery has a recorded file hash. An authoritative React repository revision and deployment receipt remain unverified.
 
 The scoped deployment inventory did not establish a service for this story. Some project inventories were unavailable, and the task connector's daily limit prevented a fresh original-source read. To complete the trace, obtain the deployment service or URL, the deployed image digest, and a build record that ties it to an immutable repository commit. Runtime acceptance for the headless implementation remains pending.
+
+## Files
+
+- Index checked on 13 November 2026 against the tracked story folder.
+- Files-section alignment: [MIGRATE guide](https://github.com/aispanda/Reusable-Delivery/blob/32eccce86ce07ea0c9fa123402a9c2021a34716d/migrate/DELIVERY.md) at `32eccce86ce07ea0c9fa123402a9c2021a34716d`; [D05 worked example](https://github.com/aispanda/B2B-Commerce/blob/aec0aee7d1443864dbd017d2cba61dcda405fca1/epics/e09-returns-settlement/stories/d05-managed-rma/README.md#files).
+- This bounded update adopts the complete, grouped file index and relative-link checks. The earlier full migration guide remains `9d32dccc738cc544481a6da257c13d438115f122`. Existing criteria, execution IDs, completed work and evidence limits are retained; no runtime checks were rerun.
+- [Google Sheets](https://docs.google.com/spreadsheets/d/1PmDfzK0RjDrr1h92JzjID6AMHUQmnHO6/edit) remains the live page register. The worksheet and infographic below are dated historical snapshots.
+- ClickUp synchronization remains Pending: the connector's daily limit prevented a fresh source read on 13 November 2026. No ClickUp description or status was changed.
+
+### Story
+
+- [README.md](README.md) — Story, criteria, evidence limits, and execution history
+
+### Worksheet snapshot
+
+- [ABCMed-page-register-SNAPSHOT-2026-11-12_141222_EST.xlsm](snapshots/ABCMed-page-register-SNAPSHOT-2026-11-12_141222_EST.xlsm) — Frozen worksheet; live register remains in Google Sheets
+
+### Delivery-process infographic
+
+- [README.md](snapshots/infographic-2026-11-12/README.md) — Source narrative, status snapshot, and production notes
+- [abcmed-delivery-process.png](snapshots/infographic-2026-11-12/abcmed-delivery-process.png) — Visual explanation of process, roles, and benefits
+- [prompt.txt](snapshots/infographic-2026-11-12/prompt.txt) — Exact infographic generation prompt
