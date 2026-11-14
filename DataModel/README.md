@@ -38,3 +38,5 @@ Check both viewing modes, journey navigation, search (including no results), def
 GitHub Pages uses **Deploy from a branch → main → / (root)**. Keep `.nojekyll` at the repository root. Commit and push changes under `DataModel/`; no workflow or package manager is needed. After GitHub finishes its Pages deployment, check the live guide and the changed interaction, then share its URL. For future independent interactive pages, prefer one zero-build HTML file and link to it; add files or dependencies only when the feature needs them.
 
 Backups and review transcripts stay local. Git commits are the portable history. The approved style was restored and refined with one bounded Claude Opus 5.5 review on 2026-11-13; no AI service is required at runtime.
+
+The example contact, address and ABC brand are fictionalized. `ABC_PO_Confirmation__c` is an anonymized placeholder, not a verified Salesforce API name.
