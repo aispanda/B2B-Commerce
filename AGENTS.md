@@ -1,6 +1,6 @@
 # Lean website maintenance
 
-- Read `Data Model/README.md` for context, sources, preview and deployment steps.
+- Read `DataModel/README.md` for context, sources, preview and deployment steps.
 - Preserve existing documents and pages; do not reorganize or rewrite them unnecessarily.
 - Prefer self-contained zero-build HTML/CDN pages and the minimum possible files.
 - Do not add unsolicited boilerplate, dashboards, frameworks or dependencies.

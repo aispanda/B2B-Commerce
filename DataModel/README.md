@@ -1,6 +1,6 @@
 # Commerce object model guide
 
-[Open the live guide](https://aispanda.github.io/B2B-Commerce/Data%20Model/) · [Buyer access diagram](https://aispanda.github.io/B2B-Commerce/Data%20Model/buyer-access-erd.html)
+[Open the live guide](https://aispanda.github.io/B2B-Commerce/DataModel/) · [Buyer access diagram](https://aispanda.github.io/B2B-Commerce/DataModel/buyer-access-erd.html)
 
 ## Purpose and accepted design
 
@@ -35,6 +35,6 @@ Check both viewing modes, journey navigation, search (including no results), def
 
 ## Deploy
 
-GitHub Pages uses **Deploy from a branch → main → / (root)**. Keep `.nojekyll` at the repository root. Commit and push changes under `Data Model/`; no workflow or package manager is needed. After GitHub finishes its Pages deployment, check the live guide and the changed interaction, then share its URL. For future independent interactive pages, prefer one zero-build HTML file and link to it; add files or dependencies only when the feature needs them.
+GitHub Pages uses **Deploy from a branch → main → / (root)**. Keep `.nojekyll` at the repository root. Commit and push changes under `DataModel/`; no workflow or package manager is needed. After GitHub finishes its Pages deployment, check the live guide and the changed interaction, then share its URL. For future independent interactive pages, prefer one zero-build HTML file and link to it; add files or dependencies only when the feature needs them.
 
 Backups and review transcripts stay local. Git commits are the portable history. The approved style was restored and refined with one bounded Claude Opus 5.5 review on 2026-11-13; no AI service is required at runtime.

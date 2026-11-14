@@ -37,6 +37,6 @@ E12 Autonomous storefront delivery kit and W05 remain deferred. No folder or imp
 
 ## Interactive data model
 
-[Open the Commerce object model guide](https://aispanda.github.io/B2B-Commerce/Data%20Model/) — journey stories, object definitions and interactive relationship diagrams.
+[Open the Commerce object model guide](https://aispanda.github.io/B2B-Commerce/DataModel/) — journey stories, object definitions and interactive relationship diagrams.
 
-The editable page, structured source data and regeneration utilities are in [Data Model](Data%20Model/). See its [maintenance guide](Data%20Model/README.md) for a tool-independent handoff. The existing portfolio documents above retain their stated status and authority.
+The editable page, structured source data and regeneration utilities are in [Data Model](DataModel/). See its [maintenance guide](DataModel/README.md) for a tool-independent handoff. The existing portfolio documents above retain their stated status and authority.
