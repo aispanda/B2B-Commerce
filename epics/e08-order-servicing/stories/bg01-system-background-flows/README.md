@@ -1,5 +1,8 @@
 # BG01: Prepare system-driven Commerce and Order Management flows
 
+**POC scope decision:** Duplicate-event replay and provider-timeout recovery checks for tax reversals and refunds are excluded from this POC by the requester. References below to these checks are retained as broader requirements and do not block POC completion. Next, verify intended-user access and remaining applicable return and refund scenarios.
+
+
 Guide: [migrate/DELIVERY.md](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/migrate/DELIVERY.md) @ `2b915c38dc21b793f9ed4aee9230c613991e79d1`. Route **MIGRATE** for this upgrade. Original route **NEW**.
 Revision/status/as-of: **1.4, 13 November 2026**. Documentation updated. Existing automation reused for order summaries, exceptions and settlement. Tax recording and three dummy reversal scenarios verified. Broader tests and human acceptance remain open.
 Origin: **AUTH-BG01**, the human instruction to track system-driven flows separately. Original inventory and runtime evidence are retained in restricted project records.
