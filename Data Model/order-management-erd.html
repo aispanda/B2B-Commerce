@@ -1,0 +1,184 @@
+<section id="e08-order-model">
+  <h1>Salesforce Order Management ERD</h1>
+  <div class="erd-controls">
+    <label class="form-label" for="e08-erd-view">View</label>
+    <select class="form-select" id="e08-erd-view">
+      <option value="overview">Hospital order overview</option>
+      <option value="order">Orders and shipments</option>
+      <option value="return">Managed return and order changes</option>
+      <option value="finance">Invoices, payments, credits, and refunds</option>
+      <option value="tax">Tax and reversals</option>
+    </select>
+  </div>
+  <div id="e08-erd-content" aria-live="polite"></div>
+</section>
+<style>
+  #e08-order-model .erd-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .55em; margin-block: .75em 1em; }
+  #e08-order-model .erd-controls label { margin: 0; }
+  #e08-order-model .erd-controls select { width: auto; max-width: 100%; }
+  #e08-order-model .erd-rows { display: grid; gap: .7em; margin: 0; padding: 0; list-style: none; }
+  #e08-order-model .erd-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(5em, .85fr) minmax(0, 1fr); align-items: stretch; gap: .4em; }
+  #e08-order-model .erd-entity { padding: .48em .55em; border-inline-start: 2px solid var(--viz-series-1, currentColor); background: var(--muted); overflow-wrap: anywhere; }
+  #e08-order-model .erd-entity strong { font-weight: 500; }
+  #e08-order-model .erd-entity span, #e08-order-model .erd-entity code { display: block; }
+  #e08-order-model .erd-edge { display: grid; align-content: center; text-align: center; overflow-wrap: anywhere; }
+  #e08-order-model .erd-edge svg { display: block; width: 100%; height: 12px; color: var(--muted-foreground); }
+  #e08-order-model .erd-edge .erd-dashed { stroke-dasharray: 5 4; }
+  #e08-order-model .erd-note { margin-block-start: .9em; }
+  @media (max-width: 460px) {
+    #e08-order-model .erd-row { grid-template-columns: minmax(0, 1fr); gap: .18em; }
+    #e08-order-model .erd-edge { grid-template-columns: 2em 1fr; align-items: center; text-align: start; gap: .4em; }
+  }
+</style>
+<script>
+(() => {
+  const root = document.getElementById('e08-order-model');
+  const select = root.querySelector('select');
+  const content = root.querySelector('#e08-erd-content');
+  const entities = {
+    account: ['Account', 'Account', 'The hospital buying the boxes'],
+    order: ['Order', 'Order', 'Original purchase or a later change order'],
+    orderItem: ['Order Product', 'OrderItem', 'Product and quantity on an order or change'],
+    summary: ['Order Summary', 'OrderSummary', 'The order as it stands now'],
+    product: ['Order Product Summary', 'OrderItemSummary', 'Current quantities for a product line'],
+    fulfillment: ['Fulfillment Order', 'FulfillmentOrder', 'Work assigned to a fulfillment location'],
+    fulfillmentLine: ['Fulfillment Order Product', 'FulfillmentOrderLineItem', 'Quantity assigned for a product'],
+    shipment: ['Shipment', 'Shipment', 'A package or delivery with tracking'],
+    shipmentItem: ['Shipment Item', 'ShipmentItem', 'Product quantity in that shipment'],
+    support: ['Case', 'Case', 'Optional record of the buyer’s call'],
+    return: ['Return Order', 'ReturnOrder', 'The managed return authorization'],
+    returnLine: ['Return Order Line Item', 'ReturnOrderLineItem', 'Expected, received, rejected, and returned quantities'],
+    change: ['Order Product Summary Change', 'OrderItemSummaryChange', 'The quantity or value that changed'],
+    changeLine: ['Change Order Product', 'OrderItem', 'The line on the change order'],
+    invoice: ['Invoice', 'Invoice', 'What the hospital was billed'],
+    invoiceLine: ['Invoice Line', 'InvoiceLine', 'The charges that make up the invoice'],
+    paymentSummary: ['Order Payment Summary', 'OrderPaymentSummary', 'What was captured, refunded, or still refundable'],
+    payment: ['Payment', 'Payment', 'Money received from the hospital'],
+    paymentApplication: ['Payment Line Invoice', 'PaymentLineInvoice', 'How much of a payment was applied to an invoice'],
+    credit: ['Credit Memo', 'CreditMemo', 'The amount credited for the accepted return'],
+    creditLine: ['Credit Memo Line', 'CreditMemoLine', 'The product or charge being credited'],
+    creditApplication: ['Credit Memo Invoice Application', 'CreditMemoInvApplication', 'How much credit was applied to an invoice'],
+    refund: ['Refund', 'Refund', 'Money sent back and its processing status'],
+    refundLine: ['Refund Line Payment', 'RefundLinePayment', 'How much of a refund came from a payment'],
+    gateway: ['Payment Gateway Log', 'PaymentGatewayLog', 'The gateway request and result'],
+    tax: ['Order Product Tax Line Item', 'OrderItemTaxLineItem', 'Original or adjusting tax amount on an order line'],
+    taxSummary: ['Order Product Tax Line Item Summary', 'OrderItemTaxLineItemSummary', 'Tax summary and saved provider reference'],
+    providerTax: ['Stripe Tax Transaction', 'External record', 'Original provider transaction'],
+    providerReversal: ['Stripe Tax Reversal', 'External record', 'Tax adjustment linked to the original transaction']
+  };
+
+  // The left entity is the referenced record. The right entity holds the relationship field.
+  const views = {
+    overview: [
+      ['order', 'summary', '2 boxes ordered'],
+      ['summary', 'shipment', '2 boxes shipped'],
+      ['summary', 'invoice', '$200 billed'],
+      ['invoice', 'payment', '$200 paid'],
+      ['summary', 'return', '2 authorized · 1 accepted'],
+      ['return', 'credit', '$100 credit posted'],
+      ['credit', 'refund', '$100 refund processed'],
+      ['providerTax', 'providerReversal', 'Tax adjusted for one box, when applicable']
+    ],
+    order: [
+      ['account', 'order', 'AccountId'],
+      ['order', 'orderItem', 'OrderId'],
+      ['order', 'summary', 'OriginalOrderId', false, '0..1'],
+      ['summary', 'product', 'OrderSummaryId'],
+      ['orderItem', 'product', 'OriginalOrderItemId', false, '0..1'],
+      ['summary', 'fulfillment', 'OrderSummaryId'],
+      ['fulfillment', 'fulfillmentLine', 'FulfillmentOrderId'],
+      ['product', 'fulfillmentLine', 'OrderItemSummaryId'],
+      ['fulfillment', 'shipment', 'FulfillmentOrderId'],
+      ['shipment', 'shipmentItem', 'ShipmentId'],
+      ['fulfillmentLine', 'shipmentItem', 'FulfillmentOrderLineItemId']
+    ],
+    return: [
+      ['support', 'return', 'Optional intake handoff', true],
+      ['summary', 'return', 'OrderSummaryId'],
+      ['return', 'returnLine', 'ReturnOrderId'],
+      ['product', 'returnLine', 'OrderItemSummaryId'],
+      ['product', 'change', 'OrderItemSummaryId'],
+      ['order', 'changeLine', 'OrderId · change-order record'],
+      ['changeLine', 'returnLine', 'ChangeOrderItemId'],
+      ['changeLine', 'change', 'ChangeOrderItemId'],
+      ['return', 'credit', 'Settlement after closure', true]
+    ],
+    finance: [
+      ['summary', 'invoice', 'ReferenceEntityId'],
+      ['invoice', 'invoiceLine', 'InvoiceId'],
+      ['summary', 'paymentSummary', 'OrderSummaryId'],
+      ['paymentSummary', 'payment', 'OrderPaymentSummaryId'],
+      ['invoice', 'paymentApplication', 'InvoiceId'],
+      ['payment', 'paymentApplication', 'PaymentId'],
+      ['summary', 'credit', 'ReferenceEntityId'],
+      ['credit', 'creditLine', 'CreditMemoId'],
+      ['invoice', 'creditApplication', 'InvoiceId'],
+      ['credit', 'creditApplication', 'CreditMemoId'],
+      ['paymentSummary', 'refund', 'OrderPaymentSummaryId'],
+      ['refund', 'refundLine', 'RefundId'],
+      ['payment', 'refundLine', 'PaymentId'],
+      ['paymentSummary', 'gateway', 'OrderPaymentSummaryId']
+    ],
+    tax: [
+      ['orderItem', 'tax', 'OrderItemId'],
+      ['product', 'taxSummary', 'OrderItemSummaryId'],
+      ['tax', 'taxSummary', 'OriginalOrderItemTaxLineItemId'],
+      ['tax', 'tax', 'RelatedTaxLineItemId · original → adjustment'],
+      ['taxSummary', 'providerTax', 'TransactionReferenceNumber · external link', true],
+      ['providerTax', 'providerReversal', 'reversal.original_transaction · Stripe']
+    ]
+  };
+
+  const notes = {
+    overview: 'Illustrative paid return, using round numbers. The arrows show the sequence.',
+    order: 'Read 1 → 0..* as “one left record can have zero or more right records.” The label names the field on the right.',
+    return: 'Submitted → Closed. Expected 2 · received 1 · rejected 0 · credited 1. Close once the second box is no longer coming and policy allows it.',
+    finance: 'If the invoice is unpaid, applying the credit reduces the balance. For a paid return, the Refund shows whether money went back.',
+    tax: 'The tax reversal and the customer refund have separate records and statuses.'
+  };
+
+  const make = (tag, className, value) => {
+    const element = document.createElement(tag);
+    element.className = className;
+    if (value) element.textContent = value;
+    return element;
+  };
+
+  function entity(key, overview) {
+    const [label, api, purpose] = entities[key];
+    const element = make('div', 'erd-entity');
+    element.append(make('strong', '', label));
+    if (!overview) element.append(make('code', 'text-small', api));
+    element.append(make('span', 'text-small', purpose));
+    return element;
+  }
+
+  function render() {
+    const view = select.value;
+    const overview = view === 'overview';
+    const list = make('ul', 'erd-rows');
+    for (const [from, to, label, handoff, maximum = '0..*'] of views[view]) {
+      const row = make('li', 'erd-row');
+      const edge = make('div', 'erd-edge');
+      edge.innerHTML = '<svg aria-hidden="true" viewBox="0 0 100 12" preserveAspectRatio="none"><path d="M1 6H98 M91 2L98 6 91 10" fill="none" stroke="currentColor" vector-effect="non-scaling-stroke"/></svg>';
+      if (handoff) edge.querySelector('path').classList.add('erd-dashed');
+      const cardinality = overview || handoff ? '' : `1 → ${maximum} · `;
+      edge.append(make('span', 'text-small', cardinality + label));
+      row.append(entity(from, overview), edge, entity(to, overview));
+      list.append(row);
+    }
+    content.replaceChildren(list, make('p', 'erd-note text-small', notes[view]));
+  }
+
+  select.addEventListener('change', () => {
+    render();
+    window.openai?.setWidgetState?.({ modelContent: { view: select.value } })?.catch(() => {});
+  });
+  const restore = (state) => {
+    if (Object.hasOwn(views, state?.modelContent?.view)) select.value = state.modelContent.view;
+    render();
+  };
+  window.addEventListener('openai:set_globals', (event) => restore(event.detail?.globals?.widgetState));
+  restore(window.openai?.widgetState);
+})();
+</script>
