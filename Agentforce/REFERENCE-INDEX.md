@@ -84,3 +84,12 @@ Skills reside under `$CODEX_HOME/skills` (commonly `~/.codex/skills`); read the 
 
 When the local skill catalog differs, use the current session catalog and discovered skill location. Never store credentials or tokens in this index.
 
+
+## Routing, action and retrieval controls
+
+- [Knowledge field selection](https://help.salesforce.com/s/articleView?id=ai.data_library_select_fields.htm&type=5)
+- [Action chaining and dependencies](https://developer.salesforce.com/docs/ai/agentforce/guide/ascript-patterns-action-chaining.html)
+- [Conditional availability filtering](https://developer.salesforce.com/docs/ai/agentforce/guide/ascript-patterns-filtering.html)
+- [Required subagent workflows](https://developer.salesforce.com/docs/ai/agentforce/guide/ascript-patterns-required-flow.html)
+- [Reasoning actions and tools](https://developer.salesforce.com/docs/ai/agentforce/guide/ascript-ref-tools.html)
+- [Agent action definitions](https://developer.salesforce.com/docs/ai/agentforce/guide/ascript-ref-actions.html)
