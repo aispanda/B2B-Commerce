@@ -42,6 +42,58 @@ Single-file, customer-neutral grounding for people and AI agents designing Sales
 
 This file generalizes the sources: customer and competitor names, org URLs, record IDs, order numbers, sample prices, test results and internal operational observations were removed. Row references (`A:Req 57–77`, `B:Scn 9`) let an authorized reader trace back.
 
+### 0.4 Writing client user stories
+
+#### Story
+
+As a **[specific role]**, I want **[functionality]** so that **[business outcome]**.
+
+#### Evidence and decisions
+
+- Cite supporting client evidence.
+- Treat generic requirements as candidates.
+- Validate generic rules with clients.
+- Verify platform capabilities and configuration.
+- Flag missing or conflicting facts.
+- Seek decisions; identify decision owners.
+- Never invent targets or policies.
+
+#### Scope and sizing
+
+- Prefer one story per functionality.
+- Group configuration, design and implementation.
+- Include relevant integrations and handovers.
+- Team estimates using Fibonacci points.
+- Split at 13 points or above.
+- Re-estimate each testable split.
+
+#### Acceptance criteria (Gherkin)
+
+- Use Given, When, Then scenarios.
+- Use each actor's business language.
+- Include other roles and handovers.
+- Check observable outcomes across systems.
+- Cover relevant failures and exceptions.
+- Use platform knowledge; avoid jargon.
+
+#### Each story's open items
+
+- Questions: owner and next step.
+- Assumptions: validate with the client.
+- Risks: impact and mitigation.
+- Decisions: outcome, owner and date.
+- Record story status and priority.
+
+**Synthetic example**
+
+As a knowledge author, I want to publish an approved article so that buyers can find current information.
+
+Given a reviewer approves an article  
+When the author publishes the article  
+Then buyers can read the article
+
+References: [Cucumber Gherkin](https://cucumber.io/docs/gherkin/reference/) · [Scrum Guide](https://scrumguides.org/scrum-guide.html) · [Splitting stories](https://www.scrum.org/resources/blog/slicing-splitting-user-stories).
+
 ---
 
 ## 1. Personas (candidate)
