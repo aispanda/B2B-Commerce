@@ -35,8 +35,8 @@ Single-file, customer-neutral grounding for people and AI agents designing Sales
 
 | Key | Source | Use / caution |
 |---|---|---|
-| SRC-A | [Agentforce workbook](https://docs.google.com/spreadsheets/d/1_qaxZ0e2-dJEHFQH5eOyza9vYak1UBux/edit) — Requirements (rows 2–224), Coverage Matrix, Subagents, Actions, Knowledge Article Plan, References | Candidate jobs and mappings. **Access may be restricted and the workbook contains customer- and org-specific material**; open only when authorized; do not ingest wholesale into public or cross-customer knowledge bases. |
-| SRC-B | [Journey and flow inventory](https://docs.google.com/spreadsheets/d/1nXyqEq3NlDQK2LpGr0ly8qZCiu3MxmEpOkMoc2DyYOo/edit) — Flow templates, Scenarios, Object model, Tracing guide, Journey stages/objects/placements, Object relationships | Process steps, template leads, object landmarks. **Access may be restricted; includes org observations and demo data that are not portable evidence.** |
+| SRC-A | Agentforce workbook — Requirements (rows 2–224), Coverage Matrix, Subagents, Actions, Knowledge Article Plan, References | Candidate jobs and mappings. **Access may be restricted and the workbook contains customer- and org-specific material**; open only when authorized; do not ingest wholesale into public or cross-customer knowledge bases. |
+| SRC-B | Journey and flow inventory — Flow templates, Scenarios, Object model, Tracing guide, Journey stages/objects/placements, Object relationships | Process steps, template leads, object landmarks. **Access may be restricted; includes org observations and demo data that are not portable evidence.** |
 | SRC-C | Salesforce documentation linked inline (`SF`) | Authoritative starting point; check release, edition, license and product scope. Some pages require sign-in or may be temporarily unavailable. |
 | SRC-D | [Published object guide](https://github.com/aispanda/B2B-Commerce/tree/main/DataModel) | Visual object relationships; project-specific examples are not universal. |
 
