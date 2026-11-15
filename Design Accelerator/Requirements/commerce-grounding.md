@@ -67,6 +67,67 @@ As a **[specific role]**, I want **[functionality]** so that **[business outcome
 - Split at 13 points or above.
 - Re-estimate each testable split.
 
+#### Story-point guide
+
+Points compare work with the team's reference stories; they are not hours. The scale below is a starting guide, not a universal Salesforce scale.
+
+| Points | Relative size |
+|---|---|
+| 1 | Small, complete reference story. |
+| 2 | Slightly larger, familiar work. |
+| 3 | Several parts, few unknowns. |
+| 5 | More work, dependencies or unknowns. |
+| 8 | Large, complex or uncertain. |
+| 13+ | Split and re-estimate. |
+
+- Include design, build, testing and deployment.
+- Consider configuration, flows and data.
+- Consider custom pages, code and security.
+- Include integrations, migration and dependencies.
+
+Provisional one-point example: show an existing product unit on a product page, including testing and deployment. Confirm its size with the team. No work type determines points automatically.
+
+#### Integration complexity
+
+- Systems, boundaries and ownership.
+- Business events and responsibilities.
+- Interfaces, contracts and availability.
+- Data mappings and transformations.
+- Volume, frequency and latency.
+- Identity, access and sensitive data.
+- Failures, retries and duplicate prevention.
+- Monitoring, alerts and support.
+- Salesforce limits and existing automation.
+- Cross-system testing and deployment.
+- External teams and dependencies.
+
+#### Data migration complexity
+
+- Sources, target scope and history.
+- Source access and extraction formats.
+- Record volumes and load throughput.
+- Data quality, duplicates and cleansing.
+- Field mappings and business transformations.
+- Keys, relationships and load order.
+- Sensitive data and destination access.
+- Salesforce limits and existing automation.
+- Cutover, freeze and incremental changes.
+- Rehearsal, reconciliation and recovery.
+- Owners, dependencies and sign-off.
+
+#### Help the user estimate
+
+- Read grounding and client context.
+- Identify missing, estimate-changing factors.
+- Ask focused, high-impact questions.
+- Mark unknowns; avoid invented facts.
+- Request team reference stories.
+- Suggest points, rationale and assumptions.
+- Scope unclear? Defer the estimate.
+- Team calibrates and confirms estimates.
+
+Sources: [Relative estimation](https://www.scrum.org/node/111) · [Salesforce integration patterns](https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns) · [Salesforce migration guidance](https://help.salesforce.com/articleView?id=000326326&language=en_US&mode=1&type=1) · [B2B checkout](https://developer.salesforce.com/docs/commerce/salesforce-commerce/guide/b2b-comm-checkout-how-standard-works.html).
+
 #### Acceptance criteria (Gherkin)
 
 - Use Given, When, Then scenarios.
