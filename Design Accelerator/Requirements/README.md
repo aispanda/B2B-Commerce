@@ -6,6 +6,7 @@ Portable, customer-neutral design context for people and AI agents. Start here, 
 
 | Need | Read |
 |---|---|
+| Complete, searchable grounding in one file, including detailed jobs, business processes and flow inventory | [commerce-grounding.md](commerce-grounding.md) |
 | Personas, journeys, goals, pain points, jobs and candidate requirements | [journeys-and-requirements.md](journeys-and-requirements.md) |
 | Salesforce B2B Commerce, checkout, Order Management flows and object landmarks | [salesforce-capabilities.md](salesforce-capabilities.md) |
 | Evidence labels, source links, verification and adaptation checklist | [sources-and-use.md](sources-and-use.md) |
