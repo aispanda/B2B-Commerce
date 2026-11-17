@@ -1,11 +1,11 @@
 # ROUTE-01: Implement Connected Commerce order routing POC
 
-Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 4 · 16 November 2026  
+Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 5 · 16 November 2026  
 Status: Execution checklist documented. Implementation, testing, and independent review are NOT RUN. Accountable owner and human acceptance are pending.
 
 **Outcome:** As an order operations user, route test orders to suitable fulfillment locations using Salesforce's Connected Commerce Order Routing and Omnichannel Inventory.
 
-**Current state:** The target POC's Setup Assistant reported routing Not Installed; Order Management Complete; OCI switch on while the assistant's OCI setup attempt showed Expired. OCI readiness is unverified. CLI read passed; Headless 360 authenticated but its tools were unavailable in the active session. Recheck all statuses in the executing session.
+**Current state:** Headless 360 and CLI passed reads against the POC. Store inventory is on and OCI returned stock at both the configured location group and its warehouse for a demo SKU. Commerce Setup Assistant still shows OCI Expired and routing Not Installed. The active flow and installed-package inventories found no obvious existing order-routing automation. The group has one warehouse and OCI shows no unassigned locations.
 
 ## Execution checklist
 
@@ -39,6 +39,13 @@ Run one eligible task at a time. The executor checks the input and current org s
 - **Output and check** — Record tool, target match, timestamp, and sanitized result. Both reads must pass before S-02a. Access verification permits only the scoped read operations in this task.
 - **Recovery** — If the MCP tool list is stale, follow the reconnect guide and refresh the session before retrying once. If a read still fails, record the exact redacted error and resume condition. Keep the task open.
 - **Actual, 16 November 2026** — PASS: Headless 360 discover, describe and read-only Organization query matched the intended POC. Salesforce CLI org list and limits read matched the same org and passed. Metadata Experts was not exposed in this session and is not required for this read. S-02a is in progress. OCI Availability API access returned true and one enabled location group was listed. The installed-package list contained no plainly named routing package; the Setup Assistant previously reported Not Installed. Unmanaged components and current triggers still need inspection.
+
+## Setup diagnostics · 16 November 2026
+
+- **S-02a:** Reviewed installed packages and active flow definitions. Found checkout subflows and order tax event automation. No routing package or active fulfillment-routing flow was identified in those reads. Install status in Setup Assistant remains Not Installed.
+- **S-02b:** The demo store shows its OCI integration enabled and uses its location group as the inventory source. A read of a stocked demo SKU returned 100 units available to order and fulfill at both group and warehouse levels. This verifies the admin availability path. Buyer reservation and order routing remain untested. The Setup Assistant job's expiration cause was not exposed in the UI.
+- **Retry side effects:** Attempted navigation triggered Basic Setup Retry. The audit trail shows changes to the Commerce Account, Order and Product layouts and Commerce Account Lightning page, plus recalculation of the Commerce Shopper permission set group. No pre-retry versions were identified in the workspace. Compare against a known good version before restoring any metadata.
+- **Next:** Verify the affected pages and shopper access, then prepare the isolated two-location fixture for S-03. Use the current store inventory evidence to guide manual checks rather than repeating the broad setup retry.
 
 ## Proposed test fixtures
 
