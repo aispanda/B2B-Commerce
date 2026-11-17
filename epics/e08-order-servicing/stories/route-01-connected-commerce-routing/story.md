@@ -1,7 +1,7 @@
 # ROUTE-01: Implement Connected Commerce order routing POC
 
-Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 10 · 16 November 2026  
-Status: Package installed. Checkout reservations and end-to-end routing passed for single-location and split-location scenarios. The shortage test verified a failed attempt and automatic recovery after restocking. Final exception, manual recovery, independent review and human acceptance remain pending.
+Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 11 · 16 November 2026  
+Status: Package installed. Checkout reservations and end-to-end routing passed for single-location and split-location scenarios. Routing tests verified single, split, shortage retry, restock recovery, the terminal exception branch, and manual fulfillment recovery. Independent review and human acceptance remain pending.
 
 **Outcome:** As an order operations user, route test orders to suitable fulfillment locations using Salesforce's Connected Commerce Order Routing and Omnichannel Inventory.
 
@@ -59,8 +59,9 @@ Run one eligible task at a time. The executor checks the input and current org s
 
 - **S-05d PARTIAL:** PO 00000134 / Order Summary 1Osbm000004YSvdCAG reserved two synthetic units at the location group. Temporarily reducing the dedicated test warehouse on-hand from 5 to 1 produced zero available-to-fulfill at the two locations; the first routing attempt found no route and scheduled a retry one day later. No fulfillment order was created.
 - The test-only schedule OSRS-0003 was advanced to 03:26:50 UTC on 17 November to exercise retry promptly. Salesforce Time-Based Automations showed it queued beyond the scheduled time. Test warehouse on-hand was restored to 5; the group held 3 reservations and the warehouse 1 at the last check. The retry completed after restocking. The order had two attempts and one allocated fulfillment order (FO-0016) for both units at the test warehouse. No process exception was created. This verifies automatic recovery after restocking. Use a fresh shortage fixture for the terminal exception and manual recovery tests.
-- **S-05e PARTIAL:** As Rajeev, opened the active Create Fulfillment Orders screen using an Order Summary record and verified product selection appears. It is absent from the current Order Summary Actions & Recommendations Add menu. No manual fulfillment was submitted; manual recovery requires a fresh order that reached the exception state.
-- **Outstanding:** Capture the actual process exception after retry exhaustion and verify manual recovery and reservation transfer once, including a supported way for operations users to launch it. Do not treat the first failed attempt or opening the screen as a pass for either scenario.
+- **S-05d PASS with a staged retry limit:** A fresh synthetic order (1Osbm000004YTTVCA4) reserved one unit. Stock was reduced to zero available to fulfill and the first attempt scheduled a next-day retry. For this fixture only, the attempt count was set to 4 and its scheduled time moved forward. The live flow then created high-severity Routing exception PE-00000002 and abandoned the schedule. No fulfillment order was created before recovery. This validates the exception branch without replaying every daily retry.
+- **S-05e PASS:** Restored the test warehouse to five units on hand. As Rajeev, ran Create Fulfillment Orders via the active Salesforce flow URL for the failed order and selected one unit at the test warehouse. Salesforce created exactly one allocated fulfillment order (FO-0018). Its scheduled OCI transfer completed successfully and warehouse reservations increased from four to five while group reservations remained five. Resolved the synthetic process exception after verifying the transfer.
+- **Operations rollout:** The recovery flow is active and launches by direct URL. It is absent from the current Order Summary Actions & Recommendations Add menu. Confirm placement and role access before rollout. Independent review and acceptance are still pending.
 
 ## Proposed test fixtures
 
@@ -78,7 +79,7 @@ These are synthetic cases for S-03a. Confirm isolation and actual stock before u
 - **AC-01:** Required access, entitlements, existing automation and OCI readiness are verified; blockers are documented. NOT RUN.
 - **AC-02:** Synthetic inventory and location fixtures support the planned scenarios. NOT RUN.
 - **AC-03:** The suitable package and flows are installed/configured and activated without duplicate routing. NOT RUN.
-- **AC-04:** Debug and end-to-end tests show the expected routing, reservation and fulfillment-order outcomes, including an exception and recovery. Unsupported debug paths are recorded and tested through their supported entry point. Single and split storefront scenarios passed. Insufficient-stock routing and manual recovery PARTIAL; process exception and manual creation remain NOT RUN.
+- **AC-04:** Debug and end-to-end tests show the expected routing, reservation and fulfillment-order outcomes, including an exception and recovery. Unsupported debug paths are recorded and tested through their supported entry point. Single and split storefront scenarios passed. Shortage retry, automatic recovery after restock, the terminal exception branch with a staged limit, and manual recovery with reservation transfer passed.
 - **AC-05:** Evidence, independent review and acceptance decision are recorded. NOT RUN.
 
 [guide]: https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md
