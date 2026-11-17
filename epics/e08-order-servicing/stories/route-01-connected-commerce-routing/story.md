@@ -1,6 +1,6 @@
 # ROUTE-01: Implement Connected Commerce order routing POC
 
-Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 2 · 16 November 2026  
+Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 3 · 16 November 2026  
 Status: Execution checklist documented. Implementation, testing, and independent review are NOT RUN. Accountable owner and human acceptance are pending.
 
 **Outcome:** As an order operations user, route test orders to suitable fulfillment locations using Salesforce's Connected Commerce Order Routing and Omnichannel Inventory.
@@ -38,7 +38,18 @@ Run one eligible task at a time. The executor checks the input and current org s
 - **Operation** — Discover and describe a minimal Headless 360 read, then dispatch it read-only. Check the CLI org list privately and run `sf org list limits --target-org <alias> --json`.
 - **Output and check** — Record tool, target match, timestamp, and sanitized result. Both reads must pass before S-02a. Access verification permits only the scoped read operations in this task.
 - **Recovery** — If the MCP tool list is stale, follow the reconnect guide and refresh the session before retrying once. If a read still fails, record the exact redacted error and resume condition. Keep the task open.
-- **Actual** — Prior CLI probe passed, but the authenticated Headless 360 tools were absent from that session. Fresh joint verification is NOT RUN.
+- **Actual, 16 November 2026** — CLI PASS: private org-list read matched the intended POC and the limits read returned successfully. Headless 360 NOT RUN: the registered server is enabled and previously authenticated, but the current session does not expose Discover, Describe, or Dispatch Read Only. S-01 is blocked until a refreshed session exposes those tools and a read succeeds against the same org. S-02a and later org work remain pending.
+
+## Proposed test fixtures
+
+These are synthetic cases for S-03a. Confirm isolation and actual stock before use. Use fresh orders for each case.
+
+| Case | Starting stock and order | Expected evidence |
+| --- | --- | --- |
+| Single location | Location A has 10 units each of SKU X and Y. Location B has 10 of Y only. Order 4 of X and 4 of Y. | A fulfills both lines. Verify the linked fulfillment order and the reservation quantities for both SKUs. |
+| Split | Location A has 10 of X only. Location B has 10 of Y only. Order 4 of each SKU. | If the configured policy permits one split, A fulfills X and B fulfills Y. Totals match the order. |
+| No route | Use a synthetic order with a valid reservation and a controlled fulfillment-location shortage, if supported by the confirmed OCI setup. | Capture the routing exception and reconcile reservations. Record a checkout rejection separately if the order never reaches routing. |
+| Manual recovery | Reuse the no-route exception after making a suitable location available. | Verify the operations user can create fulfillment orders through the supported screen and they rejoin the process once. |
 
 ## Acceptance checks
 
