@@ -1,11 +1,11 @@
 # ROUTE-01: Implement Connected Commerce order routing POC
 
-Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 5 · 16 November 2026  
-Status: Execution checklist documented. Implementation, testing, and independent review are NOT RUN. Accountable owner and human acceptance are pending.
+Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 6 · 16 November 2026  
+Status: Package installed and checkout reservation verified. Routing execution and split test in progress. Independent review and human acceptance pending.
 
 **Outcome:** As an order operations user, route test orders to suitable fulfillment locations using Salesforce's Connected Commerce Order Routing and Omnichannel Inventory.
 
-**Current state:** Headless 360 and CLI passed reads against the POC. Store inventory is on and OCI returned stock at both the configured location group and its warehouse for a demo SKU. Commerce Setup Assistant still shows OCI Expired and routing Not Installed. The active flow and installed-package inventories found no obvious existing order-routing automation. The group has one warehouse and OCI shows no unassigned locations.
+**Current state:** Commerce Order Routing 258.0 is installed. An isolated buyer PO reserved one unit, created an Order Summary and generated a routing instruction for the original warehouse. Final transfer and fulfillment-order creation are checked separately. A second dedicated warehouse was added to the demo location group and synced with zero OCI validation errors.
 
 ## Execution checklist
 
@@ -46,6 +46,12 @@ Run one eligible task at a time. The executor checks the input and current org s
 - **S-02b:** The demo store shows its OCI integration enabled and uses its location group as the inventory source. A read of a stocked demo SKU returned 100 units available to order and fulfill at both group and warehouse levels. This verifies the admin availability path. Buyer reservation and order routing remain untested. The Setup Assistant job's expiration cause was not exposed in the UI.
 - **Retry side effects:** Attempted navigation triggered Basic Setup Retry. The audit trail shows changes to the Commerce Account, Order and Product layouts and Commerce Account Lightning page, plus recalculation of the Commerce Shopper permission set group. No pre-retry versions were identified in the workspace. Compare against a known good version before restoring any metadata.
 - **Next:** Verify the affected pages and shopper access, then prepare the isolated two-location fixture for S-03. Use the current store inventory evidence to guide manual checks rather than repeating the broad setup retry.
+
+## Checkout and routing execution · 16 November 2026
+
+- **S-03:** A dedicated second warehouse was added and published to OCI. Existing demo stock was preserved. Existing catalog SKUs are available from the original warehouse, so a separate SKU stocked only at the second warehouse is being prepared for the split case.
+- **S-04:** Salesforce Setup Assistant shows Order Routing Installed. The installed package list confirms Commerce Order Routing 258.0. Schedule Routing, Determine Route by Splits, and Execute Routing were active after installation. Determine Route by Splits and Distance was inactive. The active flow metadata shows that route selection and execution use scheduled paths.
+- **S-05b:** An isolated buyer placed one synthetic purchase order for one stocked item. OCI group availability went from 100 available and zero reserved to 99 available and one reserved. The order and one Order Summary were created. The routing schedule completed, and its transfer instruction selected the original warehouse for one item. At the latest read, the Execute Routing scheduled path was still queued and no fulfillment order was present. This is a pass for checkout reservation and route selection. Transfer and fulfillment-order creation remain pending.
 
 ## Proposed test fixtures
 
