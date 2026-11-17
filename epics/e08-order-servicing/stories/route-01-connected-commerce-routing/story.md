@@ -1,6 +1,6 @@
 # ROUTE-01: Implement Connected Commerce order routing POC
 
-Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 3 · 16 November 2026  
+Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 4 · 16 November 2026  
 Status: Execution checklist documented. Implementation, testing, and independent review are NOT RUN. Accountable owner and human acceptance are pending.
 
 **Outcome:** As an order operations user, route test orders to suitable fulfillment locations using Salesforce's Connected Commerce Order Routing and Omnichannel Inventory.
@@ -38,7 +38,7 @@ Run one eligible task at a time. The executor checks the input and current org s
 - **Operation** — Discover and describe a minimal Headless 360 read, then dispatch it read-only. Check the CLI org list privately and run `sf org list limits --target-org <alias> --json`.
 - **Output and check** — Record tool, target match, timestamp, and sanitized result. Both reads must pass before S-02a. Access verification permits only the scoped read operations in this task.
 - **Recovery** — If the MCP tool list is stale, follow the reconnect guide and refresh the session before retrying once. If a read still fails, record the exact redacted error and resume condition. Keep the task open.
-- **Actual, 16 November 2026** — CLI PASS: private org-list read matched the intended POC and the limits read returned successfully. Headless 360 NOT RUN: the registered server is enabled and previously authenticated, but the current session does not expose Discover, Describe, or Dispatch Read Only. S-01 is blocked until a refreshed session exposes those tools and a read succeeds against the same org. S-02a and later org work remain pending.
+- **Actual, 16 November 2026** — PASS: Headless 360 discover, describe and read-only Organization query matched the intended POC. Salesforce CLI org list and limits read matched the same org and passed. Metadata Experts was not exposed in this session and is not required for this read. S-02a is in progress. OCI Availability API access returned true and one enabled location group was listed. The installed-package list contained no plainly named routing package; the Setup Assistant previously reported Not Installed. Unmanaged components and current triggers still need inspection.
 
 ## Proposed test fixtures
 
