@@ -1,6 +1,6 @@
 # ROUTE-01: Implement Connected Commerce order routing POC
 
-Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 11 · 16 November 2026  
+Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 12 · 17 November 2026  
 Status: Package installed. Checkout reservations and end-to-end routing passed for single-location and split-location scenarios. Routing tests verified single, split, shortage retry, restock recovery, the terminal exception branch, and manual fulfillment recovery. Independent review and human acceptance remain pending.
 
 **Outcome:** As an order operations user, route test orders to suitable fulfillment locations using Salesforce's Connected Commerce Order Routing and Omnichannel Inventory.
@@ -61,7 +61,7 @@ Run one eligible task at a time. The executor checks the input and current org s
 - The test-only schedule OSRS-0003 was advanced to 03:26:50 UTC on 17 November to exercise retry promptly. Salesforce Time-Based Automations showed it queued beyond the scheduled time. Test warehouse on-hand was restored to 5; the group held 3 reservations and the warehouse 1 at the last check. The retry completed after restocking. The order had two attempts and one allocated fulfillment order (FO-0016) for both units at the test warehouse. No process exception was created. This verifies automatic recovery after restocking. Use a fresh shortage fixture for the terminal exception and manual recovery tests.
 - **S-05d PASS with a staged retry limit:** A fresh synthetic order (1Osbm000004YTTVCA4) reserved one unit. Stock was reduced to zero available to fulfill and the first attempt scheduled a next-day retry. For this fixture only, the attempt count was set to 4 and its scheduled time moved forward. The live flow then created high-severity Routing exception PE-00000002 and abandoned the schedule. No fulfillment order was created before recovery. This validates the exception branch without replaying every daily retry.
 - **S-05e PASS:** Restored the test warehouse to five units on hand. As Rajeev, ran Create Fulfillment Orders via the active Salesforce flow URL for the failed order and selected one unit at the test warehouse. Salesforce created exactly one allocated fulfillment order (FO-0018). Its scheduled OCI transfer completed successfully and warehouse reservations increased from four to five while group reservations remained five. Resolved the synthetic process exception after verifying the transfer.
-- **Operations rollout:** The recovery flow is active and launches by direct URL. It is absent from the current Order Summary Actions & Recommendations Add menu. Confirm placement and role access before rollout. Independent review and acceptance are still pending.
+- **Operations rollout:** The **Create Fulfillment Orders** quick action is deployed to the Order Summary header. As Rajeev, verified that clicking it opens the flow and loads the correct order items. The older Actions & Recommendations Add entry was visible but produced an internal server error on two test orders. Non-admin operations access, independent review, and acceptance remain pending.
 
 ## Proposed test fixtures
 
