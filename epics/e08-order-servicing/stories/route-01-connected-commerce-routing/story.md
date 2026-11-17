@@ -1,11 +1,11 @@
 # ROUTE-01: Implement Connected Commerce order routing POC
 
-Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 7 · 16 November 2026  
-Status: Package installed and checkout reservation verified. Both checkout reservations verified. Scheduled routing execution remains pending. Independent review and human acceptance pending.
+Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 8 · 16 November 2026  
+Status: Package installed. Checkout reservations and end-to-end routing passed for single-location and split-location scenarios. Insufficient-stock routing, manual recovery, independent review and human acceptance remain pending.
 
 **Outcome:** As an order operations user, route test orders to suitable fulfillment locations using Salesforce's Connected Commerce Order Routing and Omnichannel Inventory.
 
-**Current state:** Commerce Order Routing 258.0 is installed. An isolated buyer PO reserved one unit, created an Order Summary and generated a routing instruction for the original warehouse. Final transfer and fulfillment-order creation are checked separately. A second dedicated warehouse was added to the demo location group and synced with zero OCI validation errors.
+**Current state:** Commerce Order Routing 258.0 is installed. Both checkout and routing tests completed with the expected warehouse allocations. The dedicated second warehouse and its test SKU are synced to OCI.
 
 ## Execution checklist
 
@@ -51,9 +51,9 @@ Run one eligible task at a time. The executor checks the input and current org s
 
 - **S-03:** A dedicated second warehouse was added and published to OCI. Existing demo stock was preserved. A new $1 synthetic SKU was added to the demo catalog and stocked only at the second warehouse (five units). The first test SKU was stocked only at the original warehouse.
 - **S-04:** Salesforce Setup Assistant shows Order Routing Installed. The installed package list confirms Commerce Order Routing 258.0. Schedule Routing, Determine Route by Splits, and Execute Routing were active after installation. Determine Route by Splits and Distance was inactive. The active flow metadata shows that route selection and execution use scheduled paths.
-- **S-05b:** An isolated buyer placed one synthetic purchase order for one stocked item. OCI group availability went from 100 available and zero reserved to 99 available and one reserved. The order and one Order Summary were created. The routing schedule completed, and its transfer instruction selected the original warehouse for one item. At the latest read, the Execute Routing scheduled path was still queued and no fulfillment order was present. This is a pass for checkout reservation and route selection. Transfer and fulfillment-order creation remain pending.
+- **S-05b:** An isolated buyer placed one synthetic purchase order for one stocked item. OCI group availability went from 100 available and zero reserved to 99 available and one reserved. The order and one Order Summary were created. The routing schedule completed, and its transfer instruction selected the original warehouse for one item. Salesforce subsequently recorded execution as successful with zero connection failures. FO-0013 was Allocated at the original warehouse for one test unit and the shipping line.
 
-- **S-05c:** A separate isolated PO with one unit of each SKU activated and produced one Order Summary. OCI group availability fell from 99 to 98 for the original SKU and from 5 to 4 for the new SKU, increasing reserved quantities by one each. The route-selection schedule was queued on the latest check. Neither test order had a fulfillment order. Check the existing queue and transfer records before any retry or manual recovery.
+- **S-05c:** A separate isolated PO with one unit of each SKU activated and produced one Order Summary. OCI group availability fell from 99 to 98 for the original SKU and from 5 to 4 for the new SKU, increasing reserved quantities by one each. The schedule completed and both transfer executions succeeded with zero connection failures. FO-0014 allocated one test-supply unit at the second warehouse. FO-0015 allocated one sensor unit and the shipping line at the original warehouse.
 
 ## Proposed test fixtures
 
@@ -71,7 +71,7 @@ These are synthetic cases for S-03a. Confirm isolation and actual stock before u
 - **AC-01:** Required access, entitlements, existing automation and OCI readiness are verified; blockers are documented. NOT RUN.
 - **AC-02:** Synthetic inventory and location fixtures support the planned scenarios. NOT RUN.
 - **AC-03:** The suitable package and flows are installed/configured and activated without duplicate routing. NOT RUN.
-- **AC-04:** Debug and end-to-end tests show the expected routing, reservation and fulfillment-order outcomes, including an exception and recovery. Unsupported debug paths are recorded and tested through their supported entry point. NOT RUN.
+- **AC-04:** Debug and end-to-end tests show the expected routing, reservation and fulfillment-order outcomes, including an exception and recovery. Unsupported debug paths are recorded and tested through their supported entry point. Single and split storefront scenarios passed. Insufficient-stock routing and manual recovery NOT RUN.
 - **AC-05:** Evidence, independent review and acceptance decision are recorded. NOT RUN.
 
 [guide]: https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md
