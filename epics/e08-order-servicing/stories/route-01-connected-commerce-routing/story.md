@@ -1,7 +1,7 @@
 # ROUTE-01: Implement Connected Commerce order routing POC
 
-Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 6 · 16 November 2026  
-Status: Package installed and checkout reservation verified. Routing execution and split test in progress. Independent review and human acceptance pending.
+Guide: [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2b915c38dc21b793f9ed4aee9230c613991e79d1/new/DELIVERY.md) · Revision 7 · 16 November 2026  
+Status: Package installed and checkout reservation verified. Both checkout reservations verified. Scheduled routing execution remains pending. Independent review and human acceptance pending.
 
 **Outcome:** As an order operations user, route test orders to suitable fulfillment locations using Salesforce's Connected Commerce Order Routing and Omnichannel Inventory.
 
@@ -49,9 +49,11 @@ Run one eligible task at a time. The executor checks the input and current org s
 
 ## Checkout and routing execution · 16 November 2026
 
-- **S-03:** A dedicated second warehouse was added and published to OCI. Existing demo stock was preserved. Existing catalog SKUs are available from the original warehouse, so a separate SKU stocked only at the second warehouse is being prepared for the split case.
+- **S-03:** A dedicated second warehouse was added and published to OCI. Existing demo stock was preserved. A new $1 synthetic SKU was added to the demo catalog and stocked only at the second warehouse (five units). The first test SKU was stocked only at the original warehouse.
 - **S-04:** Salesforce Setup Assistant shows Order Routing Installed. The installed package list confirms Commerce Order Routing 258.0. Schedule Routing, Determine Route by Splits, and Execute Routing were active after installation. Determine Route by Splits and Distance was inactive. The active flow metadata shows that route selection and execution use scheduled paths.
 - **S-05b:** An isolated buyer placed one synthetic purchase order for one stocked item. OCI group availability went from 100 available and zero reserved to 99 available and one reserved. The order and one Order Summary were created. The routing schedule completed, and its transfer instruction selected the original warehouse for one item. At the latest read, the Execute Routing scheduled path was still queued and no fulfillment order was present. This is a pass for checkout reservation and route selection. Transfer and fulfillment-order creation remain pending.
+
+- **S-05c:** A separate isolated PO with one unit of each SKU activated and produced one Order Summary. OCI group availability fell from 99 to 98 for the original SKU and from 5 to 4 for the new SKU, increasing reserved quantities by one each. The route-selection schedule was queued on the latest check. Neither test order had a fulfillment order. Check the existing queue and transfer records before any retry or manual recovery.
 
 ## Proposed test fixtures
 
