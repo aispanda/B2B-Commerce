@@ -114,3 +114,7 @@ Draft consolidated by the assigned sole E07 writer in separate staging; coordina
 On 12 November 2026, Headless 360 and Salesforce CLI read checks passed in the intended development environment after the MCP connection recovered. The scoped administrator read found the demo account in the store's buyer group and the candidate SKU in an account-related policy.
 
 Buyer-session access, the SKU's store-specific entitlement and current price, the order or template baseline, and an approved isolated cart remain pending. The Quick Order and repeat purchase tests remain NOT RUN.
+
+## Files
+
+- [README.md](README.md) — Story and historical execution record.
