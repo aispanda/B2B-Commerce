@@ -29,7 +29,7 @@
 **D08-01 · Investigating**
 - **Goal** · Find an eligible product by SKU and add it to the intended cart.
 - **Blocker** · The test product was created after the last full search index; automatic updates are off. Quick Order rejected its SKU.
-- **Current fix** · Coordinate a full index update, then retry the SKU. Partial update is unavailable; Salesforce warns the full update publishes pending store changes. Not yet verified.
+- **Current fix** · Authorized full index update started on 19 November; Salesforce reports it in progress. Retry the SKU after completion; outcome not yet verified.
 - **Documentation** · [Salesforce: Commerce Search Index](https://help.salesforce.com/s/articleView?id=commerce.comm_search_index.htm&language=en_US&type=5) describes search index updates.
 
 **D08-01–03 · Open**
