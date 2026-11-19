@@ -20,14 +20,19 @@
 
 | Check ID | Status | Observed result and evidence |
 |---|---|---|
-| D08-01 | PARTIAL | Quick Order is visible; adding a product and its price remain unverified. |
+| D08-01 | FAILED / PARTIAL | A visible, priced demo product was rejected by SKU lookup; an invalid SKU received a clear error. Cart addition and price remain unverified. |
 | D08-02 | PARTIAL | Start Reorder is visible; the resulting cart and template replay remain unverified. |
 | D08-03 | NOT RUN | Export unverified. |
 
 ## Material blockers
 
+**D08-01 · Investigating**
+- **Goal** · Find an eligible product by SKU and add it to the intended cart.
+- **Blocker** · Quick Order rejected a product visible and priced on its product page.
+- **Current fix** · Compare SKU lookup with catalog visibility and search indexing; root cause and fix remain unverified.
+
 **D08-01–03 · Open**
-- **Goal** · Replay the checks with the intended buyer and cart.
+- **Goal** · Replay cart-changing checks safely.
 - **Blocker** · The current cart is already in use; an isolated test cart is not yet verified.
 - **Current fix** · Use a separate test cart, record its contents, add a demo product, and verify the line and price. Proposed; not tested.
 - **Documentation** · [Salesforce: Shop Faster with Quick Order](https://help.salesforce.com/s/articleView?id=release-notes.rn_comm_quick_order.htm&language=en_US&release=244&type=5) describes SKU entry and adding to a cart; it does not identify a safe test cart.
