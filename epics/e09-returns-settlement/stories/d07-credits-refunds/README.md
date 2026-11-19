@@ -12,7 +12,7 @@ CREDITS-01 completed bounded historical discovery. D05 separately demonstrated a
 
 The user chose to **hold the 12.50 credit separately until the PO credit is confirmed**, rather than apply it to the unpaid invoice first. This decision does not itself prove the standard automation supports the outcome. A later bounded read found that the active shared managed-return close flow can process a qualifying return and initiate refunds; a fixture-specific held-credit route has not been safely isolated or tested. A generated POC draft used unverified objects and did not isolate the shared flow, so it was rejected and never deployed. No D07 return, credit or refund has been demonstrated.
 
-**Next · CREDITS-19:** Assigned implementer to establish and verify an isolated held-credit route, preserving the shared flow and coordinating the fixture. Do not close a return or claim an unapplied credit until the route, side effects, appropriate authorization and evidence are established. Independent delivery verification and human acceptance remain Pending.
+**Next · CREDITS-19:** Salesforce implementer, assignment Pending, to establish and verify an isolated held-credit route, preserving the shared flow and coordinating the fixture. Do not close a return or claim an unapplied credit until the route, side effects, appropriate authorization and evidence are established. Independent delivery verification and human acceptance remain Pending.
 
 ## Outcome and scope
 
