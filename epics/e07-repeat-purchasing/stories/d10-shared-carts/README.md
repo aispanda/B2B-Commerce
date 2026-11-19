@@ -29,7 +29,8 @@
 **D10-01–03 · Open**
 - **Goal** · Verify sharing, denial, revocation and applicable settings.
 - **Blocker** · A usable second buyer, outside-account control and separate isolated cart remain unverified.
-- **Current fix** · Verify eligible identities, pricing and cart access before role tests; unverified.
+- **Current fix** · Check buyer licenses, matching pricing and currency; identify an outside-account user and separate test cart. Proposed; not tested.
+- **Documentation** · [Salesforce: Cart Sharing in B2B Commerce](https://help.salesforce.com/s/articleView?id=commerce.comm_sharecartsetup.htm&language=en_US&type=5) describes eligible buyers and pricing restrictions; it does not establish test identities or cart access.
 
 **Next** · Pending confirmation of executor: verify buyer eligibility and a separate fixture for D10-01–03. Do not recreate the previously created contact.
 
