@@ -29,7 +29,8 @@
 **D08-01–03 · Open**
 - **Goal** · Replay the checks with the intended buyer and cart.
 - **Blocker** · Buyer session, isolated cart, order and template are not verified.
-- **Current fix** · Verify an eligible buyer and identify safe fixtures and reset before testing; unverified.
+- **Current fix** · Sign in as the buyer; identify a separate test cart, order and template, then verify a safe reset. Proposed; not tested.
+- **Documentation** · [Salesforce: Order Templates in a B2B Store](https://help.salesforce.com/s/articleView?id=commerce.comm_ordertemplates.htm&language=en_US&type=5) describes saving and reopening templates; it does not establish test access or fixture safety.
 
 **Next** · Pending confirmation of executor: verify buyer access and isolated fixture for D08-01–03; preserve the no-order boundary.
 
