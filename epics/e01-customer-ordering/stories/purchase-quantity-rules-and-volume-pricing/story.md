@@ -1,6 +1,6 @@
 # DEMO-QTY · Purchase quantity rules and volume pricing
 
-**Owner** · Pending confirmation · NEW route · [Prior guide](https://github.com/aispanda/Reusable-Delivery/blob/7a1203229c0e156809a4f83042e58bc57016dbb1/new/DELIVERY.md) · [Current guide](https://github.com/aispanda/Reusable-Delivery/blob/eb7173519f6a7a9b25fe360ced95666e0cb16c0b/new/DELIVERY.md#copyable-story)
+**Owner** · Pending confirmation · NEW route · [Prior guide](https://github.com/aispanda/Reusable-Delivery/blob/7a1203229c0e156809a4f83042e58bc57016dbb1/new/DELIVERY.md) · [Previous guide](https://github.com/aispanda/Reusable-Delivery/blob/eb7173519f6a7a9b25fe360ced95666e0cb16c0b/new/DELIVERY.md#copyable-story) · [Current guide](https://github.com/aispanda/Reusable-Delivery/blob/2a4b77e1772f4828f595d40c882e7c4f77bc4007/new/DELIVERY.md#copyable-story)
 
 **Outcome** · As a demo buyer, I want the storefront to enforce pack increments and apply volume pricing so that I can see the correct price before ordering.
 
@@ -48,6 +48,11 @@ Raw browser and CLI outputs are retained in the restricted execution chat. The p
 ## Verification details
 
 CLI confirmed 20 units available to order from the store inventory endpoint using lowercase `eq` in the scope expression. Headless 360 confirmed the inventory upload completed. The combined inventory and pricing operation returned `FUNCTIONALITY_NOT_ENABLED`, while the dedicated product pricing operation returned the buyer price and tier. Playwright Chrome verified buyer identity through My Account and exercised the product and cart pages. CLI read the same `CartItem` after each browser action. At 10 and 12 units, `SalesPrice` retained the $10 base price and `TotalPriceAfterAllAdjustments` matched the cart subtotal.
+
+## Admin guidance
+
+- **Minimum, maximum, and increment** · Open the assigned Quantity Rule record and select **Edit**. [Salesforce quantity rule instructions](https://help.salesforce.com/s/articleView?id=sf.comm_products_qr_create_assign.htm&language=en_US&type=5) · Replay AC-01 and AC-04.
+- **Volume threshold and discount** · Open the Price Adjustment Schedule, deactivate it, and edit the tier under **Related → Price Adjustment Tiers**. Save and reactivate the schedule. [Salesforce tiered pricing instructions](https://help.salesforce.com/s/articleView?id=commerce.comm_pas.htm&language=en_US&type=5) · Replay AC-02, AC-05, and AC-06.
 
 **Next** · None for the demo. AC-01–AC-06 are closed.
 
