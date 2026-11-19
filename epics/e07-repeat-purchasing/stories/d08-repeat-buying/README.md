@@ -4,7 +4,7 @@
 
 **Outcome** · A buyer can use Quick Order and repeat-buying tools with an intended cart.
 
-**Demo result** · NOT RUN; intended buyer session and isolated cart have not been verified.
+**Demo result** · Quick Order and Start Reorder controls were visible to a signed-in test buyer. Adding products and reordering remain unverified.
 
 **Acceptance** · AC-01–03 remain open. No order submission or customer notification.
 
@@ -20,17 +20,17 @@
 
 | Check ID | Status | Observed result and evidence |
 |---|---|---|
-| D08-01 | NOT RUN | Buyer session, price and SKU behavior unverified. |
-| D08-02 | NOT RUN | Order, template and isolated cart unverified. |
+| D08-01 | PARTIAL | Quick Order is visible; adding a product and its price remain unverified. |
+| D08-02 | PARTIAL | Start Reorder is visible; the resulting cart and template replay remain unverified. |
 | D08-03 | NOT RUN | Export unverified. |
 
 ## Material blockers
 
 **D08-01–03 · Open**
 - **Goal** · Replay the checks with the intended buyer and cart.
-- **Blocker** · Buyer session, isolated cart, order and template are not verified.
-- **Current fix** · Sign in as the buyer; identify a separate test cart, order and template, then verify a safe reset. Proposed; not tested.
-- **Documentation** · [Salesforce: Order Templates in a B2B Store](https://help.salesforce.com/s/articleView?id=commerce.comm_ordertemplates.htm&language=en_US&type=5) describes saving and reopening templates; it does not establish test access or fixture safety.
+- **Blocker** · The current cart is already in use; an isolated test cart is not yet verified.
+- **Current fix** · Use a separate test cart, record its contents, add a demo product, and verify the line and price. Proposed; not tested.
+- **Documentation** · [Salesforce: Shop Faster with Quick Order](https://help.salesforce.com/s/articleView?id=release-notes.rn_comm_quick_order.htm&language=en_US&release=244&type=5) describes SKU entry and adding to a cart; it does not identify a safe test cart.
 
 **Next** · Pending confirmation of executor: verify buyer access and isolated fixture for D08-01–03; preserve the no-order boundary.
 
