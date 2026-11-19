@@ -1,5 +1,44 @@
 # D10 Enable collaborative purchasing with shared carts
 
+**Owner** · Pending confirmation · [Guide](https://github.com/aispanda/Reusable-Delivery/blob/2a4b77e1772f4828f595d40c882e7c4f77bc4007/migrate/DELIVERY.md)
+
+**Outcome** · Eligible teammates can share an isolated cart with controlled access.
+
+**Demo result** · NOT RUN; buyer identities and a separate shared cart have not been verified.
+
+**Acceptance** · AC-01–02 remain NOT RUN; AC-03 is partial historical discovery. No order submission.
+
+## Proposed scenario checks
+
+- **Where / who** · Authorized demo storefront as the owner, collaborator and outside-account control; entry details are restricted.
+- **Start with** · Two eligible same-account buyers with matching pricing and currency, an outside-account control and a separate isolated cart; links and safe reset remain pending.
+- **Demo sequence** · D10-01 → D10-02 → D10-03
+
+1. **D10-01** · Owner shares the cart with the collaborator and tests View Only, Edit and Checkout → each role exhibits its permitted behavior without order submission. AC-01.
+2. **D10-02** · Outside-account user attempts list and direct-link access; owner revokes collaborator access → outsider cannot open the cart and revoked cart disappears from the collaborator's view. AC-02.
+3. **D10-03** · Authorized administrator records current Advanced Cart Management setting, licenses, pricing/currency restriction and ownership behavior → evidence addresses each item. AC-03.
+
+| Check ID | Status | Observed result and evidence |
+|---|---|---|
+| D10-01 | NOT RUN | Roles and buyer sessions unverified. |
+| D10-02 | NOT RUN | Outside-account denial and revocation unverified. |
+| D10-03 | PARTIAL | Historical discovery only; current settings and behavior unverified. |
+
+## Material blockers
+
+**D10-01–03 · Open**
+- **Goal** · Verify sharing, denial, revocation and applicable settings.
+- **Blocker** · A usable second buyer, outside-account control and separate isolated cart remain unverified.
+- **Current fix** · Check buyer licenses, matching pricing and currency; identify an outside-account user and separate test cart. Proposed; not tested.
+- **Documentation** · [Salesforce: Cart Sharing in B2B Commerce](https://help.salesforce.com/s/articleView?id=commerce.comm_sharecartsetup.htm&language=en_US&type=5) describes eligible buyers and pricing restrictions; it does not establish test identities or cart access.
+
+**Next** · Pending confirmation of executor: verify buyer eligibility and a separate fixture for D10-01–03. Do not recreate the previously created contact.
+
+## Historical execution and source record
+
+Earlier status statements below are dated observations; the scenario table above records the current verification state.
+
+
 Guide: [migrate/DELIVERY.md](https://github.com/aispanda/Reusable-Delivery/blob/9d32dccc738cc544481a6da257c13d438115f122/migrate/DELIVERY.md), commit `9d32dccc738cc544481a6da257c13d438115f122`, route MIGRATE.
 
 Guide upgrade: the earlier drafts used `4b5406c3d74f7f56071d193ba3359218d4b70d4d` and `769a5099cb7412e9f307a38286f8e2adf74448a8`. The `9d32dccc738cc544481a6da257c13d438115f122` upgrade adds a mandatory platform-access check and role-dependent verification evidence. No criterion was changed; earlier observations retain their historical scope and runtime checks remain NOT RUN. For later authorized CARTS-02/03, assign the operator and independent checker and record role, cross-account denial and revocation evidence against AC-01–03. Prior evidence and unrun checks retain the scope recorded below.
@@ -82,3 +121,11 @@ One executor for the separate proposed documentation reconciliation: Codex deskt
 On 12 November 2026, Headless 360 and Salesforce CLI read checks passed in the intended development environment after the MCP connection recovered. The scoped administrator query returned one active contact-linked user for the demo account. Earlier evidence recorded creation of a synthetic collaborator contact and a failed customer-user creation attempt. This recheck did not verify a usable second buyer.
 
 The planned test requires two eligible same-account buyers, an outside-account control, and a separate approved cart. Buyer session access, sharing behavior, and acceptance remain NOT RUN.
+
+## Later document review
+
+On 12 November 2026 Jev reviewed the public draft and returned 29 YES and one UNCERTAIN across 30 questions. Claude reviewed the public text and selected results. Neither review verified original source preservation or Salesforce runtime behavior. The earlier failed Jev attempt remains NO VERDICT.
+
+## Files
+
+- [README.md](README.md) — Story and historical execution record.

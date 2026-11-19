@@ -1,5 +1,44 @@
 # D08 Verify Quick Order and repeat buying tools
 
+**Owner** · Pending confirmation · [Guide](https://github.com/aispanda/Reusable-Delivery/blob/2a4b77e1772f4828f595d40c882e7c4f77bc4007/migrate/DELIVERY.md)
+
+**Outcome** · A buyer can use Quick Order and repeat-buying tools with an intended cart.
+
+**Demo result** · NOT RUN; intended buyer session and isolated cart have not been verified.
+
+**Acceptance** · AC-01–03 remain open. No order submission or customer notification.
+
+## Proposed scenario checks
+
+- **Where / who** · Authorized demo storefront as the intended signed-in buyer; entry details are restricted.
+- **Start with** · An approved isolated cart, permitted and invalid SKUs, an accessible prior order and template; record links and a safe reset remain pending.
+- **Demo sequence** · D08-01 → D08-02 → D08-03
+
+1. **D08-01** · Buyer enters a permitted SKU and quantity → correct line and account price appear in the intended cart; invalid or unauthorized SKUs are handled clearly. AC-01.
+2. **D08-02** · Buyer reorders an existing order and saves and reopens a template → each updates only the intended cart. AC-02.
+3. **D08-03** · Buyer exports the cart → expected item data downloads, without submitting an order or sending notification. AC-03.
+
+| Check ID | Status | Observed result and evidence |
+|---|---|---|
+| D08-01 | NOT RUN | Buyer session, price and SKU behavior unverified. |
+| D08-02 | NOT RUN | Order, template and isolated cart unverified. |
+| D08-03 | NOT RUN | Export unverified. |
+
+## Material blockers
+
+**D08-01–03 · Open**
+- **Goal** · Replay the checks with the intended buyer and cart.
+- **Blocker** · Buyer session, isolated cart, order and template are not verified.
+- **Current fix** · Sign in as the buyer; identify a separate test cart, order and template, then verify a safe reset. Proposed; not tested.
+- **Documentation** · [Salesforce: Order Templates in a B2B Store](https://help.salesforce.com/s/articleView?id=commerce.comm_ordertemplates.htm&language=en_US&type=5) describes saving and reopening templates; it does not establish test access or fixture safety.
+
+**Next** · Pending confirmation of executor: verify buyer access and isolated fixture for D08-01–03; preserve the no-order boundary.
+
+## Historical execution and source record
+
+Earlier status statements below are dated observations; the scenario table above records the current verification state.
+
+
 Guide: [migrate/DELIVERY.md](https://github.com/aispanda/Reusable-Delivery/blob/9d32dccc738cc544481a6da257c13d438115f122/migrate/DELIVERY.md), commit `9d32dccc738cc544481a6da257c13d438115f122`, route MIGRATE.
 
 Guide upgrade: the previous published draft used `769a5099cb7412e9f307a38286f8e2adf74448a8`. The new guide adds a first platform access check for MCP and CLI, and role-dependent test evidence covering test identity, intended role, target access and observed outcome. Platform-dependent steps now depend on that check. Existing evidence remains historical and unverified checks remain NOT RUN. An earlier draft used `4b5406c3d74f7f56071d193ba3359218d4b70d4d`. For later authorized REPEAT-02/03, assign the operator and independent checker and record cart, price, reorder, template and export evidence against AC-01–03. Prior evidence and unrun checks retain the scope recorded below.
@@ -76,3 +115,7 @@ Draft consolidated by the assigned sole E07 writer in separate staging; coordina
 On 12 November 2026, Headless 360 and Salesforce CLI read checks passed in the intended development environment after the MCP connection recovered. The scoped administrator read found the demo account in the store's buyer group and the candidate SKU in an account-related policy.
 
 Buyer-session access, the SKU's store-specific entitlement and current price, the order or template baseline, and an approved isolated cart remain pending. The Quick Order and repeat purchase tests remain NOT RUN.
+
+## Files
+
+- [README.md](README.md) — Story and historical execution record.
