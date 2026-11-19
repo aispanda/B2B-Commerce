@@ -28,9 +28,9 @@
 
 **D08-01 · Investigating**
 - **Goal** · Find an eligible product by SKU and add it to the intended cart.
-- **Blocker** · Quick Order rejected a product visible and priced on its product page.
-- **Current fix** · Compare SKU lookup with catalog visibility and search indexing; root cause and fix remain unverified.
-- **Documentation** · [Salesforce: Product search prerequisites](https://help.salesforce.com/s/articleView?id=commerce.comm_search_prereq.htm&language=en_US&type=5) describes catalog, permissions and indexing checks.
+- **Blocker** · The test product was created after the last full search index; automatic updates are off. Quick Order rejected its SKU.
+- **Current fix** · Coordinate a full index update, then retry the SKU. Partial update is unavailable; full update publishes pending search changes. Not yet verified.
+- **Documentation** · [Salesforce: Commerce Search Index](https://help.salesforce.com/s/articleView?id=commerce.comm_search_index.htm&language=en_US&type=5) describes search index updates.
 
 **D08-01–03 · Open**
 - **Goal** · Replay cart-changing checks safely.
