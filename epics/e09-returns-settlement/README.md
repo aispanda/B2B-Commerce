@@ -1,12 +1,12 @@
 # E09 Returns, exchanges and settlement
 
-Migration pending. Classification: Proposed grouping.
+Migration and source-preservation review remain in progress. Classification: Proposed grouping.
 
 Intended outcome: Return intake, managed RMA, exchanges and financial outcomes.
 
 Scope note: Keep buyer intake separate from servicing and PO credits separate from card refunds.
 
-## Story placeholders
+## Stories
 
 - [D04 Let a buyer request a return](stories/d04-return-request/README.md)
 - [D05 Process a fulfilled return with managed RMA](stories/d05-managed-rma/README.md)
@@ -17,4 +17,4 @@ Scope note: Keep buyer intake separate from servicing and PO credits separate fr
 
 Original sources SRC03; SRC04; SRC11; SRC12 retain requirements authority. Read the actual originals and accepted criteria; source summaries are insufficient. Original execution artifacts govern evidence. This portfolio page remains a migration draft. Sync: Pending — deferred by instruction.
 
-Implementation authority remains with the original code artifact, if any, identified during discovery. No implementation or acceptance is inferred from this scaffold.
+Implementation authority remains with the original code artifact, if any, identified during discovery. Story-specific evidence governs implementation and acceptance; D05 records a bounded completed demo and D04, D06 and D07 retain open work.
