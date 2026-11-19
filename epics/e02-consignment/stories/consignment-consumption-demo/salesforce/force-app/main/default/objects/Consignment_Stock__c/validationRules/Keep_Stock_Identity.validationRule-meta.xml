@@ -3,10 +3,13 @@
     <fullName>Keep_Stock_Identity</fullName>
     <active>true</active>
     <description>Preserves the original key, account, location, product, and stocking unit.</description>
-    <errorConditionFormula>AND(
-    NOT(ISNEW()),
+    <errorConditionFormula>OR(
+    ISBLANK(Product__c),
+    AND(
+        NOT(ISNEW()),
     OR(ISCHANGED(Stock_Key__c), ISCHANGED(Account__c), ISCHANGED(Location__c),
        ISCHANGED(Product__c), ISCHANGED(Stocking_Unit__c))
+    )
 )</errorConditionFormula>
-    <errorMessage>Use a separate stock position for a different account, location, product, stocking unit, or key.</errorMessage>
+    <errorMessage>Choose a product. Use a separate stock position to change its identity.</errorMessage>
 </ValidationRule>
