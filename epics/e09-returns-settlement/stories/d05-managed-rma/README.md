@@ -1,5 +1,7 @@
 # D05: Process a fulfilled return with managed RMA
 
+Guide: [migrate/DELIVERY.md](https://github.com/aispanda/Reusable-Delivery/blob/2a4b77e1772f4828f595d40c882e7c4f77bc4007/migrate/DELIVERY.md) @ `2a4b77e1772f4828f595d40c882e7c4f77bc4007`; route **MIGRATE**. Earlier documentation review used `9d32dccc738cc544481a6da257c13d438115f122`; completed demo and closure remain unchanged. New scenario, Admin guidance and intended-role checks below are documentation planning and do not add a runtime pass.
+
 As a Customer Care agent, I want to authorize a return, record receipt and close an RMA so credit processing reflects the items received.
 
 **Demo result, 13 November 2026.** One unit passed the receipt-first Lightning demo. Salesforce closed the return, posted a $12.50 credit memo and processed a simulated $12.50 refund. The user directed [ClickUp closure for this demo](reviews.md#demo-closeout) after the bounded result was reported. Full AC-02 coverage and verification as the intended Customer Care user remain open. Rejection, fees, store credit and live payments were outside the demo.
@@ -57,3 +59,14 @@ Inventory verified at demo closeout.
 - [DemoRmaRefundAdapter.cls](demo-kit/force-app/main/default/classes/DemoRmaRefundAdapter.cls) — Simulates refunds without external calls
 - [DemoRmaRefundAdapter.cls-meta.xml](demo-kit/force-app/main/default/classes/DemoRmaRefundAdapter.cls-meta.xml) — Declares Apex class version and status
 - [DemoRmaRefund.namedCredential-meta.xml](demo-kit/force-app/main/default/namedCredentials/DemoRmaRefund.namedCredential-meta.xml) — Defines the simulator’s placeholder endpoint
+
+## Proposed scenario checks
+
+- **Where / who:** Authorized isolated org; intended Customer Care user, access verification pending.
+- **Start with:** Follow [fixture setup](demo-kit/README.md#fixture). Existing test records and safe reset must be verified in the target org before replay.
+
+1. **RMA-02:** Agent submits one eligible fulfilled unit, records one received and zero rejected, then closes the return. AC-01–02.
+2. **RMA-03 / RMA-03A:** Agent follows the return to its credit and simulated refund and reconciles the results. AC-03.
+3. **RMA-06:** Assigned verifier checks partial receipt or ineligible/unfulfilled quantity and duplicates. AC-02. **NOT RUN.**
+
+**Next · RMA-06:** Assign a verifier and establish a safe isolated fixture and intended-user access; preserve the user-directed demo closure and separately record remaining AC-02 coverage.
