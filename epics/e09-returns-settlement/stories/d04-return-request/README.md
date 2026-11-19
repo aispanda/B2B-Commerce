@@ -65,4 +65,4 @@ A prior JEV documentation review applies only to the previous revision. The sepa
 
 - [README.md](README.md) — Scope, checks and current status
 
-**Next · SS-01:** Assigned Salesforce implementer to test the read-only component with the intended buyer and a cross-account negative case after platform access is verified. Buyer submission, complete security checks and acceptance remain NOT RUN.
+**Next · SS-01:** Salesforce implementer, assignment Pending, to test the read-only component with the intended buyer and a cross-account negative case after platform access is verified. Buyer submission, complete security checks and acceptance remain NOT RUN.
