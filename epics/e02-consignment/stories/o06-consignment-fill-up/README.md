@@ -1,20 +1,20 @@
-# O06 Review and submit a consignment fill-up
+# O06 · Review and submit a consignment fill-up
 
-Guide · [migrate/DELIVERY.md at 9d32dccc738cc544481a6da257c13d438115f122](https://github.com/aispanda/Reusable-Delivery/blob/9d32dccc738cc544481a6da257c13d438115f122/migrate/DELIVERY.md) · MIGRATE
+**Owner** · Pending confirmation · [Execution](#solution-and-execution) · [migrate/DELIVERY.md at 2a4b77e1772f4828f595d40c882e7c4f77bc4007](https://github.com/aispanda/Reusable-Delivery/blob/2a4b77e1772f4828f595d40c882e7c4f77bc4007/migrate/DELIVERY.md) · MIGRATE
 
-Revision 0.1 · 12 November 2026 · Published partial migration draft. Independent workbook comparison passed. Implementation and runtime checks remain unverified. Human acceptance and ClickUp synchronization Pending. Accountable owner Pending. The source parent task is unassigned.
+**Outcome** · As an eligible hospital buyer, I want to review a consignment fill-up request without an immediate payment so that the supplier can supply stock for later consumption.
 
-Origin · SRC16, MVP User Stories row 7 and ClickUp parent section 6. See [E02 design and source reconciliation](../../README.md).
+**Demo result** · NOT RUN. Earlier Salesforce access checks covered demo discovery. No observed buyer-to-SAP run was found.
 
-## Outcome and scope
-
-As an eligible hospital buyer, I want to review a consignment fill-up request without an immediate payment so that the supplier can supply stock for later consumption.
+**Acceptance** · Pending. The production design, runtime checks and human acceptance remain open. The [records-only demo](../consignment-consumption-demo/README.md) has its own criteria.
 
 Reference prices remain visible. Fill-up has zero due now. SAP owns consumption reporting, consumption pricing, invoicing and payment. The fill-up flow supports a buyer's manual replenishment request. Stock visibility, live stock checks, consumption entry and automated replenishment stay outside this MVP. The PO policy for consumption billing remains with SAP.
 
-## Source acceptance notes and proposed checks
+## Acceptance criteria
 
-| Source note | Original wording | Proposed verification | Result |
+The identifiers below are the existing workbook row and note references. The acceptance wording is verbatim.
+
+| Criterion | Original wording | Proposed verification | Result |
 |---|---|---|---|
 | 7.1 | Checkout uses one delivery address, a shipping method, products and quantities. | Review and compare the one authorized address, method and each SKU/quantity across cart, checkout and the captured outbound request. | NOT RUN |
 | 7.2 | The hospital PO number is optional. | Verify one fill-up with no PO and one with a supplied PO. Check the captured request in both cases and run regular PO validation as a regression check. | NOT RUN |
@@ -32,8 +32,26 @@ The proposed design reuses the selected account's catalog, cart and delivery con
 | Confirm the shared external contract | Confirm the SAP order type, request and acceptance fields, and timeout lookup with the O07/O08 owners. | SAP order integration owner, person Pending | Pending |
 | Verify buyer to SAP | Exercise source notes 7.1–7.4 and correlate SAP acceptance, Salesforce order state and buyer confirmation. | QA lead, person Pending | NOT RUN |
 
-**Next step.** The Salesforce Commerce technical lead identifies the intended store's configured checkout route and the supported handling of a blank PO and no payment. Record the configuration revision and a field-to-display sketch for the authorized address, shipping, reference prices and zero due. Inspect it against notes 7.1–7.3 and the O07/O08 dependencies. Resume design selection once the storefront path and SAP contract are both available. Actual NOT RUN.
+Repeat platform access verification against the intended Salesforce and SAP test environments before executing these checks.
+
+## Material blockers
+
+**7.1–7.4 · Contract and test prerequisites pending**
+
+- **Goal** · Verify that an eligible buyer can submit a no-payment fill-up with an optional PO.
+- **Blocker** · The configured checkout route and the SAP request, acceptance and recovery contract are unverified.
+- **Current fix** · Proposed. Confirm the checkout route and obtain the SAP contract before authorizing a non-production buyer run.
+- **Documentation** · [Shared design and prerequisites](../../README.md#decisions-and-next-tasks)
+
+**Next** · Pending confirmation. Confirm the Salesforce Commerce technical lead and identify the configured route for blank PO, reference pricing and no payment. This advances 7.1–7.4. [E02 decisions](../../README.md#decisions-and-next-tasks)
+
+## Files
+
+- [README.md](README.md) — Requirements, checks, and execution status
+- [E02 README](../../README.md) — Shared design and source reconciliation
 
 ## Review and history
 
 The 12 November draft preserves all four notes in source order. Note labels identify workbook row and ordinal. The story sentence generalizes the supplier name. Proposed verification adds coverage detail for review. Full original-source verification and human acceptance remain Pending.
+
+19 November migration review compared each note against the workbook and the current shared ClickUp parent. Criteria and note labels match. Ownership and runtime status are unchanged. The updated guide adds demo replay and closeout admin guidance. Production settings remain proposed. [Prior story](https://github.com/aispanda/B2B-Commerce/blob/f5cc54121bf0153cb7d78a6446b55fcd603211d2/epics/e02-consignment/stories/o06-consignment-fill-up/README.md)

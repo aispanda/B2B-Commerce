@@ -1,8 +1,8 @@
 # E02 Consignment ordering
 
-Guide · [migrate/DELIVERY.md at 9d32dccc738cc544481a6da257c13d438115f122](https://github.com/aispanda/Reusable-Delivery/blob/9d32dccc738cc544481a6da257c13d438115f122/migrate/DELIVERY.md) · MIGRATE
+Guide · [migrate/DELIVERY.md at 2a4b77e1772f4828f595d40c882e7c4f77bc4007](https://github.com/aispanda/Reusable-Delivery/blob/2a4b77e1772f4828f595d40c882e7c4f77bc4007/migrate/DELIVERY.md) · MIGRATE
 
-Revision 0.2 · 12 November 2026 · Published partial migration draft. The production checkout and SAP integration remain unverified. The separate demo package passed offline checks and its Salesforce runtime checks remain NOT RUN. Human acceptance and ClickUp synchronization Pending. ClickUp controls assignment and delivery status. The order-scenarios parent task is unassigned.
+19 November 2026 · Migration for review. O05 and O06 retain the SAP-backed checkout baseline. The demo has observed Salesforce results and open role checks. Human acceptance and ClickUp synchronization are pending.
 
 ## Scope and evidence
 
@@ -14,7 +14,7 @@ The baseline covers [O05 eligibility](stories/o05-consignment-eligibility/README
 | Code and configuration | E02 and E03 contain README placeholders on the [inspected portfolio revision](https://github.com/aispanda/B2B-Commerce/tree/c72d64e0b45376048bb3d1b5f9579c76224e04c8). The earlier repository, PR and local source checks found no implementation or test artifacts for O05/O06 checkout or its SAP integration. Those checks preceded the separate demo package. Headless 360 and Salesforce CLI 2.157.8 independently read the same intended demo org. The org has active checkout flow components by name. Scoped field, entity, flow and Apex name searches returned no consignment match. The SAP-related custom-field match was on quote lines. These checks cannot rule out generic names, middleware or a different environment. |
 | Observed runtime | Historical W03-E02/E03/E04 show regular PO checkout controls, Salesforce Order and Order Summary records, and a buyer-supplied order-detail screenshot. The submission itself was reported by the user. The headless concept simulates regular PO confirmation. No observed consignment buyer submission, SAP acceptance or correlated confirmation was located. No transaction was run during discovery. |
 
-The [consignment consumption demo](stories/consignment-consumption-demo/README.md) has a separate Salesforce DX package and synthetic fixtures for receipt, usage and simulated billing. It does not establish a working production checkout or SAP integration.
+The [consignment consumption demo](stories/consignment-consumption-demo/README.md) has a separate Salesforce DX package and synthetic fixtures for receipt, usage and simulated billing. The 19 November run verified receipt, usage, replay and simulated billing through CLI and verified browser receipt posting. The coordinator and billing clerk checks are open. These results cover the synthetic Salesforce demo. See the [demo execution record](stories/consignment-consumption-demo/build-plan.md#19-november-2026-live-run).
 
 ## Proposed design for review
 
@@ -47,3 +47,7 @@ Named owners are pending. Roles below are proposed based on the authority needed
 | Published E02/E03 scaffold and W03 migration evidence | Portfolio remains a documentation pointer. W03 regular PO observations stay with W03. Repo search, demo-org access and metadata reads establish discovery scope only. No production system or middleware contract was verified. |
 
 Maker check compares note wording and order against both originals and checks the proposed design against the boundary and unresolved questions. An independent local workbook comparison confirmed all seven notes in source order. Full source preservation and human acceptance remain pending. Restricted originals remain in their source systems. The portfolio coordinator owns the restricted source map and any later cross-epic edits or publication.
+
+19 November source refresh verified all seven original notes against the workbook and current shared parent description. The parent is unassigned and has no comments, attachments, or subtasks. ClickUp writeback is pending separate authority for the shared cross-epic parent and a verified restricted snapshot before replacement. Intended-reader access to restricted evidence remains pending.
+
+**Guide provenance** · [Prior MIGRATE guide](https://github.com/aispanda/Reusable-Delivery/blob/9d32dccc738cc544481a6da257c13d438115f122/migrate/DELIVERY.md). The current guide adds replay preparation and verified admin handoff at closeout. No criterion or prior result was changed by the template upgrade.

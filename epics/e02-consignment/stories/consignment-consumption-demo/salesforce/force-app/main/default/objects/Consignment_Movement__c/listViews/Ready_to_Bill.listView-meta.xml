@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ready_to_Bill</fullName>
+    <columns>NAME</columns>
+    <columns>Consignment_Stock__c</columns>
+    <columns>Quantity__c</columns>
+    <columns>Demo_Charge_Before_Tax__c</columns>
+    <columns>Billing_Status__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Billing_Status__c</field>
+        <operation>equals</operation>
+        <value>Ready to Bill</value>
+    </filters>
+    <label>Ready to Bill</label>
+</ListView>

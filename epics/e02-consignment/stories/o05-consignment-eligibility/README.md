@@ -1,20 +1,20 @@
-# O05 Choose consignment checkout when eligible
+# O05 · Choose consignment checkout when eligible
 
-Guide · [migrate/DELIVERY.md at 9d32dccc738cc544481a6da257c13d438115f122](https://github.com/aispanda/Reusable-Delivery/blob/9d32dccc738cc544481a6da257c13d438115f122/migrate/DELIVERY.md) · MIGRATE
+**Owner** · Pending confirmation · [Execution](#solution-and-execution) · [migrate/DELIVERY.md at 2a4b77e1772f4828f595d40c882e7c4f77bc4007](https://github.com/aispanda/Reusable-Delivery/blob/2a4b77e1772f4828f595d40c882e7c4f77bc4007/migrate/DELIVERY.md) · MIGRATE
 
-Revision 0.1 · 12 November 2026 · Published partial migration draft. Independent workbook comparison passed. Implementation and runtime checks remain unverified. Human acceptance and ClickUp synchronization Pending. Accountable owner Pending. The source parent task is unassigned.
+**Outcome** · As an eligible hospital buyer, I want a consignment checkout option on the cart so that I can request stock under my hospital's consignment arrangement.
 
-Origin · SRC16, MVP User Stories row 6 and ClickUp parent section 5. See [E02 design and source reconciliation](../../README.md).
+**Demo result** · NOT RUN. Earlier Salesforce access checks covered demo discovery. No observed buyer-to-SAP run was found.
 
-## Outcome and scope
-
-As an eligible hospital buyer, I want a consignment checkout option on the cart so that I can request stock under my hospital's consignment arrangement.
+**Acceptance** · Pending. The production design, runtime checks and human acceptance remain open. The [records-only demo](../consignment-consumption-demo/README.md) has its own criteria.
 
 MVP eligibility is at customer-account level and sourced from SAP. Existing product entitlements apply. Each submitted order has one selected type. A synchronized Salesforce account flag is a design option. More granular eligibility is a post-MVP candidate.
 
-## Source acceptance notes and proposed checks
+## Acceptance criteria
 
-| Source note | Original wording | Proposed verification | Result |
+The identifiers below are the existing workbook row and note references. The acceptance wording is verbatim.
+
+| Criterion | Original wording | Proposed verification | Result |
 |---|---|---|---|
 | 6.1 | Eligible customers see Checkout as Consignment alongside regular Checkout. | Sign in with access to one eligible and one ineligible customer. Select the eligible customer and verify both checkout options. | NOT RUN |
 | 6.2 | Ineligible customers see regular Checkout only and cannot submit a consignment request by bypassing the button. | Select the ineligible customer and verify regular checkout only. Exercise the authorized non-production service path with ineligible, revoked and switched-account fixtures. Verify server-side denial and no SAP submission. | NOT RUN |
@@ -30,8 +30,26 @@ The proposed design uses the current authorized account and its SAP eligibility 
 | Verify eligibility source | Confirm the SAP field, customer key, eligible/ineligible sample, freshness and submit-time validation. | SAP customer master/integration owner, person Pending | Pending |
 | Map and verify enforcement | Determine where the selected account and intent are persisted and rechecked in the configured checkout. Execute source-note checks after authorized implementation. | Salesforce Commerce technical lead, person Pending | Pending |
 
-**Next step.** The SAP customer master/integration owner supplies a versioned eligibility field/key mapping and a synthetic eligible/ineligible pair. Include the update cadence, revocation window and expected submit-time validation. Review the two values and decision path against notes 6.1–6.3. Record the contract in the restricted source system and reference the revision here. Resume after the owner and mapping are identified. Actual NOT RUN.
+Repeat platform access verification against the intended Salesforce and SAP test environments before executing these checks.
+
+## Material blockers
+
+**6.1–6.3 · Contract and test prerequisites pending**
+
+- **Goal** · Provide the SAP eligibility contract for eligible, ineligible and revoked accounts.
+- **Blocker** · The SAP field, customer key, update cadence and submit-time validation are unconfirmed.
+- **Current fix** · Proposed. Assign the SAP customer master owner to supply a versioned mapping and synthetic eligible and ineligible examples.
+- **Documentation** · [Shared design and prerequisites](../../README.md#decisions-and-next-tasks)
+
+**Next** · Pending confirmation. Confirm the SAP eligibility owner and obtain the versioned mapping and examples. This advances 6.1–6.3. [E02 decisions](../../README.md#decisions-and-next-tasks)
+
+## Files
+
+- [README.md](README.md) — Requirements, checks, and execution status
+- [E02 README](../../README.md) — Shared design and source reconciliation
 
 ## Review and history
 
 The 12 November draft preserves all three notes in source order. Note labels identify workbook row and ordinal. Proposed verification adds coverage detail for review. Full original-source verification and human acceptance remain Pending.
+
+19 November migration review compared each note against the workbook and the current shared ClickUp parent. Criteria and note labels match. Ownership and runtime status are unchanged. The updated guide adds demo replay and closeout admin guidance. Production settings remain proposed. [Prior story](https://github.com/aispanda/B2B-Commerce/blob/f5cc54121bf0153cb7d78a6446b55fcd603211d2/epics/e02-consignment/stories/o05-consignment-eligibility/README.md)

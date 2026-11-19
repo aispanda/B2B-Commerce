@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>View</actionName>
+        <content>Consignment_Movement_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <type>Flexipage</type>
+    </actionOverrides>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Records one receipt or hospital usage report line for Consignment Stock. Event Key identifies the source event. Quantity affects stock after posting. Validation preserves posted evidence and lets billing advance separately for simulated charges.</description>
     <enableReports>true</enableReports>
