@@ -120,3 +120,11 @@ One executor for the separate proposed documentation reconciliation: Codex deskt
 On 12 November 2026, Headless 360 and Salesforce CLI read checks passed in the intended development environment after the MCP connection recovered. The scoped administrator query returned one active contact-linked user for the demo account. Earlier evidence recorded creation of a synthetic collaborator contact and a failed customer-user creation attempt. This recheck did not verify a usable second buyer.
 
 The planned test requires two eligible same-account buyers, an outside-account control, and a separate approved cart. Buyer session access, sharing behavior, and acceptance remain NOT RUN.
+
+## Later document review
+
+On 12 November 2026 Jev reviewed the public draft and returned 29 YES and one UNCERTAIN across 30 questions. Claude reviewed the public text and selected results. Neither review verified original source preservation or Salesforce runtime behavior. The earlier failed Jev attempt remains NO VERDICT.
+
+## Files
+
+- [README.md](README.md) — Story and historical execution record.
