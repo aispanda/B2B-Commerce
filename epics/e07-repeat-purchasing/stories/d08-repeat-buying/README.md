@@ -30,6 +30,7 @@
 - **Goal** · Find an eligible product by SKU and add it to the intended cart.
 - **Blocker** · Quick Order rejected a product visible and priced on its product page.
 - **Current fix** · Compare SKU lookup with catalog visibility and search indexing; root cause and fix remain unverified.
+- **Documentation** · [Salesforce: Product search prerequisites](https://help.salesforce.com/s/articleView?id=commerce.comm_search_prereq.htm&language=en_US&type=5) describes catalog, permissions and indexing checks.
 
 **D08-01–03 · Open**
 - **Goal** · Replay cart-changing checks safely.
