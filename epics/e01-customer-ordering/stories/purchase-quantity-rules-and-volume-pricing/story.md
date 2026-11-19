@@ -4,7 +4,7 @@
 
 **Outcome** · As a demo buyer, I want the storefront to enforce pack increments and apply volume pricing so that I can see the correct price before ordering.
 
-**Demo result** · All six checks passed on 19 November 2026 in the proof-of-concept store. Playwright Chrome verified the signed-in synthetic buyer’s cart. Salesforce CLI confirmed each saved quantity and adjusted subtotal on the same cart line.
+**Verified run** · All six checks passed on 19 November 2026 through cart repricing in the proof-of-concept store. Playwright Chrome verified the signed-in synthetic buyer’s cart, and Salesforce CLI confirmed the saved quantities and adjusted subtotals. No order was submitted. The dedicated cart ended at 12 units.
 
 **Acceptance** · Closed on 19 November 2026 at the project requester’s direction. Closure covers AC-01–AC-06 through cart repricing. The isolated cart was left at 12 units. Checkout and order submission were outside test scope.
 
@@ -13,7 +13,9 @@
 ## Proposed scenario checks
 
 - **Where / who** · Use the authorized proof-of-concept storefront as the designated synthetic buyer. The entry link and test user are in the restricted execution record.
-- **Start with** · Open the demo SKU with a dedicated empty cart. Test-record links are in the restricted execution record. Pending for replay · Confirm an empty cart. If needed, remove only the demo SKU line from the dedicated test cart.
+- **Start with** · Open the demo SKU with a dedicated empty cart. Test-record links are in the restricted execution record.
+
+**Replay readiness** · Pending confirmation of an empty isolated cart before replay.
 
 **Demo sequence** · AC-03 → AC-04 → AC-05 → AC-06
 
@@ -40,7 +42,7 @@ Raw browser and CLI outputs are retained in the restricted execution chat. The p
 **AC-03 · Resolved**
 - **Goal** · Add eight units as the synthetic buyer and verify one cart line at $80.
 - **Blocker** · The buyer page initially showed Out of Stock. In-app browser control then became unavailable.
-- **Current fix** · Playwright Chrome restored buyer testing. Add To Cart was enabled, and AC-03 passed. [Verification details](#verification-details)
+- **Current fix** · CLI confirmed sellable stock. Playwright Chrome showed Add to Cart enabled, and AC-03 passed. The earlier stock display’s root cause remains unverified. [Verification details](#verification-details)
 - **Documentation** · [Omnichannel Inventory Connect REST APIs](https://help.salesforce.com/s/articleView?id=commerce.inv_omnichannel_inventory_connect_rest_apis.htm&language=en_US&type=5)
 
 ## Verification details
