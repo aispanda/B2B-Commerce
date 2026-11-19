@@ -1,6 +1,6 @@
 # D05: Process a fulfilled return with managed RMA
 
-Guide: [migrate/DELIVERY.md](https://github.com/aispanda/Reusable-Delivery/blob/2a4b77e1772f4828f595d40c882e7c4f77bc4007/migrate/DELIVERY.md) @ `2a4b77e1772f4828f595d40c882e7c4f77bc4007`; route **MIGRATE**. Earlier documentation review used `9d32dccc738cc544481a6da257c13d438115f122`; completed demo and closure remain unchanged. New scenario, Admin guidance and intended-role checks below are documentation planning and do not add a runtime pass.
+Guide: [migrate/DELIVERY.md](https://github.com/aispanda/Reusable-Delivery/blob/2a4b77e1772f4828f595d40c882e7c4f77bc4007/migrate/DELIVERY.md) @ `2a4b77e1772f4828f595d40c882e7c4f77bc4007`; route **MIGRATE**. Earlier documentation review used `9d32dccc738cc544481a6da257c13d438115f122`; completed demo and closure remain unchanged. New scenario and intended-role checks below are documentation planning and do not add a runtime pass.
 
 As a Customer Care agent, I want to authorize a return, record receipt and close an RMA so credit processing reflects the items received.
 
