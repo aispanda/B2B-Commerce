@@ -1,6 +1,6 @@
 # DEMO-QTY · Purchase quantity rules and volume pricing
 
-**Owner** · Pending confirmation · NEW route · [Guide](https://github.com/aispanda/Reusable-Delivery/blob/7a1203229c0e156809a4f83042e58bc57016dbb1/new/DELIVERY.md)
+**Owner** · Pending confirmation · NEW route · [Prior guide](https://github.com/aispanda/Reusable-Delivery/blob/7a1203229c0e156809a4f83042e58bc57016dbb1/new/DELIVERY.md) · [Current guide](https://github.com/aispanda/Reusable-Delivery/blob/eb7173519f6a7a9b25fe360ced95666e0cb16c0b/new/DELIVERY.md#copyable-story)
 
 **Outcome** · As a demo buyer, I want the storefront to enforce pack increments and apply volume pricing so that I can see the correct price before ordering.
 
@@ -12,12 +12,17 @@
 
 ## Proposed scenario checks
 
+- **Where / who** · Use the authorized proof-of-concept storefront as the designated synthetic buyer. The entry link and test user are in the restricted execution record.
+- **Start with** · Open the demo SKU with a dedicated empty cart. Test-record links are in the restricted execution record. Pending for replay · Confirm an empty cart. If needed, remove only the demo SKU line from the dedicated test cart.
+
+**Demo sequence** · AC-03 → AC-04 → AC-05 → AC-06
+
 1. **AC-01** · Commerce admin queries native records. `ProductQuantityRule` links `DEMO-GAUZE-BOX` to a `PurchaseQuantityRule` with minimum 2, maximum 20, and increment 2.
 2. **AC-02** · Commerce admin queries the buyer’s effective `PricebookEntry`. Its active range-based `PriceAdjustmentSchedule` has a 10% `PriceAdjustmentTier` starting at 10 units.
-3. **AC-03** · The buyer adds 8 units from the product page. The cart shows one line at $10.00 per unit and an $80.00 subtotal.
-4. **AC-04** · The buyer attempts to update the cart to 9 units. The storefront blocks the change and the line retains 8 units at $80.00.
-5. **AC-05** · The buyer updates the cart to 10 units. The line reprices to $9.00 per unit and a $90.00 subtotal.
-6. **AC-06** · The buyer updates the cart to 12 units. The line shows $9.00 per unit and a $108.00 subtotal.
+3. **AC-03** · The buyer adds 8 units from the product page → One cart line shows $10.00 per unit and an $80.00 subtotal.
+4. **AC-04** · The buyer attempts to set the cart line to 9 units → The cart flags the invalid quantity and retains 8 units at $80.00.
+5. **AC-05** · The buyer updates the cart to 10 units → The cart line shows $9.00 per unit and a $90.00 subtotal.
+6. **AC-06** · The buyer updates the cart to 12 units → The cart line shows $9.00 per unit and a $108.00 subtotal.
 
 | Check ID | Status | Observed result and evidence |
 |---|---|---|
