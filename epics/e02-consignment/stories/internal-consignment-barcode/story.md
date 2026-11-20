@@ -54,7 +54,7 @@ The user clarified that this story uses Salesforce for the entire workflow. The 
 - [Published story before correction](https://github.com/aispanda/B2B-Commerce/blob/331bb445c6ca6339a2e45b57f8f924053d108d4e/epics/e02-consignment/stories/internal-consignment-barcode/story.md) → this story. AC-01–AC-03 retain their wording. AC-04 was changed by the user's Salesforce-only correction. SC-08 was updated and remains NOT RUN. The SAP blocker was withdrawn.
 - [E02 demo scenario](https://github.com/aispanda/B2B-Commerce/blob/634d5eef66584da696dd658615d77bb856259a75/epics/e02-consignment/stories/consignment-consumption-demo/scenario.md) → SC-03–SC-05 fixture expectations. The demo records are reusable, subject to fixture and access verification.
 - The local barcode research preceded the Salesforce-only correction. Its SAP assumptions are historical and do not govern this story. A publication-safe current design and portable link are pending.
-- ClickUp search returned no barcode story. The related order-scenarios parent is not established as this story's item. Item identification and synchronization remain pending.
+- [ClickUp story](https://app.clickup.com/t/90141836417/1k59juump80) → this story. Created in ABCMed Storefront on 19 November 2026. The saved outcome and story link were read back. Owner is pending and status is To Do.
 
 ## Execution
 
@@ -71,4 +71,4 @@ The user clarified that this story uses Salesforce for the entire workflow. The 
 | --- | --- |
 | [story.md](story.md) | Requirements, demo checks and execution record |
 
-**ClickUp synchronization** · Pending. A matching barcode story item has not been identified. Confirm the intended item and edit authority before synchronization.
+**ClickUp synchronization** · The [new ClickUp story](https://app.clickup.com/t/90141836417/1k59juump80) contains the outcome and current story link. The saved description was read back.
