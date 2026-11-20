@@ -47,7 +47,14 @@ Before building or writing intake records:
 1. Inspect the designated test org and compare suitable existing objects with a purpose-built bid intake object; record the selected object, record type and rationale.
 2. Map solicitation-level fields, line items, issuer, deadline and time zone, source links, extraction evidence and reviewer status to Salesforce fields or related records. Identify missing fields and required permissions.
 3. Define the source-and-solicitation identity, duplicate handling, amendment history, expired-notice treatment and human review decisions. Confirm how reviewers open the original PDF and how uncertain extraction is flagged.
-4. Review the proposed model and access with the owner and reviewer before configuration or test-record writes. Update the scenario checks to match the approved design.
+4. Review the proposed model and access with the owner and reviewer before build, configuration or test-record writes. Consider a bid linked to multiple customer opportunities and avoid double-counting pipeline. Update the scenario checks to match the approved design.
+
+## Technical smoke test · 19 November 2026
+
+- A private Standard bucket was created in the AI Spanda project in South Carolina. Soft delete is disabled at the owner's direction; no Salesforce records were written.
+- Uploaded a one-page extract of the [Erie County medical supplies invitation](https://www3.erie.gov/purchasing/sites/www3.erie.gov.purchasing/files/bids/2025-06/250124-004-medical-supplies.pdf). This is an expired historical sample, not an open opportunity. The original is 22 pages; only page one was staged to bound processing cost. Cloud runtime identifiers remain in restricted configuration.
+- Document AI processing: NOT RUN. The console showed the API disabled; processor availability, billing and bucket compatibility are not yet verified. The user requested that solution design be determined before further build work.
+- This one-page smoke test is separate from the full scenario checks and does not establish extraction quality or acceptance.
 
 ## Material blockers
 
@@ -66,4 +73,4 @@ Route NEW, guide revision `bc8d7d2816995254205002d26a4ad8a59bc1696a`. Review dra
 | S-03 | Run the bounded batch and verify the test drafts, source links and replay. | Validated checklist, reviewed intake design and authorized spend/writes | Pending assignment | NOT RUN |
 | S-04 | Independently inspect the observed results against criteria and record human acceptance separately. | S-03 evidence | Pending assignment | NOT RUN |
 
-**Next** · Verify access and document the intake design. A separately authorized one-document technical smoke test may establish Cloud Storage and Document AI connectivity; it does not replace the scenario checks or authorize Salesforce writes.
+**Next** · Determine and review the solution design before further build work; verify access and document the intake design. A separately authorized one-document technical smoke test may establish Cloud Storage and Document AI connectivity; it does not replace the scenario checks or authorize Salesforce writes.
