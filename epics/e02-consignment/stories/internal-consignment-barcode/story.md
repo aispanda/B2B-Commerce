@@ -10,7 +10,7 @@
 
 ## Proposed scenario checks
 
-- **Where / who** · Use the Salesforce mobile app on a physical phone as an authorized coordinator in the demo org. Proposed entry is **App Launcher → assigned app → Menu → Consignment Stock**. Verify the app assignment and entry before replay. [Salesforce BarcodeScanner compatibility](https://developer.salesforce.com/docs/platform/mobile-offline/guide/use-barcodescanner-compatibility.html)
+- **Where / who** · Use the Salesforce mobile app on a physical phone as an authorized coordinator in the demo org. The administrator test entry is **Mobile Only → Menu → Consignment Stock Lookup**. Verify the menu and intended coordinator access before replay. [Salesforce BarcodeScanner compatibility](https://developer.salesforce.com/docs/platform/mobile-offline/guide/use-barcodescanner-compatibility.html)
 - **Start with** · Use the E02 synthetic stock position at zero confirmed on hand, a 10-box fill-up Shipment Item, a dated receipt reference and a three-box usage report. Confirm the fixture and its links before replay. The previous demo stock has seven boxes. A separate synthetic ten-unit delivered line and zero-stock position have been prepared; verify their links and receipt absence before replay. [E02 scenario and fixture](https://github.com/aispanda/B2B-Commerce/blob/634d5eef66584da696dd658615d77bb856259a75/epics/e02-consignment/stories/consignment-consumption-demo/scenario.md)
 
 **Demo sequence** · SC-01 → SC-02 → SC-03 → SC-04 → SC-05
