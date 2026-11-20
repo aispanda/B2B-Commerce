@@ -16,7 +16,7 @@ def page_tokens(document, number):
     text = document.get("text")
     if not text:
         return []
-    page = next((page for page in document["pages"] if page["pageNumber"] == number), {})
+    page = next((page for page in document.get("pages", []) if page["pageNumber"] == number), {})
     tokens = []
     for token in page.get("tokens", []):
         layout = token["layout"]
