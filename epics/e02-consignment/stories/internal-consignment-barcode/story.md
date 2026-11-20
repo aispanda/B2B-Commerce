@@ -1,6 +1,6 @@
 # E02 · Scan barcodes for internal consignment
 
-**Owner** · Pending confirmation · [Story and execution record](#execution) · [Delivery guide · MIGRATE · f425953](https://github.com/aispanda/Reusable-Delivery/blob/f425953ee7617ebc1232829a84dd44694609dfbe/migrate/DELIVERY.md)
+**Owner** · Pending confirmation · [Story and execution record](#execution) · [Delivery guide · MIGRATE · 3023855](https://github.com/aispanda/Reusable-Delivery/blob/302385554c48443a020000c51d75cec7888dbb4f/migrate/START.md)
 
 **Outcome** · As an internal consignment coordinator, I want to scan or enter a barcode on my phone so that I can identify site stock, record receipts and usage, and submit count discrepancies for review.
 
@@ -11,7 +11,7 @@
 ## Proposed scenario checks
 
 - **Where / who** · Use a physical phone with the Salesforce mobile app and an authorized internal coordinator in the designated demo org. Verify the entry point and role before replay. [Salesforce BarcodeScanner compatibility](https://developer.salesforce.com/docs/platform/mobile-offline/guide/use-barcodescanner-compatibility.html)
-- **Start with** · Use the E02 synthetic stock position at zero confirmed on hand, a 10-box fill-up Shipment Item, a dated receipt reference and a three-box usage report. Confirm the fixture and its links before replay. Use a fresh isolated fixture for a rerun that requires new movements. [E02 scenario and fixture](https://github.com/aispanda/B2B-Commerce/blob/634d5eef66584da696dd658615d77bb856259a75/epics/e02-consignment/stories/consignment-consumption-demo/scenario.md)
+- **Start with** · Use the E02 synthetic stock position at zero confirmed on hand, a 10-box fill-up Shipment Item, a dated receipt reference and a three-box usage report. Confirm the fixture and its links before replay. The existing demo stock now has seven boxes after a posted receipt of 10 and usage of 3. Prepare a separate, qualified fixture at zero for a fresh walkthrough; do not reset the shared fixture. [E02 scenario and fixture](https://github.com/aispanda/B2B-Commerce/blob/634d5eef66584da696dd658615d77bb856259a75/epics/e02-consignment/stories/consignment-consumption-demo/scenario.md)
 
 **Demo sequence** · SC-01 → SC-02 → SC-03 → SC-04 → SC-05
 
@@ -28,9 +28,9 @@
 | --- | --- | --- |
 | SC-01 | NOT RUN | Pending intended-device and app verification. |
 | SC-02 | NOT RUN | Pending camera fallback test. |
-| SC-03 | NOT RUN | Pending matching shipment and receipt fixture. |
-| SC-04 | NOT RUN | Pending usage fixture and posting test. |
-| SC-05 | NOT RUN | Pending discrepancy review workflow. |
+| SC-03 | NOT RUN | A separate zero-stock fixture and unused delivered shipment line are pending. |
+| SC-04 | NOT RUN | Pending a fresh usage report and posting test. |
+| SC-05 | NOT RUN | Pending the discrepancy review workflow and destination. |
 | SC-06 | NOT RUN | Pending identifier and access tests. |
 | SC-07 | NOT RUN | Pending shipment match and replay tests. |
 | SC-08 | NOT RUN | Pending access to the authorized checkout test path. |
@@ -44,17 +44,42 @@
 | AC-03 | Capture count discrepancies for review until an adjustment movement is defined. | SC-05 |
 | AC-04 | Use Salesforce for fill-up checkout and eligibility. | SC-08 · Salesforce path and eligibility rules pending verification. The eligible/ineligible scenario is proposed. |
 
+## Material blockers
+
+**SC-03–SC-04 · Fresh fixture pending**
+- **Goal** · Demonstrate receiving ten boxes and using three, starting from zero.
+- **Blocker** · The existing demo stock already has seven boxes and its receipt and usage are posted.
+- **Current fix** · Prepare and qualify a separate fictional stock position and unused delivered shipment line. Not yet verified.
+
+**SC-03, SC-07 · Shipment validation pending**
+- **Goal** · Record a receipt only against the matching delivered shipment item.
+- **Blocker** · The existing E02 process relies on manual shipment checks; automatic mismatch rejection is unverified.
+- **Current fix** · Add and test a server-side shipment match and replay check before saving. Not yet implemented.
+- **Documentation** · [Salesforce Shipment Item](https://developer.salesforce.com/docs/platform/object-reference/references/standard-objects/object-shipmentitem.html)
+
+**SC-05 · Review destination pending**
+- **Goal** · Record a count difference for review without changing stock.
+- **Blocker** · The reviewers and Salesforce review destination are not yet confirmed.
+- **Current fix** · Confirm the review destination and implement the record and review path. Not yet verified.
+
+**SC-08 · Checkout path pending**
+- **Goal** · Let eligible buyers submit a fill-up in Salesforce and prevent ineligible submissions.
+- **Blocker** · The store's Salesforce eligibility and submission path has not been verified.
+- **Current fix** · Identify the configured checkout and test eligible and ineligible buyers. Not yet verified.
+
 ## Scope correction
 
 The user clarified that this story uses Salesforce for the entire workflow. The previously recorded SAP blocker and SAP submission requirement are withdrawn. SC-08 remains NOT RUN until the Salesforce fill-up path is verified.
 
 ## Migration and scope history
 
-- The previous story used [NEW guide revision 2a4b77e](https://github.com/aispanda/Reusable-Delivery/blob/2a4b77e1772f4828f595d40c882e7c4f77bc4007/new/DELIVERY.md). This review uses MIGRATE at revision f425953. The migration route adds source mapping and criterion reconciliation, and requires an Outcome-and-story-link ClickUp description after publication. Existing checks retain their IDs and NOT RUN results.
+- The previous story used [NEW guide revision 2a4b77e](https://github.com/aispanda/Reusable-Delivery/blob/2a4b77e1772f4828f595d40c882e7c4f77bc4007/new/DELIVERY.md). The earlier review used MIGRATE at revision f425953. The migration route adds source mapping and criterion reconciliation, and requires an Outcome-and-story-link ClickUp description after publication. Existing checks retain their IDs and NOT RUN results.
 - [Published story before correction](https://github.com/aispanda/B2B-Commerce/blob/331bb445c6ca6339a2e45b57f8f924053d108d4e/epics/e02-consignment/stories/internal-consignment-barcode/story.md) → this story. AC-01–AC-03 retain their wording. AC-04 was changed by the user's Salesforce-only correction. SC-08 was updated and remains NOT RUN. The SAP blocker was withdrawn.
 - [E02 demo scenario](https://github.com/aispanda/B2B-Commerce/blob/634d5eef66584da696dd658615d77bb856259a75/epics/e02-consignment/stories/consignment-consumption-demo/scenario.md) → SC-03–SC-05 fixture expectations. The demo records are reusable, subject to fixture and access verification.
 - The local barcode research preceded the Salesforce-only correction. Its SAP assumptions are historical and do not govern this story. A publication-safe current design and portable link are pending.
 - [ClickUp story](https://app.clickup.com/t/90141836417/1k59juump80) → this story. Created in ABCMed Storefront on 19 November 2026. The saved outcome and story link were read back. Owner is pending and status is To Do.
+
+- Guide update: MIGRATE `f425953` → `302385554c48443a020000c51d75cec7888dbb4f`. Scenario IDs, agreed criteria, NOT RUN results and Salesforce-only correction are retained. The newer guide adds explicit gate-decision and scoped-exception recording; applicable steps must be reconciled before dispatch or closeout. Modules consulted: story, using, states, agreement, privacy, execution, review and publication. Migration and portable evidence remain pending.
 
 ## Execution
 
@@ -63,7 +88,9 @@ The user clarified that this story uses Salesforce for the entire workflow. The 
 | S-01 | Verify platform access. Headless 360 discover, describe and read-only Organization query passed. CLI org listing and read-only limits query passed for the same POC org on 19 November 2026. Portable restricted evidence and intended-user access remain pending. | Current executor | Passed for these read checks; evidence handoff pending |
 | S-02 | After S-01, verify the intended mobile role, fixture, barcode-to-stock mapping and review destination for discrepancies. Qualify the checkout test path for SC-08. | Pending confirmation | Pending |
 
-**Next** · Verify the mobile role, synthetic fixture, barcode mapping and discrepancy review destination for S-02. Executor pending confirmation. · [Execution](#execution)
+**Lookup slice** · Local draft only. Salesforce check-only validation passed three Apex tests. CodeRabbit returned zero findings; a fresh Claude Opus 5.5 final review reported no changes needed on the reviewed draft. Reviewed snapshot SHA-256: `7fd499ce4c04b5121bc27ba72c837f3647d28fa9a6b4c35855b7a0f5ffed93c4` (sorted per-file manifest). The code is not deployed; portable review evidence and physical phone testing remain pending.
+
+**Next** · Qualify a separate zero-stock fixture and delivered shipment line for SC-03–SC-04. Executor pending confirmation. Prerequisites: intended org and authorized synthetic data. · [Execution](#execution)
 
 ## Files
 
