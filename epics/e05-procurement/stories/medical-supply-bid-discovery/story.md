@@ -93,6 +93,8 @@ This existing story follows the [MIGRATE route at revision a89fb67](https://gith
 
 **Synchronization:** The existing local ClickUp synchronization record reports the prior task-creation attempt was rate-limited with no task ID returned. Search for BID-01 before any retry to avoid duplication; synchronization remains pending until the saved item and link are verified.
 
+**Batch readiness check · 20 November 2026.** There is no general bucket-to-Salesforce batch implementation evidenced by the current pilot. The operator-run local transfer script consumes one previously produced Document AI JSON and hard-codes the Erie sample; it is not a batch runner. Read-only checks found no Cloud Run jobs in `us-east1` and no notifications configured on the pilot bucket. Eventarc and Cloud Scheduler listing was unavailable because their APIs were disabled; this does not establish the absence of other orchestration. A new end-to-end batch test is blocked until a general reviewed batch implementation exists. No new Document AI processing or Salesforce writes were performed in this check.
+
 ## Material blockers
 
 **S-01 · Cloud and Salesforce access pending**  
