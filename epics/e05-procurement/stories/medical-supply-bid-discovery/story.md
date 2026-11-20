@@ -58,6 +58,8 @@ Use one custom **Solicitation** object (proposed API name `Bid__c`) and one opti
 
 Keep the pilot to this object and lookup. Separate line-item and amendment objects, product matching, and forecast changes can be evaluated if reviewer or reporting needs justify them. The test org, field definitions and reviewer permissions still need verification before build. The [Claude design review](claude-solution-design-review.md) preserves the broader alternatives.
 
+**Test-org schema deployed.** Salesforce validated and deployed `Bid__c` (Solicitation), its 15 fields, and the optional `Opportunity.Solicitation__c` lookup. Tooling API confirmed the fields and the lookup target. Common text uses 255 characters, Requested Items and Extraction Notes use Long Text Area, and published date, published time and verified deadline use Date, Time and Date/Time respectively. Needs Review defaults on and Source Key is a unique External ID. Reviewer field access and page layout placement remain pending. No records were created or linked.
+
 ## Technical smoke test · 19 November 2026
 
 - A private Standard bucket was created in the AI Spanda project in South Carolina. Soft delete is disabled at the owner's direction; no Salesforce records were written.
@@ -70,7 +72,7 @@ Keep the pilot to this object and lookup. Separate line-item and amendment objec
 ## Material blockers
 
 **S-01 · Cloud and Salesforce access pending**  
-The AI Spanda project now has a private Standard bucket in South Carolina. The Document AI API and US Form Parser are enabled. A one-page batch verified read/write compatibility with the South Carolina bucket. Billing eligibility and credits remain unverified. A billing read was blocked because the Cloud Billing API was disabled for the calling project. Verify entitlements and permissions before provisioning or running a paid batch. The Salesforce target, record type and reviewer role remain to be confirmed.
+The AI Spanda project now has a private Standard bucket in South Carolina. The Document AI API and US Form Parser are enabled. A one-page batch verified read/write compatibility with the South Carolina bucket. Billing eligibility and credits remain unverified. A billing read was blocked because the Cloud Billing API was disabled for the calling project. Verify entitlements and permissions before provisioning or running a paid batch. The schema is deployed to the ABCMed test org. Reviewer access and page layouts remain to be verified.
 
 ## Execution record
 
@@ -84,4 +86,4 @@ Route NEW, guide revision `bc8d7d2816995254205002d26a4ad8a59bc1696a`. Review dra
 | S-03 | Run the bounded batch and verify the test drafts, source links, replay and Opportunity linking. | Validated checklist, reviewed intake design and authorized spend/writes | Pending assignment | NOT RUN |
 | S-04 | Independently inspect the observed results against criteria and record human acceptance separately. | S-03 evidence | Pending assignment | NOT RUN |
 
-**Next** · Verify access, confirm the one-solicitation-per-Opportunity limit, and review the proposed field mapping and reviewer access before build. A separately authorized one-document technical smoke test may establish Cloud Storage and Document AI connectivity; it does not replace the scenario checks or authorize Salesforce writes.
+**Next** · Verify reviewer access and page layout placement, then check the field mapping with the staged result and a separate sample containing requested items. A separately authorized one-document technical smoke test may establish Cloud Storage and Document AI connectivity; it does not replace the scenario checks or authorize Salesforce writes.
