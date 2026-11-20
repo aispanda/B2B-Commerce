@@ -1,0 +1,21 @@
+name: BID-01 preview checks
+on:
+  pull_request:
+    paths:
+      - 'epics/e05-procurement/stories/medical-supply-bid-discovery/template-mapper/**'
+      - '.github/workflows/bid-01-preview.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: '3.14'
+      - run: python -m pip install -r epics/e05-procurement/stories/medical-supply-bid-discovery/template-mapper/requirements-workflow.txt
+      - run: python -m unittest discover -s epics/e05-procurement/stories/medical-supply-bid-discovery/template-mapper -v
