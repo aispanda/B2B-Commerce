@@ -1,0 +1,134 @@
+{
+  "id": "erie-invitation-v1",
+  "page": 1,
+  "signature": [
+    {
+      "text": "COUNTY OF ERIE",
+      "box": [
+        0.36,
+        0.1,
+        0.65,
+        0.132
+      ]
+    },
+    {
+      "text": "DIVISION OF PURCHASE",
+      "box": [
+        0.36,
+        0.132,
+        0.65,
+        0.15
+      ]
+    },
+    {
+      "text": "INVITATION TO BID",
+      "box": [
+        0.36,
+        0.15,
+        0.65,
+        0.174
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "target": "Issuing_Organization__c",
+      "required": true,
+      "box": [
+        0.36,
+        0.1,
+        0.65,
+        0.15
+      ]
+    },
+    {
+      "target": "Notice_Type__c",
+      "required": true,
+      "box": [
+        0.36,
+        0.15,
+        0.65,
+        0.174
+      ]
+    },
+    {
+      "target": "Solicitation_Number__c",
+      "required": true,
+      "pattern": "[0-9]{6}-[0-9]{3}",
+      "anchor": {
+        "text": "BID NUMBER :",
+        "box": [
+          0.1,
+          0.365,
+          0.257,
+          0.398
+        ]
+      },
+      "offset": [
+        0.017,
+        -0.01,
+        0.25,
+        0.01
+      ]
+    },
+    {
+      "target": "Published_Event_Date__c",
+      "type": "date",
+      "anchor": {
+        "text": "OPENING DATE :",
+        "box": [
+          0.1,
+          0.396,
+          0.282,
+          0.429
+        ]
+      },
+      "offset": [
+        0.018,
+        -0.01,
+        0.22,
+        0.01
+      ]
+    },
+    {
+      "target": "Published_Event_Time__c",
+      "type": "time",
+      "anchor": {
+        "text": "TIME :",
+        "box": [
+          0.59,
+          0.396,
+          0.664,
+          0.429
+        ]
+      },
+      "offset": [
+        0.018,
+        -0.01,
+        0.16,
+        0.01
+      ]
+    },
+    {
+      "target": "Title__c",
+      "required": true,
+      "anchor": {
+        "text": "FOR :",
+        "box": [
+          0.11,
+          0.428,
+          0.175,
+          0.46
+        ]
+      },
+      "offset": [
+        0.024,
+        -0.01,
+        0.56,
+        0.01
+      ],
+      "continuation_depth": 0.04,
+      "continuation_left": 0.1
+    }
+  ]
+}
