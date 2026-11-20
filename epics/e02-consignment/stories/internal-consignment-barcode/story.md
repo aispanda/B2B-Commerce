@@ -44,6 +44,15 @@
 | AC-03 | Capture count discrepancies for review until an adjustment movement is defined. | SC-05 |
 | AC-04 | Keep fill-up checkout on the existing eligibility and SAP submission path. | SC-08 · [O05 eligibility](../o05-consignment-eligibility/README.md) · [O06 fill-up](../o06-consignment-fill-up/README.md) |
 
+## Material blockers
+
+**SC-08 · Pending**
+
+- **Goal** · Show an eligible buyer's fill-up request is accepted by SAP.
+- **Blocker** · The checkout-to-SAP request and response are unverified.
+- **Current fix** · Confirm the SAP contract and test one synthetic request and acceptance.
+- **Documentation** · [E02 scope, evidence and proposed SAP handoff](https://github.com/aispanda/B2B-Commerce/blob/634d5eef66584da696dd658615d77bb856259a75/epics/e02-consignment/README.md). This documents the gap and proposed design. A verified solution URL is pending.
+
 ## Execution
 
 | Step | Action | Executor | State |
