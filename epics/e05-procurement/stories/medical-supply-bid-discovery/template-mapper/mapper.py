@@ -13,7 +13,9 @@ TARGETS = {
 
 
 def page_tokens(document, number):
-    text = document["text"]
+    text = document.get("text")
+    if not text:
+        return []
     page = next((page for page in document["pages"] if page["pageNumber"] == number), {})
     tokens = []
     for token in page.get("tokens", []):
