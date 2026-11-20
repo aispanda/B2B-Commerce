@@ -49,6 +49,8 @@ Before building or writing intake records:
 3. Define the source-and-solicitation identity, duplicate handling, amendment history, expired-notice treatment and human review decisions. Confirm how reviewers open the original PDF and how uncertain extraction is flagged.
 4. Review the proposed model and access with the owner and reviewer before build, configuration or test-record writes. Consider a bid linked to multiple customer opportunities and avoid double-counting pipeline. Update the scenario checks to match the approved design.
 
+**Candidate for evaluation (not approved)** · A separate solicitation record with related line items and amendments, and links to one or more customer Opportunities. Verify whether an Opportunity can relate to multiple solicitations and select a lookup or junction accordingly. Preserve unmatched source line descriptions rather than requiring a Product match. Compare with existing org objects and standard alternatives. Define forecasting/reporting to avoid double-counting without assuming all linked Opportunities are mutually exclusive. Gemini suggested Salesforce Files for source documents; this conflicts with AC-03's external PDF storage, so retain Cloud Storage as the current requirement pending an explicit design decision. Verify all platform claims and org capabilities independently.
+
 ## Technical smoke test · 19 November 2026
 
 - A private Standard bucket was created in the AI Spanda project in South Carolina. Soft delete is disabled at the owner's direction; no Salesforce records were written.
