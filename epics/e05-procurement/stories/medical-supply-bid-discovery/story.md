@@ -1,6 +1,6 @@
 # BID-01 · Turn public medical supply bids into Salesforce records
 
-**Owner** · Pending confirmation · [Execution record](#execution-record) · [NEW delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/bc8d7d2816995254205002d26a4ad8a59bc1696a/new/DELIVERY.md)
+**Owner** · Pending confirmation · [Execution record](#execution-record) · [MIGRATE delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/2e1c80dbc0c89ae81b9bcaedc79258c07a6b2e3c/migrate/START.md)
 
 **Outcome** · As a medical supply sales coordinator, I want relevant public RFQs and invitations to bid turned into Salesforce records for review so that I can identify bids worth pursuing before their deadlines.
 
@@ -23,7 +23,7 @@
 |---|---|---|
 | QA-01 | NOT RUN | Live discovery and status verification pending. |
 | QA-02 | NOT RUN | One-page technical smoke test passed. The full scenario batch and line-item comparison are pending. |
-| QA-03 | PARTIAL | On 20 November the signed-in pilot operator saw the grouped Details fields and opened the one-page private PDF from the Salesforce link. The visible number, title, issuer, and opening date/time matched the page; the verified deadline and time zone were blank. This historical sample has no requested items. A separately designated reviewer, missing/conflicting case, and complete scenario remain unverified. |
+| QA-03 | NOT RUN | Partial historical evidence for the full scenario. On 20 November the signed-in pilot operator saw the grouped Details fields and opened the one-page private PDF from the Salesforce link. The visible number, title, issuer, and opening date/time matched the page; the verified deadline and time zone were blank. This historical sample has no requested items. A separately designated reviewer, missing/conflicting case, and complete scenario remain unverified. |
 | QA-04 | NOT RUN | Replay and amendment fixtures pending. |
 | QA-05 | NOT RUN | Opportunity lookup and synthetic test records pending. |
 
@@ -38,6 +38,8 @@
 | AC-05 | A reviewer can link multiple existing Opportunities to one Solicitation. The link is optional and the bid appears once in solicitation counts. | QA-05 |
 
 ## Files
+
+- [Configurable PDF intake plan](configurable-pdf-intake-plan.md) · Implementation slices and Neon design feedback.
 
 - [Claude solution design review](claude-solution-design-review.md) · Complete generated draft preserved for review; its claims and proposed decisions are not yet independently verified or approved.
 
@@ -95,14 +97,28 @@ This existing story follows the [MIGRATE route at revision a89fb67](https://gith
 
 **Batch readiness check · 20 November 2026.** There is no general bucket-to-Salesforce batch implementation evidenced by the current pilot. The operator-run local transfer script consumes one previously produced Document AI JSON and hard-codes the Erie sample; it is not a batch runner. Read-only checks found no Cloud Run jobs in `us-east1` and no notifications configured on the pilot bucket. Eventarc and Cloud Scheduler listing was unavailable because their APIs were disabled; this does not establish the absence of other orchestration. A new end-to-end batch test is blocked until a general reviewed batch implementation exists. No new Document AI processing or Salesforce writes were performed in this check.
 
+## Configurable PDF intake (proposed)
+
+One versioned extraction template per layout maps annotated PDF regions to approved Solicitation fields. The first slice uses saved Form Parser output, printed label anchors and a hand-authored Erie template with a static overlay. Test changed values, missing identity, shifts and ambiguous matches on fixtures before building the PDF.js authoring screen. Evaluate managed Custom Extractor separately if enough labeled examples are available.
+
+An operator starts a bounded batch with an explicit manifest of private source objects. The batch checks page limits, stages immutable inputs, reconciles each Document AI result and routes unknown or ambiguous layouts for review with a reason. A recognized layout requires a valid identity before Salesforce write. Create a draft marked Needs Review using the existing unique source key. An identical replay leaves the draft intact, while changed content for the same identity goes to review with its evidence. Opportunity linking stays manual.
+
+Gemini Neon, High reasoning, reviewed the proposed design. Adopted refinements include label-relative boxes, a fixture-first sequence, immutable staging and replay reconciliation. Google Skill Finder located Cloud Storage Basics, Cloud Run Basics and Solution Architecture. The Neon review and proposed tests are in the linked plan. Implementation, deployment and end-to-end testing remain pending.
+
 ## Material blockers
+
+**S-03 / QA-02–QA-04 · General batch unavailable**
+- **Goal** · Run a bounded PDF batch and verify draft creation, review routing and replay.
+- **Blocker** · The verified pilot uses a one-document operator script. A general batch and reviewed mapper are pending.
+- **Current fix** · Validate the first versioned template locally, then implement the reviewed batch slices and run the bounded live test within authorized spend.
+- **Documentation** · [Document AI batch processing](https://docs.cloud.google.com/document-ai/docs/send-request#batch-processing)
 
 **S-01 · Cloud and Salesforce access pending**  
 The AI Spanda project now has a private Standard bucket in South Carolina. The Document AI API and US Form Parser are enabled. A one-page batch verified read/write compatibility with the South Carolina bucket. Billing eligibility and credits remain unverified. A billing read was blocked because the Cloud Billing API was disabled for the calling project. Verify entitlements and permissions before provisioning or running a paid batch. The schema is deployed to the ABCMed test org. The pilot operator's Details view and PDF access were observed; separate reviewer access and the remaining scenario checks still require verification.
 
 ## Execution record
 
-Route NEW, guide revision `bc8d7d2816995254205002d26a4ad8a59bc1696a`. Review draft. Cloud and Salesforce runtime identifiers belong in restricted configuration.
+Current route MIGRATE at `2e1c80dbc0c89ae81b9bcaedc79258c07a6b2e3c`. Prior MIGRATE revision `a89fb67e70b823f449fca4df631018677a41ae8f`; original NEW revision `bc8d7d2816995254205002d26a4ad8a59bc1696a`. Loaded agreement, privacy, story, execution, states, platform, automation, review, publication, using, reference, and CODE-QUALITY at the current revision. The current guide clarifies progress tracking and exact-revision review evidence. Existing scenario wording and AC-01–AC-05 are preserved. QA-03 retains the prior observation and remains NOT RUN as a complete scenario. The local intake plan and Neon feedback are mapped to the linked plan. Cloud and Salesforce runtime identifiers stay in restricted configuration.
 
 | Step | Action | Dependency | Executor | State |
 |---|---|---|---|---|
@@ -112,4 +128,4 @@ Route NEW, guide revision `bc8d7d2816995254205002d26a4ad8a59bc1696a`. Review dra
 | S-03 | Run the bounded batch and verify the test drafts, source links, replay and Opportunity linking. | Validated checklist, reviewed intake design and authorized spend/writes | Pending assignment | NOT RUN |
 | S-04 | Independently inspect the observed results against criteria and record human acceptance separately. | S-03 evidence | Pending assignment | NOT RUN |
 
-**Next** · Identify and verify any separately designated reviewer; exercise the missing or conflicting case before automating QA-03. Prepare a durable sanitized revision and repository-owned checks for the sample transfer script, and complete the required review sequence on each new code or metadata slice before dependent implementation.
+**Next** · S-02 / QA-02. Validate the first Erie template against saved Form Parser output and a held-out or synthetic conflicting layout. Executor pending confirmation. Use the authorized local fixtures and record the expected versus observed field and routing results before automating the batch.
