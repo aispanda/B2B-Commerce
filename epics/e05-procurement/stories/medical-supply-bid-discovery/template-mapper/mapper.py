@@ -69,7 +69,7 @@ def read_field(tokens, field):
             first_line = min(token[2] for token in values)
             zone = [field.get("continuation_left", left), top, 1.0,
                     bottom + field["continuation_depth"]]
-            if any((token[2] > first_line + 0.005 or token[1] > right) and token not in values and token not in anchor_tokens
+            if any((token[2] > first_line + 0.005 or token[1] > right or token[1] < left) and token not in values and token not in anchor_tokens
                    for token in within(tokens, zone)):
                 raise ValueError("possible wrapped value")
     pieces = []
