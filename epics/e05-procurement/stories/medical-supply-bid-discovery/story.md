@@ -62,13 +62,14 @@ Keep the pilot to this object and lookup. Separate line-item and amendment objec
 
 - A private Standard bucket was created in the AI Spanda project in South Carolina. Soft delete is disabled at the owner's direction; no Salesforce records were written.
 - Uploaded a one-page extract of the [Erie County medical supplies invitation](https://www3.erie.gov/purchasing/sites/www3.erie.gov.purchasing/files/bids/2025-06/250124-004-medical-supplies.pdf). This is an expired historical sample, not an open opportunity. The original is 22 pages; only page one was staged to bound processing cost. Cloud runtime identifiers remain in restricted configuration.
-- Document AI processing: NOT RUN. The console showed the API disabled; processor availability, billing and bucket compatibility are not yet verified. The user requested that solution design be determined before further build work.
+- Document AI processing: NOT RUN. Enabled the Document AI API in the console and verified the processor list was empty. Form Parser creation was blocked by automatic approval review pending explicit authorization and a spend limit. Processor availability, billing and bucket compatibility remain unverified.
+- Local reference check on the staged page found issuer County of Erie, Division of Purchase, bid number `250124-004`, and notice type Invitation to Bid. The official source identifies the title as Medical Supplies. The page states an opening date and time of June 30, 2025 at 2:00 p.m. with no stated time zone. Preserve the published event and label and verify its meaning before mapping it to a response deadline. This historical page does not list requested items or quantities. The local PDF text layer garbled the title, so compare the parser output against the visible source.
 - This one-page smoke test is separate from the full scenario checks and does not establish extraction quality or acceptance.
 
 ## Material blockers
 
 **S-01 · Cloud and Salesforce access pending**  
-The AI Spanda project now has a private Standard bucket in South Carolina. Document AI compatibility and billing eligibility remain unverified. A billing read was blocked because the Cloud Billing API was disabled for the calling project. Verify entitlements and permissions before provisioning or running a paid batch. The Salesforce target, record type and reviewer role remain to be confirmed.
+The AI Spanda project now has a private Standard bucket in South Carolina. The Document AI API is enabled. The Form Parser, compatibility and billing eligibility remain pending. A billing read was blocked because the Cloud Billing API was disabled for the calling project. Verify entitlements and permissions before provisioning or running a paid batch. The Salesforce target, record type and reviewer role remain to be confirmed.
 
 ## Execution record
 
