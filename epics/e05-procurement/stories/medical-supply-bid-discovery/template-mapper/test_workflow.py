@@ -50,3 +50,9 @@ class WorkflowTests(unittest.TestCase):
               mock.patch.object(workflow, "map_document", observe_tracing)):
             run_preview(document(ENTRIES), [TEMPLATE])
         self.assertEqual(seen, [False])
+
+    def test_missing_ocr_text_routes_to_review(self):
+        result = run_preview({"pages": [{"pageNumber": 1}]}, [TEMPLATE])
+        self.assertEqual(result["route"], "review")
+        self.assertEqual(result["mapping"]["status"], "unknown-template")
+        self.assertEqual(result["mapping"]["fields"], {})
