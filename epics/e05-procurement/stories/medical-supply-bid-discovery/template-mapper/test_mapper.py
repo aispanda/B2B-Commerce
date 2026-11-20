@@ -126,3 +126,43 @@ class MapperTests(unittest.TestCase):
         config = dict(TEMPLATE, fields=[{"target": "Solicitation_Number__c",
                                         "box": [.4, .36, .5, .39]}, title])
         self.assertEqual(map_document(document(entries), [config])["status"], "matched")
+
+    def test_title_word_left_of_value_box_requires_review(self):
+        entries = self.entries[:-1] + [("A", .25, .305), ("Title", .43, .305),
+                                      ("123", .43, .38)]
+        title = {"target": "Title__c", "required": True,
+                 "anchor": {"text": "NUMBER", "box": [.1, .25, .3, .35]},
+                 "offset": [.05, -.01, .3, .01], "continuation_depth": .035,
+                 "continuation_left": .1}
+        config = dict(TEMPLATE, fields=[{"target": "Solicitation_Number__c",
+                                        "box": [.4, .36, .5, .39]}, title])
+        self.assertEqual(map_document(document(entries), [config])["status"], "invalid-fields")
+
+    def test_erie_template_maps_synthetic_notice(self):
+        import json
+        from pathlib import Path
+        template = json.loads(Path(__file__).with_name("erie-v1.json").read_text())
+        entries = [
+            ("COUNTY", .443, .121), ("OF", .523, .121), ("ERIE", .579, .121),
+            ("DIVISION", .425, .141), ("OF", .486, .141), ("PURCHASE", .56, .141),
+            ("INVITATION", .463, .158), ("TO", .536, .158), ("BID", .572, .158),
+            ("BID", .133, .381), ("NUMBER", .193, .381), (":", .233, .381),
+            ("999999-123", .294, .381), ("OPENING", .159, .412),
+            ("DATE", .229, .412), (":", .256, .412), ("June", .307, .413),
+            ("30,", .341, .413), ("2025", .381, .413), ("TIME", .626, .412),
+            (":", .648, .412), ("2:00", .684, .412), ("PM", .72, .412),
+            ("FOR", .138, .444), (":", .156, .444),
+            ("Medical", .233, .445), ("Supplies", .309, .445),
+        ]
+        result = map_document(document(entries), [template])
+        self.assertEqual(result["status"], "matched")
+        self.assertEqual(result["fields"], {
+            "Issuing_Organization__c": "COUNTY OF ERIE DIVISION OF PURCHASE",
+            "Notice_Type__c": "INVITATION TO BID",
+            "Solicitation_Number__c": "999999-123",
+            "Published_Event_Date__c": "2025-06-30",
+            "Published_Event_Time__c": "14:00:00.000Z",
+            "Title__c": "Medical Supplies",
+        })
+        self.assertEqual(map_document(document(entries[9:]), [template])["status"],
+                         "unknown-template")
