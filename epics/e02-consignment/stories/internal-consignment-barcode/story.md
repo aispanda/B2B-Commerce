@@ -6,7 +6,7 @@
 
 **Demo result** · NOT RUN. The target org, app entry point, intended role and fixture links are pending verification.
 
-**Acceptance** · The workflow direction is confirmed. Human acceptance of the implementation is pending. Adjustment posting requires a future movement design. SAP remains the production authority for consignment fulfillment, inventory and billing.
+**Acceptance** · The workflow direction is confirmed. Human acceptance of the implementation is pending. Adjustment posting requires a future movement design. This story uses Salesforce for the consignment workflow.
 
 ## Proposed scenario checks
 
@@ -22,7 +22,7 @@
 5. **SC-05** · Count six boxes against seven confirmed and submit the discrepancy → the review record shows expected **7**, counted **6**, variance **−1**, the site and product, and who submitted it and when. Confirmed on hand is **7**. AC-03
 6. **SC-06** · Try an unknown code, a code with multiple mappings and an inaccessible site → the coordinator cannot save a movement. A valid code with leading zeros resolves identically through scan and manual entry. AC-01
 7. **SC-07** · Try a mismatched Shipment Item and replay the same receipt and usage references → the mismatch is rejected, each valid event is counted once, and confirmed on hand is **7**. AC-02
-8. **SC-08** · In the authorized checkout test path, exercise an eligible and an ineligible buyer → the eligible fill-up uses the existing SAP submission path and a fill-up request leaves stock posting pending receipt. The ineligible buyer cannot submit a fill-up. AC-04
+8. **SC-08** · In the authorized checkout test path, exercise an eligible and an ineligible buyer → the eligible buyer submits a fill-up in Salesforce and a fill-up request leaves stock posting pending receipt. The ineligible buyer cannot submit a fill-up. AC-04
 
 | Check ID | Status | Observed result and evidence |
 | --- | --- | --- |
@@ -42,16 +42,11 @@
 | AC-01 | Use native scanning in the Salesforce mobile app with a manual fallback. | SC-01, SC-02, SC-06 |
 | AC-02 | Reuse E02’s receipt and consumption movements. | SC-03, SC-04, SC-07 |
 | AC-03 | Capture count discrepancies for review until an adjustment movement is defined. | SC-05 |
-| AC-04 | Keep fill-up checkout on the existing eligibility and SAP submission path. | SC-08 · [O05 eligibility](../o05-consignment-eligibility/README.md) · [O06 fill-up](../o06-consignment-fill-up/README.md) |
+| AC-04 | Use Salesforce for fill-up checkout and eligibility. | SC-08 · Salesforce path and eligibility rules pending verification. |
 
-## Material blockers
+## Scope correction
 
-**SC-08 · Pending**
-
-- **Goal** · Show an eligible buyer's fill-up request is accepted by SAP.
-- **Blocker** · The checkout-to-SAP request and response are unverified.
-- **Current fix** · Confirm the SAP contract and test one synthetic request and acceptance.
-- **Documentation** · [E02 scope, evidence and proposed SAP handoff](https://github.com/aispanda/B2B-Commerce/blob/634d5eef66584da696dd658615d77bb856259a75/epics/e02-consignment/README.md). This documents the gap and proposed design. A verified solution URL is pending.
+The user clarified that this story uses Salesforce for the entire workflow. The previously recorded SAP blocker and SAP submission requirement are withdrawn. SC-08 remains NOT RUN until the Salesforce fill-up path is verified.
 
 ## Execution
 
