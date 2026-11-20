@@ -40,10 +40,19 @@
 - [Public hospital medical supply bid PDF](https://quezoncity.gov.ph/wp-content/uploads/2025/11/54.-QCGH-26-MSLI-0093.pdf) for historical extraction, with no claim that bidding is open.
 - [Document AI batch requests](https://docs.cloud.google.com/document-ai/docs/send-request#batch-processing) for Cloud Storage input and output. [Extraction pricing](https://cloud.google.com/products/document-ai/pricing) for estimating page charges.
 
+## Salesforce intake design (pending)
+
+Before building or writing intake records:
+
+1. Inspect the designated test org and compare suitable existing objects with a purpose-built bid intake object; record the selected object, record type and rationale.
+2. Map solicitation-level fields, line items, issuer, deadline and time zone, source links, extraction evidence and reviewer status to Salesforce fields or related records. Identify missing fields and required permissions.
+3. Define the source-and-solicitation identity, duplicate handling, amendment history, expired-notice treatment and human review decisions. Confirm how reviewers open the original PDF and how uncertain extraction is flagged.
+4. Review the proposed model and access with the owner and reviewer before configuration or test-record writes. Update the scenario checks to match the approved design.
+
 ## Material blockers
 
 **S-01 · Cloud and Salesforce access pending**  
-The candidate test project returned no visible storage buckets. Document AI and billing eligibility are unverified. A billing read was blocked because the Cloud Billing API was disabled for the calling project. Verify entitlements and permissions before provisioning or running a paid batch. The Salesforce target, record type and reviewer role remain to be confirmed.
+The AI Spanda project now has a private Standard bucket in South Carolina. Document AI compatibility and billing eligibility remain unverified. A billing read was blocked because the Cloud Billing API was disabled for the calling project. Verify entitlements and permissions before provisioning or running a paid batch. The Salesforce target, record type and reviewer role remain to be confirmed.
 
 ## Execution record
 
@@ -53,7 +62,8 @@ Route NEW, guide revision `bc8d7d2816995254205002d26a4ad8a59bc1696a`. Review dra
 |---|---|---|---|---|
 | S-01 | Verify platform access with separate read-only probes for Salesforce Headless 360, Salesforce CLI, and Google Cloud project, storage, Document AI and billing. | Authorized target identities | Pending assignment | Pending |
 | S-02 | Map source documentation, select the small batch and validate the checklist manually on a known case and a missing or conflicting case. | Public sources and applicable access | Pending assignment | NOT RUN |
-| S-03 | Run the bounded batch and verify the test drafts, source links and replay. | Validated checklist, target object and authorized spend/writes | Pending assignment | NOT RUN |
+| S-02a | Design and review the Salesforce intake object, field mapping, reviewer access, deduplication and amendment handling. | Test-org discovery and reviewer input | Pending assignment | NOT RUN |
+| S-03 | Run the bounded batch and verify the test drafts, source links and replay. | Validated checklist, reviewed intake design and authorized spend/writes | Pending assignment | NOT RUN |
 | S-04 | Independently inspect the observed results against criteria and record human acceptance separately. | S-03 evidence | Pending assignment | NOT RUN |
 
-**Next** · S-01. Verify access without changing either platform. Record one minimal read per connection and the exact gap if it fails. Confirm the project, org and owner before provisioning, consuming paid processing or writing Salesforce data.
+**Next** · Verify access and document the intake design. A separately authorized one-document technical smoke test may establish Cloud Storage and Document AI connectivity; it does not replace the scenario checks or authorize Salesforce writes.
