@@ -56,3 +56,8 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(result["route"], "review")
         self.assertEqual(result["mapping"]["status"], "unknown-template")
         self.assertEqual(result["mapping"]["fields"], {})
+
+    def test_text_without_pages_routes_to_review(self):
+        result = run_preview({"text": "unstructured text"}, [TEMPLATE])
+        self.assertEqual(result["route"], "review")
+        self.assertEqual(result["mapping"]["status"], "unknown-template")
