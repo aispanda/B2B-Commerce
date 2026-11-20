@@ -62,6 +62,9 @@ Keep the pilot to this object and lookup. Separate line-item and amendment objec
 
 **Transfer smoke test.** The pilot operator received the scoped Bid Intake Pilot permission set. A sample-specific operator script read the one-page Document AI JSON from Cloud Storage and created historical Solicitation BID-00001 in the ABCMed test org, marked Needs Review. A readback matched the bid number, issuer, title, notice type, published date and time. The time zone and verified response deadline remain blank. A sequential replay found the same source key and did not modify the record. The PDF link is present; reviewer access has not been tested. The script is a single-sample smoke test and does not implement general ingestion, concurrent deduplication, or amendment handling. No Opportunity has been linked.
 
+
+**Layout and relationship update.** The Solicitation page layout now groups the pilot fields by details, dates, source documents and extracted content, and includes an Opportunities related list. The optional Solicitation lookup was added to the four existing Opportunity layouts. The edit form displays the fields and values, and the Related tab displays Opportunities; no Opportunity has been linked. The record Details view still shows only the original system fields after refresh, so investigate and verify the read-only view before treating page placement as complete. QA-05 and reviewer access remain unverified.
+
 ## Technical smoke test · 19 November 2026
 
 - A private Standard bucket was created in the AI Spanda project in South Carolina. Soft delete is disabled at the owner's direction; no Salesforce records were written.
