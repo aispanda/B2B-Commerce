@@ -17,6 +17,7 @@
 2. **QA-02** · Stage the PDFs in Google Cloud Storage, run one Document AI batch, and confirm each input has a corresponding result or an explicit processing error. Compare extracted requested items, quantities and units, where stated, against their source pages. Flag missing or conflicting values. **AC-02**
 3. **QA-03** · Open the Salesforce test draft. Verify the issuing organization, solicitation ID, deadline with time zone where stated, requested items, review status and source links. Verify the original PDF opens for the reviewer and is stored outside Salesforce. **AC-03**
 4. **QA-04** · Replay the same notice and then an amended notice. Verify the original intake record is not duplicated, and the amendment is flagged for review. Expired samples may be retained as historical test evidence and must not appear in the active sales queue. **AC-04**
+5. **QA-05** · Link two existing synthetic Opportunities to the same Solicitation and leave a third unlinked. Verify that both links resolve to the same record, the third can remain blank, and the solicitation report counts the bid once. **AC-05**
 
 | Check ID | Status | Observed result and evidence |
 |---|---|---|
@@ -24,6 +25,7 @@
 | QA-02 | NOT RUN | No Document AI batch has run. |
 | QA-03 | NOT RUN | Target object and reviewer access pending. |
 | QA-04 | NOT RUN | Replay and amendment fixtures pending. |
+| QA-05 | NOT RUN | Opportunity lookup and synthetic test records pending. |
 
 ## Acceptance criteria
 
@@ -33,6 +35,7 @@
 | AC-02 | The batch produces a traceable result or an explicit error for every file. Each required field or line is supported by the source or flagged for review. | QA-02 |
 | AC-03 | Salesforce stores reviewable bid data and source links. Google Cloud Storage holds original PDFs and extraction JSON. A person decides whether to pursue the bid. | QA-03 |
 | AC-04 | Reprocessing a notice is idempotent using source and solicitation ID. Changes to a known notice are visible to the reviewer. | QA-04 |
+| AC-05 | A reviewer can link multiple existing Opportunities to one Solicitation. The link is optional and the bid appears once in solicitation counts. | QA-05 |
 
 ## Files
 
@@ -42,16 +45,18 @@
 - [Public hospital medical supply bid PDF](https://quezoncity.gov.ph/wp-content/uploads/2025/11/54.-QCGH-26-MSLI-0093.pdf) for historical extraction, with no claim that bidding is open.
 - [Document AI batch requests](https://docs.cloud.google.com/document-ai/docs/send-request#batch-processing) for Cloud Storage input and output. [Extraction pricing](https://cloud.google.com/products/document-ai/pricing) for estimating page charges.
 
-## Salesforce intake design (pending)
+## Salesforce intake design (pilot)
 
-Before building or writing intake records:
+Use one custom **Solicitation** object (proposed API name `Bid__c`) and one optional **Solicitation** lookup on Opportunity. One solicitation can be linked to several Opportunities. Each Opportunity can link to at most one solicitation. Confirm that limit with the reviewer during test-org discovery. Revisit a junction object if an Opportunity needs to link to multiple solicitations or the relationship needs its own fields.
 
-1. Inspect the designated test org and compare suitable existing objects with a purpose-built bid intake object; record the selected object, record type and rationale.
-2. Map solicitation-level fields, line items, issuer, deadline and time zone, source links, extraction evidence and reviewer status to Salesforce fields or related records. Identify missing fields and required permissions.
-3. Define the source-and-solicitation identity, duplicate handling, amendment history, expired-notice treatment and human review decisions. Confirm how reviewers open the original PDF and how uncertain extraction is flagged.
-4. Review the proposed model and access with the owner and reviewer before build, configuration or test-record writes. Consider a bid linked to multiple customer opportunities and avoid double-counting pipeline. Update the scenario checks to match the approved design.
+| Step | Pilot design |
+|---|---|
+| Capture | Document AI reads the staged PDF and writes extraction JSON to private Cloud Storage. The intake process maps the title, issuer, solicitation number, notice type, deadline as published, verified deadline and time zone where available, and extraction flags to the Solicitation. Keep requested items as readable rows in a long text field with description, quantity, unit and source page where available. Flag missing or conflicting values for review. Use the JSON for complete detail if the summary exceeds the field limit. |
+| Preserve sources | Keep each PDF revision and its extraction JSON in Cloud Storage. Use a distinct, write-once object path for each PDF revision. Store the official notice URL and an authenticated PDF link on the Solicitation. Confirm that a named reviewer can open the exact PDF with their normal Google account. |
+| Handle replays and amendments | Upsert one Solicitation by a unique external ID based on source and solicitation number, including issuer when the source requires it to distinguish notices. An identical replay leaves reviewed data and status intact. For an amendment, retain the previous document and extraction result, update the current source reference and extracted fields, and return the Solicitation to review. Keep it out of the open queue when the deadline or notice status cannot be verified. |
+| Review and link | A reviewer checks the extracted fields against the PDF and records the decision. When an existing Opportunity is relevant, the reviewer links it manually using the optional lookup. Use a Solicitation-based report for bid counts, so two linked Opportunities still count as one solicitation. |
 
-**Candidate for evaluation (not approved)** · A separate solicitation record with related line items and amendments, and links to one or more customer Opportunities. Verify whether an Opportunity can relate to multiple solicitations and select a lookup or junction accordingly. Preserve unmatched source line descriptions rather than requiring a Product match. Compare with existing org objects and standard alternatives. Define forecasting/reporting to avoid double-counting without assuming all linked Opportunities are mutually exclusive. Gemini suggested Salesforce Files for source documents; this conflicts with AC-03's external PDF storage, so retain Cloud Storage as the current requirement pending an explicit design decision. Verify all platform claims and org capabilities independently.
+Keep the pilot to this object and lookup. Separate line-item and amendment objects, product matching, and forecast changes can be evaluated if reviewer or reporting needs justify them. The test org, field definitions and reviewer permissions still need verification before build. The [Claude design review](claude-solution-design-review.md) preserves the broader alternatives.
 
 ## Technical smoke test · 19 November 2026
 
@@ -73,8 +78,8 @@ Route NEW, guide revision `bc8d7d2816995254205002d26a4ad8a59bc1696a`. Review dra
 |---|---|---|---|---|
 | S-01 | Verify platform access with separate read-only probes for Salesforce Headless 360, Salesforce CLI, and Google Cloud project, storage, Document AI and billing. | Authorized target identities | Pending assignment | Pending |
 | S-02 | Map source documentation, select the small batch and validate the checklist manually on a known case and a missing or conflicting case. | Public sources and applicable access | Pending assignment | NOT RUN |
-| S-02a | Design and review the Salesforce intake object, field mapping, reviewer access, deduplication and amendment handling. | Test-org discovery and reviewer input | Pending assignment | NOT RUN |
-| S-03 | Run the bounded batch and verify the test drafts, source links and replay. | Validated checklist, reviewed intake design and authorized spend/writes | Pending assignment | NOT RUN |
+| S-02a | Verify the proposed Solicitation fields, Opportunity lookup, reviewer access and amendment handling in the designated test org and review the design. | Test-org discovery and reviewer input | Pending assignment | NOT RUN |
+| S-03 | Run the bounded batch and verify the test drafts, source links, replay and Opportunity linking. | Validated checklist, reviewed intake design and authorized spend/writes | Pending assignment | NOT RUN |
 | S-04 | Independently inspect the observed results against criteria and record human acceptance separately. | S-03 evidence | Pending assignment | NOT RUN |
 
-**Next** · Determine and review the solution design before further build work; verify access and document the intake design. A separately authorized one-document technical smoke test may establish Cloud Storage and Document AI connectivity; it does not replace the scenario checks or authorize Salesforce writes.
+**Next** · Verify access, confirm the one-solicitation-per-Opportunity limit, and review the proposed field mapping and reviewer access before build. A separately authorized one-document technical smoke test may establish Cloud Storage and Document AI connectivity; it does not replace the scenario checks or authorize Salesforce writes.
