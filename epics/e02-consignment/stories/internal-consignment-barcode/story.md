@@ -4,14 +4,14 @@
 
 **Outcome** · As an internal consignment coordinator, I want to scan or enter a barcode on my phone so that I can identify site stock, record receipts and usage, and submit count discrepancies for review.
 
-**Demo result** · NOT RUN. The demo org was identified through CLI access. The mobile entry, intended user and fresh fixture still need verification.
+**Demo result** · NOT RUN on a phone. The lookup is deployed and its app page activated for the administrator demo user. Mobile navigation, camera scanning and intended coordinator access remain unverified.
 
 **Acceptance** · The workflow direction is confirmed. Human acceptance of the implementation is pending. Adjustment posting requires a future movement design. This story uses Salesforce for the consignment workflow.
 
 ## Proposed scenario checks
 
 - **Where / who** · Use the Salesforce mobile app on a physical phone as an authorized coordinator in the demo org. Proposed entry is **App Launcher → assigned app → Menu → Consignment Stock**. Verify the app assignment and entry before replay. [Salesforce BarcodeScanner compatibility](https://developer.salesforce.com/docs/platform/mobile-offline/guide/use-barcodescanner-compatibility.html)
-- **Start with** · Use the E02 synthetic stock position at zero confirmed on hand, a 10-box fill-up Shipment Item, a dated receipt reference and a three-box usage report. Confirm the fixture and its links before replay. The existing demo stock now has seven boxes after a posted receipt of 10 and usage of 3. Prepare a separate, qualified fixture at zero for a fresh walkthrough; do not reset the shared fixture. [E02 scenario and fixture](https://github.com/aispanda/B2B-Commerce/blob/634d5eef66584da696dd658615d77bb856259a75/epics/e02-consignment/stories/consignment-consumption-demo/scenario.md)
+- **Start with** · Use the E02 synthetic stock position at zero confirmed on hand, a 10-box fill-up Shipment Item, a dated receipt reference and a three-box usage report. Confirm the fixture and its links before replay. The previous demo stock has seven boxes. A separate synthetic ten-unit delivered line and zero-stock position have been prepared; verify their links and receipt absence before replay. [E02 scenario and fixture](https://github.com/aispanda/B2B-Commerce/blob/634d5eef66584da696dd658615d77bb856259a75/epics/e02-consignment/stories/consignment-consumption-demo/scenario.md)
 
 **Demo sequence** · SC-01 → SC-02 → SC-03 → SC-04 → SC-05
 
@@ -28,7 +28,7 @@
 | --- | --- | --- |
 | SC-01 | NOT RUN | Pending intended-device and app verification. |
 | SC-02 | NOT RUN | Pending camera fallback test. |
-| SC-03 | NOT RUN | A separate zero-stock fixture and unused delivered shipment line are pending. |
+| SC-03 | NOT RUN | A fresh synthetic zero-stock position and unused ten-unit delivered line have been created. Receipt workflow remains NOT RUN. |
 | SC-04 | NOT RUN | Pending a fresh usage report and posting test. |
 | SC-05 | NOT RUN | Pending the discrepancy review workflow and destination. |
 | SC-06 | NOT RUN | Pending identifier and access tests. |
@@ -46,10 +46,10 @@
 
 ## Material blockers
 
-**SC-03–SC-04 · Fresh fixture pending**
+**SC-03–SC-04 · Fixture prepared**
 - **Goal** · Demonstrate receiving ten boxes and using three, starting from zero.
-- **Blocker** · The existing demo stock already has seven boxes and its receipt and usage are posted.
-- **Current fix** · Prepare and qualify a separate fictional stock position and unused delivered shipment line. Not yet verified.
+- **Blocker** · The receipt and usage actions are not implemented for this barcode experience.
+- **Current fix** · Build and verify the actions using the prepared synthetic shipment and zero-stock position.
 
 **SC-03, SC-07 · Shipment validation pending**
 - **Goal** · Record a receipt only against the matching delivered shipment item.
@@ -92,13 +92,13 @@ The user clarified that this story uses Salesforce for the entire workflow. The 
 | S-03 | Implement the reviewed lookup and mobile Screen Flow actions in separately testable slices. Validate SC-01–SC-07 against the design. | Pending confirmation | Pending |
 | S-04 | After manual validation, implement the required Gemini LangGraph evidence workflow. | Pending confirmation | Pending |
 
-**Lookup slice** · Local draft only. Salesforce check-only validation passed three Apex tests. CodeRabbit returned zero findings; a fresh Claude Opus 5.5 final review reported no changes needed on the reviewed draft. Reviewed snapshot SHA-256: `7fd499ce4c04b5121bc27ba72c837f3647d28fa9a6b4c35855b7a0f5ffed93c4` (sorted per-file manifest). The code is not deployed; portable review evidence and physical phone testing remain pending.
+**Lookup slice** · Deployed to the demo org on 20 November 2026; all three specified Apex tests passed. CodeRabbit and fresh Claude Opus 5.5 reviewed snapshot `281c85940a23b05270195ff52131c24d80c510ca7607ccba2cfbd7dcf2ea39f5`. The **Consignment Stock Lookup** app page was activated for system administrators and added to the Mobile Only menu. Administrator phone scan and manual lookup are NOT RUN. Intended coordinator role and access remain pending. Portable deployment and review evidence remain pending.
 
 **Design review** · On 20 November 2026, Claude Opus 5.5 (High) reviewed the draft design in-app and returned 18 location-specific suggestions. The revised [design](design.md) addresses the mobile action constraint, scanner lifecycle and fallback, role mapping, duplicate submissions and posting, and acceptance coverage. The existing 100-result cap was retained. The lookup already dismissed the scanner, and distinct failure messages remain an implementation item. Mobile Flow visibility and refresh, reviewer assignments, and sample label mappings require org and phone validation. The private review transcript is retained separately. The revised design is pending a recheck before implementation handoff.
 
 **Governance** · Google’s [Gemini Fullstack LangGraph Quickstart](https://github.com/google-gemini/gemini-fullstack-langgraph-quickstart) is required for this story's repeatable verification workflow. First validate the checklist manually using a synthetic case and a case with missing or conflicting evidence. The local deterministic fixture check is evidence for SC-03 preparation only. Reuse Quickstart scaffolding for the bounded evidence workflow, keep pass/fail checks deterministic, and restrict the Gemini node to summarizing sanitized evidence. Verify approved Gemini credential access at execution without recording its value. Live Google integration is pending. For each changed code slice, run the relevant checks, then CodeRabbit first and a fresh Claude Opus 5.5 session last on the recorded revision. The design review is separate from code review and human acceptance.
 
-**Next** · Qualify a separate zero-stock fixture and delivered shipment line for SC-03–SC-04. Executor pending confirmation. Prerequisites: intended org and authorized synthetic data. · [Execution](#execution)
+**Next** · Verify **Menu → Consignment Stock Lookup** and scan or type the synthetic SKU on the authorized administrator's phone for SC-01–SC-02. Verifier: Pending confirmation. Prerequisites: Salesforce mobile sign-in and camera access. · [Execution](#execution)
 
 ## Files
 
