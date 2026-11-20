@@ -1,16 +1,16 @@
 # E02 · Scan barcodes for internal consignment
 
-**Owner** · Pending confirmation · [Story and execution record](#execution) · [Delivery guide · MIGRATE · 3023855](https://github.com/aispanda/Reusable-Delivery/blob/302385554c48443a020000c51d75cec7888dbb4f/migrate/START.md)
+**Owner** · Pending confirmation · [Delivery guide · MIGRATE · a06a646](https://github.com/aispanda/Reusable-Delivery/blob/a06a646d44542ba9c41c68da10dffbf01b2fd3c7/migrate/START.md)
 
 **Outcome** · As an internal consignment coordinator, I want to scan or enter a barcode on my phone so that I can identify site stock, record receipts and usage, and submit count discrepancies for review.
 
-**Demo result** · NOT RUN. The target org, app entry point, intended role and fixture links are pending verification.
+**Demo result** · NOT RUN. The demo org was identified through CLI access. The mobile entry, intended user and fresh fixture still need verification.
 
 **Acceptance** · The workflow direction is confirmed. Human acceptance of the implementation is pending. Adjustment posting requires a future movement design. This story uses Salesforce for the consignment workflow.
 
 ## Proposed scenario checks
 
-- **Where / who** · Use a physical phone with the Salesforce mobile app and an authorized internal coordinator in the designated demo org. Verify the entry point and role before replay. [Salesforce BarcodeScanner compatibility](https://developer.salesforce.com/docs/platform/mobile-offline/guide/use-barcodescanner-compatibility.html)
+- **Where / who** · Use the Salesforce mobile app on a physical phone as an authorized coordinator in the demo org. Proposed entry is **App Launcher → assigned app → Menu → Consignment Stock**. Verify the app assignment and entry before replay. [Salesforce BarcodeScanner compatibility](https://developer.salesforce.com/docs/platform/mobile-offline/guide/use-barcodescanner-compatibility.html)
 - **Start with** · Use the E02 synthetic stock position at zero confirmed on hand, a 10-box fill-up Shipment Item, a dated receipt reference and a three-box usage report. Confirm the fixture and its links before replay. The existing demo stock now has seven boxes after a posted receipt of 10 and usage of 3. Prepare a separate, qualified fixture at zero for a fresh walkthrough; do not reset the shared fixture. [E02 scenario and fixture](https://github.com/aispanda/B2B-Commerce/blob/634d5eef66584da696dd658615d77bb856259a75/epics/e02-consignment/stories/consignment-consumption-demo/scenario.md)
 
 **Demo sequence** · SC-01 → SC-02 → SC-03 → SC-04 → SC-05
@@ -76,10 +76,12 @@ The user clarified that this story uses Salesforce for the entire workflow. The 
 - The previous story used [NEW guide revision 2a4b77e](https://github.com/aispanda/Reusable-Delivery/blob/2a4b77e1772f4828f595d40c882e7c4f77bc4007/new/DELIVERY.md). The earlier review used MIGRATE at revision f425953. The migration route adds source mapping and criterion reconciliation, and requires an Outcome-and-story-link ClickUp description after publication. Existing checks retain their IDs and NOT RUN results.
 - [Published story before correction](https://github.com/aispanda/B2B-Commerce/blob/331bb445c6ca6339a2e45b57f8f924053d108d4e/epics/e02-consignment/stories/internal-consignment-barcode/story.md) → this story. AC-01–AC-03 retain their wording. AC-04 was changed by the user's Salesforce-only correction. SC-08 was updated and remains NOT RUN. The SAP blocker was withdrawn.
 - [E02 demo scenario](https://github.com/aispanda/B2B-Commerce/blob/634d5eef66584da696dd658615d77bb856259a75/epics/e02-consignment/stories/consignment-consumption-demo/scenario.md) → SC-03–SC-05 fixture expectations. The demo records are reusable, subject to fixture and access verification.
-- The local barcode research preceded the Salesforce-only correction. Its SAP assumptions are historical and do not govern this story. A publication-safe current design and portable link are pending.
+- The historical research preceded the Salesforce-only correction. The current Salesforce-only UI specification is [design.md](design.md). It uses mobile Screen Flow actions for stock transactions.
 - [ClickUp story](https://app.clickup.com/t/90141836417/1k59juump80) → this story. Created in ABCMed Storefront on 19 November 2026. The saved outcome and story link were read back. Owner is pending and status is To Do.
 
 - Guide update: MIGRATE `f425953` → `302385554c48443a020000c51d75cec7888dbb4f`. Scenario IDs, agreed criteria, NOT RUN results and Salesforce-only correction are retained. The newer guide adds explicit gate-decision and scoped-exception recording; applicable steps must be reconciled before dispatch or closeout. Modules consulted: story, using, states, agreement, privacy, execution, review and publication. Migration and portable evidence remain pending.
+
+- Current guide update: MIGRATE `302385554c48443a020000c51d75cec7888dbb4f` → `a06a646d44542ba9c41c68da10dffbf01b2fd3c7`. The revised guide pins the route and triggered modules. Modules consulted: agreement, privacy, story, execution, states, platform, automation, review, publication, using and CODE-QUALITY. All agreed acceptance wording, scenario IDs and NOT RUN results are retained. Design and review evidence were reconciled below. Restricted review evidence portability remains pending.
 
 ## Execution
 
@@ -87,8 +89,14 @@ The user clarified that this story uses Salesforce for the entire workflow. The 
 | --- | --- | --- | --- |
 | S-01 | Verify platform access. Headless 360 discover, describe and read-only Organization query passed. CLI org listing and read-only limits query passed for the same POC org on 19 November 2026. Portable restricted evidence and intended-user access remain pending. | Current executor | Passed for these read checks; evidence handoff pending |
 | S-02 | After S-01, verify the intended mobile role, fixture, barcode-to-stock mapping and review destination for discrepancies. Qualify the checkout test path for SC-08. | Pending confirmation | Pending |
+| S-03 | Implement the reviewed lookup and mobile Screen Flow actions in separately testable slices. Validate SC-01–SC-07 against the design. | Pending confirmation | Pending |
+| S-04 | After manual validation, implement the required Gemini LangGraph evidence workflow. | Pending confirmation | Pending |
 
 **Lookup slice** · Local draft only. Salesforce check-only validation passed three Apex tests. CodeRabbit returned zero findings; a fresh Claude Opus 5.5 final review reported no changes needed on the reviewed draft. Reviewed snapshot SHA-256: `7fd499ce4c04b5121bc27ba72c837f3647d28fa9a6b4c35855b7a0f5ffed93c4` (sorted per-file manifest). The code is not deployed; portable review evidence and physical phone testing remain pending.
+
+**Design review** · On 20 November 2026, Claude Opus 5.5 (High) reviewed the draft design in-app and returned 18 location-specific suggestions. The revised [design](design.md) addresses the mobile action constraint, scanner lifecycle and fallback, role mapping, duplicate submissions and posting, and acceptance coverage. The existing 100-result cap was retained. The lookup already dismissed the scanner, and distinct failure messages remain an implementation item. Mobile Flow visibility and refresh, reviewer assignments, and sample label mappings require org and phone validation. The private review transcript is retained separately. The revised design is pending a recheck before implementation handoff.
+
+**Governance** · Google’s [Gemini Fullstack LangGraph Quickstart](https://github.com/google-gemini/gemini-fullstack-langgraph-quickstart) is required for this story's repeatable verification workflow. First validate the checklist manually using a synthetic case and a case with missing or conflicting evidence. The local deterministic fixture check is evidence for SC-03 preparation only. Reuse Quickstart scaffolding for the bounded evidence workflow, keep pass/fail checks deterministic, and restrict the Gemini node to summarizing sanitized evidence. Verify approved Gemini credential access at execution without recording its value. Live Google integration is pending. For each changed code slice, run the relevant checks, then CodeRabbit first and a fresh Claude Opus 5.5 session last on the recorded revision. The design review is separate from code review and human acceptance.
 
 **Next** · Qualify a separate zero-stock fixture and delivered shipment line for SC-03–SC-04. Executor pending confirmation. Prerequisites: intended org and authorized synthetic data. · [Execution](#execution)
 
@@ -97,5 +105,6 @@ The user clarified that this story uses Salesforce for the entire workflow. The 
 | File | Purpose |
 | --- | --- |
 | [story.md](story.md) | Requirements, demo checks and execution record |
+| [design.md](design.md) | Mobile screens, Salesforce setup and acceptance walkthrough |
 
 **ClickUp synchronization** · The [new ClickUp story](https://app.clickup.com/t/90141836417/1k59juump80) contains the outcome and current story link. The saved description was read back.
