@@ -46,11 +46,11 @@
 
 ## Material blockers
 
-**SC-01, SC-02 · Salesforce emulator sign-in**
-- **Goal** · Test mobile lookup and manual entry on the Salesforce Android emulator.
-- **Blocker** · The installed Salesforce app is waiting for its agreement and an authorized user to sign in.
-- **Current fix** · The user reviews the agreement and signs in; then validate the mobile checklist. Physical-camera scanning still needs a phone.
-- **Documentation** · [Salesforce virtual-device builds](https://developer.salesforce.com/docs/platform/mobile-offline/guide/dx-mobile-previews-salesforce-app.html)
+**SC-01, SC-02 · Camera validation and cancellation**
+- **Goal** · Scan the fixture and return cleanly to manual entry when scanning is cancelled.
+- **Blocker** · The emulator returned a fixed simulated barcode value, not an observed camera decode. Closing its scanner showed “Scan failed” rather than a neutral cancellation.
+- **Current fix** · Investigate and correct cancellation handling, review the change under the code gates, and test with the actual Salesforce mobile app on a physical phone.
+- **Documentation** · [Salesforce BarcodeScanner compatibility](https://developer.salesforce.com/docs/platform/mobile-offline/guide/use-barcodescanner-compatibility.html)
 
 **SC-03–SC-04 · Fixture prepared**
 - **Goal** · Demonstrate receiving ten boxes and using three, starting from zero.
@@ -99,6 +99,10 @@ The user clarified that this story uses Salesforce for the entire workflow. The 
 | S-04 | After manual validation, implement the required Gemini LangGraph evidence workflow. | Pending confirmation | Pending |
 
 **21 November mobile testing** · Appium 4.0.0 and UiAutomator2 9.3.0 were installed in the local barcode test area; Android Studio was installed. The official Salesforce Android emulator APK passed ZIP integrity checks and contains arm64-v8a libraries. The user accepted the SDK licenses; the ARM Android emulator booted and Salesforce installed. Appium's Android doctor reported zero required fixes, and its local server reported ready. The Salesforce app awaits agreement and sign-in. Salesforce CLI read-only org access passed. Existing `ConsignmentBarcodeLookupTest` passed 3/3 (run `707bm00001YLU9J`): exact SKU, leading zeros and blank input. These are server-side checks, not a mobile, camera or acceptance pass. SC-01 and SC-02 remain NOT RUN.
+
+**21 November emulator observations** · Using ADB on the signed-in administrator's Android emulator, Mobile Only → Menu → All Items search found Consignment Stock Lookup. Manual `INF-SET-DEMO` returned three stock positions; selecting CST-0001 opened that record. An unknown SKU returned “No accessible stock matches this code”; changing the field cleared prior results. Denying camera permission and cancelling its explanation displayed the manual-entry message. Closing the scanner after granting permission instead displayed “Scan failed. Enter the code manually”; cancellation handling needs investigation. The emulator scanner displayed a symbology chooser; selecting CODE128 returned `TestBarcodeValue for CODE128`, which produced no matching stock. Loading a barcode image into the virtual scene did not establish a camera decode. These were manual ADB-driven observations, not an automated Appium test or physical-phone acceptance. SC-01 and SC-02 remain NOT RUN on a physical phone.
+
+**Mobile design feedback** · Parallel Salesforce visual and mobile reviews of one emulator screenshot recommend emphasizing account and location, reducing repeated product details, and giving each identical “Select this stock” button a distinct accessible name. These are review recommendations pending implementation and TalkBack verification, not a WCAG conformance result. Code changes require the existing CodeRabbit and fresh Opus review gates.
 
 **Lookup slice** · Deployed to the demo org on 20 November 2026; all three specified Apex tests passed. CodeRabbit and fresh Claude Opus 5.5 reviewed snapshot `281c85940a23b05270195ff52131c24d80c510ca7607ccba2cfbd7dcf2ea39f5`. The **Consignment Stock Lookup** app page was activated for system administrators and added to the Mobile Only menu. Administrator phone scan and manual lookup are NOT RUN. Intended coordinator role and access remain pending. Portable deployment and review evidence remain pending.
 
