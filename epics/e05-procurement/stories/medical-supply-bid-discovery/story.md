@@ -121,6 +121,14 @@ Gemini Neon, High reasoning, reviewed the proposed design. Adopted refinements i
 
 **Design consultation.** Gemini Neon reviewed a description of the existing plan but reported that it could not access the story. Its proposals include using Document AI extraction and a Gemini-assisted draft template, with a human editor and an active-template registry. Treat these as proposals requiring independent verification. The Google Skill Finder catalog identified `agent-platform-inference` for Gemini model calls; it was installed on 21 November. The existing GCS and gcloud skills remain applicable.
 
+## Implementation readiness and existing work · 21 November 2026
+
+The business scenario and review-first requirements are recorded. The previous configurable PDF intake plan is superseded and has been removed from the published story folder; its local draft is archived. The Claude solution-design review is retained as historical analysis, not an approved current design.
+
+**Useful work:** The private bucket, test-org Solicitation and Opportunity lookup, one-page Erie sample and Form Parser output, sample transfer evidence, and reviewed mapper/LangGraph preview in PR #6 are reusable for investigation and regression examples. They do not establish the proposed custom-extractor, n8n, or Solicitation Document workflow. PR #6 is draft and GitHub currently reports it as not mergeable against its advanced base; resolve and re-review if its code is adopted, or retain it as historical evidence.
+
+**Ready to begin bounded design and offline prototyping; not ready for a live end-to-end batch.** The custom-extractor schema and evaluation, n8n hosting and mapping, child-document metadata and review flow, failure and duplicate handling, and the LangGraph boundary need an explicit design and test slices. Verify actual access, reviewer permissions, pricing and billing before live processing. The earlier $1 authorization concerned one page with the Form Parser; do not assume it is a blanket budget for new processors or larger batches. Keep the CodeRabbit-first, Codex, and fresh Opus-last reviews and exact-revision evidence before dependent implementation or deployment. All full-pilot acceptance checks remain NOT RUN.
+
 ## Material blockers
 
 **S-03 / QA-02–QA-04 · General batch unavailable**
@@ -152,7 +160,7 @@ Current route MIGRATE at `a06a646d44542ba9c41c68da10dffbf01b2fd3c7`. Reconciled 
 
 **S-02 / QA-02 · Wrapped-title negative check: Fail.** A synthetic continuation token below the Erie title was added to a copy of the saved extraction. Expected: complete title or review routing. Observed: draft-preview with the continuation omitted. The first template therefore cannot safely process wrapped titles. The 14 existing local tests pass but did not cover this case. No cloud processing or Salesforce write was performed. Fix the mapper or template validation and run the mandatory review sequence before dependent use.
 
-**Folder maintenance.** The local historical Opus briefing was moved to the BID-01 draft archive because it describes the earlier pre-processing state. The published Claude review and existing sample inputs remain historical evidence; the current story and intake plan are authoritative for current status.
+**Folder maintenance.** The local historical Opus briefing was moved to the BID-01 draft archive because it describes the earlier pre-processing state. The published Claude review and existing sample inputs remain historical evidence; the current story is authoritative for current status.
 
 **S-02 / QA-02 · Wrapped-title repair.** On local revision `b29d265b82b421244c3d02fc9fb3cecbd00cb8c5`, 17 local tests and the saved Erie dry run passed. The mapper routes suspected continuation or right overflow for review. CodeRabbit findings on boundary and anchor handling were reproduced and fixed; Codex identified a left-aligned continuation and it was fixed. On the final revision CodeRabbit suggested rejecting a second line already fully captured inside the value box. That suggestion was deferred because returning the complete value satisfies the check; fresh Claude Opus 5.5 High independently agreed and requested no changes. Opus reviewed the supplied snapshot and did not run tests. The guard is limited to its configured region and tolerance; a real held-out example remains NOT RUN. The code and review revisions remain local, and repository CI/PR-head checks are pending.
 
