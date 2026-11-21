@@ -39,6 +39,8 @@
 
 ## Files
 
+- [ABCMed emergency medical-supply demo scenario](emergency-medical-supply-demo-scenario.md) · Proposed narrative, bounded demo, acceptance examples, and future possibilities; full demo NOT RUN.
+
 - [Configurable PDF intake plan](configurable-pdf-intake-plan.md) · Implementation slices and Neon design feedback.
 
 - [Claude solution design review](claude-solution-design-review.md) · Complete generated draft preserved for review; its claims and proposed decisions are not yet independently verified or approved.
