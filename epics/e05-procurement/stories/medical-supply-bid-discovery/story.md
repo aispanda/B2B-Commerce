@@ -49,6 +49,16 @@
 - [Public hospital medical supply bid PDF](https://quezoncity.gov.ph/wp-content/uploads/2025/11/54.-QCGH-26-MSLI-0093.pdf) for historical extraction, with no claim that bidding is open.
 - [Document AI batch requests](https://docs.cloud.google.com/document-ai/docs/send-request#batch-processing) for Cloud Storage input and output. [Extraction pricing](https://cloud.google.com/products/document-ai/pricing) for estimating page charges.
 
+## Task documentation map
+
+Use the shared references below for the applicable task; links already listed in Files are referenced by name. These are guidance for planned work, not evidence that it ran.
+
+- **S-01 — Access and billing:** [Salesforce CLI org list](https://developer.salesforce.com/docs/platform/salesforce-cli-reference/guide/cli_reference_org_list.html); [verify Google Cloud billing status](https://docs.cloud.google.com/billing/docs/how-to/verify-billing-enabled). Headless 360 MCP access follows the [Salesforce access references](https://github.com/aispanda/Reusable-Delivery/tree/main/references).
+- **S-02 — Source selection and manual checks:** Official public opportunity feed and public hospital medical supply bid PDF in Files; Document AI batch requests in Files for extraction semantics.
+- **S-02a — Salesforce schema and review access:** [Salesforce object relationships](https://developer.salesforce.com/docs/platform/data-models/guide/understand-custom-standard-objects.html); [Salesforce external-ID upsert](https://developer.salesforce.com/docs/platform/api-rest/guide/dome-upsert.html). Verify the actual org's fields, lookup, and permissions independently.
+- **S-03 — Batch and test drafts:** Document AI batch requests and extraction pricing in Files; Salesforce external-ID upsert above. If selected, consult [Document AI custom extractor](https://docs.cloud.google.com/document-ai/docs/custom-extractor-overview), [n8n Cloud Run setup](https://docs.n8n.io/hosting/installation/server-setups/google-cloud-run/), [n8n data mapping](https://docs.n8n.io/data/data-mapping/data-mapping-ui/), and the [n8n license](https://docs.n8n.io/sustainable-use-license/). These components are proposed and require validation.
+- **S-04 — Independent inspection:** Use QA-01–QA-05 and AC-01–AC-05 in this story, and the relevant task references above; acceptance depends on observed evidence.
+
 ## Salesforce intake design (pilot)
 
 Use one custom **Solicitation** object (proposed API name `Bid__c`) and one optional **Solicitation** lookup on Opportunity. One solicitation can be linked to several Opportunities. Each Opportunity can link to at most one solicitation. Confirm that limit with the reviewer during test-org discovery. Revisit a junction object if an Opportunity needs to link to multiple solicitations or the relationship needs its own fields.
@@ -117,7 +127,7 @@ Gemini Neon, High reasoning, reviewed the proposed design. Adopted refinements i
 - **Goal** · Run a bounded PDF batch and verify draft creation, review routing and replay.
 - **Blocker** · The verified pilot uses a one-document operator script. A general batch is pending; the local mapper has been reviewed as recorded below.
 - **Current fix** · Validate the first versioned template locally, then implement the reviewed batch slices and run the bounded live test within authorized spend.
-- **Documentation** · [Document AI batch processing](https://docs.cloud.google.com/document-ai/docs/send-request#batch-processing)
+- **Documentation** · Document AI batch requests in Files; see S-03 in Task documentation map.
 
 **S-01 · Cloud and Salesforce access pending**  
 The AI Spanda project now has a private Standard bucket in South Carolina. The Document AI API and US Form Parser are enabled. A one-page batch verified read/write compatibility with the South Carolina bucket. Billing eligibility and credits remain unverified. A billing read was blocked because the Cloud Billing API was disabled for the calling project. Verify entitlements and permissions before provisioning or running a paid batch. The schema is deployed to the ABCMed test org. The pilot operator's Details view and PDF access were observed; separate reviewer access and the remaining scenario checks still require verification.
