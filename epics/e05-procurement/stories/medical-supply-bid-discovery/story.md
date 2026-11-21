@@ -105,6 +105,10 @@ An operator starts a bounded batch with an explicit manifest of private source o
 
 Gemini Neon, High reasoning, reviewed the proposed design. Adopted refinements include label-relative boxes, a fixture-first sequence, immutable staging and replay reconciliation. Google Skill Finder located Cloud Storage Basics, Cloud Run Basics and Solution Architecture. The Neon review and proposed tests are in the linked plan. The local mapper and LangGraph preview exist as recorded below; the general batch, deployment and end-to-end testing remain pending.
 
+**User-requested template workflow · 21 November 2026.** For each document layout, a template author provides a representative PDF and a prompt. AI proposes field labels and annotated regions. The author reviews and edits the regions, maps approved fields to the Solicitation object, selects the corresponding Salesforce record type and activates a versioned template. A manually started batch classifies each incoming document against active templates, routes unknown or uncertain matches to review, and creates a test-org Solicitation draft for a valid match using the configured record type. Original files and extraction evidence stay in private Cloud Storage. This extends the stated template design; detailed product choices, classification thresholds and implementation remain to be validated. The existing Erie template and LangGraph preview are an initial hand-configured technical slice, not this complete workflow. AI-suggested mapping, human activation, automatic classification and record-type mapping are NOT RUN.
+
+**Design consultation.** Gemini Neon reviewed a description of the existing plan but reported that it could not access the story. Its proposals include using Document AI extraction and a Gemini-assisted draft template, with a human editor and an active-template registry. Treat these as proposals requiring independent verification. The Google Skill Finder catalog identified `agent-platform-inference` for Gemini model calls; it was installed on 21 November. The existing GCS and gcloud skills remain applicable.
+
 ## Material blockers
 
 **S-03 / QA-02–QA-04 · General batch unavailable**
