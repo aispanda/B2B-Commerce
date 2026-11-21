@@ -46,6 +46,12 @@
 
 ## Material blockers
 
+**SC-01, SC-02 · Android emulator setup**
+- **Goal** · Test mobile lookup and manual entry on a Salesforce Android emulator.
+- **Blocker** · Android Studio requires the user to review and accept Android SDK and ARM system-image licenses before it can install the emulator.
+- **Current fix** · Accept the displayed licenses and finish setup; then launch the emulator, install the downloaded Salesforce app, sign in, and validate the checklist. Physical-camera scanning still needs a phone.
+- **Documentation** · [Salesforce virtual-device builds](https://developer.salesforce.com/docs/platform/mobile-offline/guide/dx-mobile-previews-salesforce-app.html)
+
 **SC-03–SC-04 · Fixture prepared**
 - **Goal** · Demonstrate receiving ten boxes and using three, starting from zero.
 - **Blocker** · The receipt and usage actions are not implemented for this barcode experience.
@@ -91,6 +97,8 @@ The user clarified that this story uses Salesforce for the entire workflow. The 
 | S-02 | After S-01, verify the intended mobile role, fixture, barcode-to-stock mapping and review destination for discrepancies. Qualify the checkout test path for SC-08. | Pending confirmation | Pending |
 | S-03 | Implement the reviewed lookup and mobile Screen Flow actions in separately testable slices. Validate SC-01–SC-07 against the design. | Pending confirmation | Pending |
 | S-04 | After manual validation, implement the required Gemini LangGraph evidence workflow. | Pending confirmation | Pending |
+
+**21 November mobile testing** · Appium 4.0.0 and UiAutomator2 9.3.0 were installed in the local barcode test area; Android Studio was installed. The official Salesforce Android emulator APK passed ZIP integrity checks and contains arm64-v8a libraries. Emulator setup is waiting for the Android SDK license screen. Salesforce CLI read-only org access passed. Existing `ConsignmentBarcodeLookupTest` passed 3/3 (run `707bm00001YLU9J`): exact SKU, leading zeros and blank input. These are server-side checks, not a mobile, camera or acceptance pass. SC-01 and SC-02 remain NOT RUN.
 
 **Lookup slice** · Deployed to the demo org on 20 November 2026; all three specified Apex tests passed. CodeRabbit and fresh Claude Opus 5.5 reviewed snapshot `281c85940a23b05270195ff52131c24d80c510ca7607ccba2cfbd7dcf2ea39f5`. The **Consignment Stock Lookup** app page was activated for system administrators and added to the Mobile Only menu. Administrator phone scan and manual lookup are NOT RUN. Intended coordinator role and access remain pending. Portable deployment and review evidence remain pending.
 
