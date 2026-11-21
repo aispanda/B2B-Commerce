@@ -38,4 +38,4 @@ Separate line-item and amendment objects; automatic Opportunity creation; matchi
 
 ## Source
 
-The scenario incorporates and bounds the emergency-response demo proposed in the [Gemini discussion](https://share.gemini.google/AMsxE8MvmfOo). Treat its agency examples, timings, savings, and claims as illustrative until independently verified.
+The scenario incorporates a proposed emergency-response demo. Agency examples, timings, savings, and claims are illustrative until independently verified.
