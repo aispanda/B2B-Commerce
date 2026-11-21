@@ -43,6 +43,8 @@
 
 ## Files
 
+- [Document extraction configuration workbook](document-extraction-configuration.xlsx) · Example template and field settings with prompt review status; pilot configuration, not an accepted model.
+
 - [ABCMed emergency medical-supply demo scenario](emergency-medical-supply-demo-scenario.md) · Proposed narrative, bounded demo, acceptance examples, and future possibilities; full demo NOT RUN.
 
 - [Claude solution design review](claude-solution-design-review.md) · Complete generated draft preserved for review; its claims and proposed decisions are not yet independently verified or approved.
