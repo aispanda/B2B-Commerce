@@ -524,7 +524,7 @@ function parseScenarios(result) {
   if (new Set(ids).size !== ids.length) return {list: [], state: 'invalid', message: 'needs unique criterion and verification IDs'};
   const criteria = data.criteria.map(c => {
     if (hasTestFields(c)) {
-      return {id: c.id, title: c.title, test: {startingState: c.startingState, actions: c.actions, expectedResult: c.expectedResult}};
+      return {id: c.id, title: c.title, test: {startingState: c.startingState, actor: c.actor, actions: c.actions, expectedResult: c.expectedResult}};
     }
     return {id: c.id, title: c.title,
       steps: ['given', 'when', 'then'].map(key => '**' + key[0].toUpperCase() + key.slice(1) + '** ' + c[key])};
@@ -1026,6 +1026,7 @@ function renderAcceptance() {
           criterion.title ? el('strong', {class: 'criterion-title'}, inline(criterion.title)) : null,
           criterion.test ? [
             el('div', {class: 'criterion-step'}, el('strong', {}, 'Starting state '), inline(criterion.test.startingState)),
+            criterion.test.actor ? el('div', {class: 'criterion-step'}, el('strong', {}, 'Actor '), el('code', {}, criterion.test.actor)) : null,
             el('div', {class: 'criterion-step'}, el('strong', {}, 'Actions'),
               el('ol', {class: 'actions'}, criterion.test.actions.map(action => el('li', {}, inline(action))))),
             el('div', {class: 'criterion-step'}, el('strong', {}, 'Expected result '), inline(criterion.test.expectedResult))
@@ -1034,7 +1035,7 @@ function renderAcceptance() {
     if (scenarios.length > 1) linked.append(el('h3', {}, 'Scenario checks'));
     if (scenarios.length) {
       linked.append(el('div', {class: 'detail-list'}, scenarios.map(([scenario, result, matches]) =>
-        matches[0] === criterion ? renderScenario(scenario, result, scenarios.length === 1)
+        matches[0] === criterion ? renderScenario(scenario, result, {singleCheck: scenarios.length === 1, showActor: !criterion.test?.actor})
           : el('p', {class: 'story-section-content'}, idLink(scenario.scenarioId, scenario.scenarioId + ' · ' + scenario.name)))));
     } else {
       linked.append(el('p', {class: 'muted'}, 'No scenario is linked to this criterion.'));
@@ -1052,11 +1053,11 @@ function renderAcceptance() {
   return section;
 }
 
-function renderScenario(sc, d, singleCheck = false) {
+function renderScenario(sc, d, {singleCheck = false, showActor = true} = {}) {
   const tasks = tasksSupporting([sc.scenarioId]);
   const setupNote = sc.setup ?? sc.startingState;
   const setup = el('dl', {class: 'kv task-fields task-column'},
-    kv('Actor', sc.actor ? el('code', {}, sc.actor) : emptyValue(), SCENARIO_HELP.actor),
+    showActor ? kv('Actor', sc.actor ? el('code', {}, sc.actor) : emptyValue(), SCENARIO_HELP.actor) : null,
     kv('Environment', sc.environment ? el('code', {}, sc.environment) : emptyValue('Any'), SCENARIO_HELP.environment),
     kv('Version', String(sc.version ?? '—'), SCENARIO_HELP.version),
     setupNote ? kv(sc.setup ? 'Setup' : 'Starting state', linkify(setupNote), SCENARIO_HELP.startingState, true) : null,
