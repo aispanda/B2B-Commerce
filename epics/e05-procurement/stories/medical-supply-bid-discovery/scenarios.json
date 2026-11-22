@@ -1,186 +1,185 @@
-[
-  {
-    "scenarioId": "QA-01",
-    "version": 2,
-    "name": "Screen notices for the open bid queue",
-    "actor": "sales_reviewer",
-    "environment": "pilot_intake",
-    "startingState": "An official portal and the test queue are available. Prepare open, expired, closed, irrelevant, and deadline-unverifiable notices.",
-    "fixtures": [
-      "open_notice",
-      "expired_notice",
-      "unverified_notice",
-      "closed_notice",
-      "irrelevant_notice"
-    ],
-    "actions": [
-      "Open each official notice and its latest published amendment, if any.",
-      "Check relevance, notice type, issuer, solicitation ID, response deadline, time zone where stated, and current status.",
-      "Submit each candidate through pilot screening and inspect the resulting queue."
-    ],
-    "expected": "Only relevant public solicitations with a verified future deadline and an open status confirmed on the buyer's official portal can enter the open-bid queue.",
-    "acceptanceSource": "story",
-    "surfaces": {
-      "desktopUi": true,
-      "mobileUi": false,
-      "backend": true
+{
+  "criteria": [
+    {
+      "id": "AC-01",
+      "title": "Screen bids for the open-bid queue.",
+      "given": "a public solicitation has been submitted for intake.",
+      "when": "its relevance and current status are checked against the agreed relevance rules and the buyer’s official portal.",
+      "then": "it enters the open-bid queue only if it meets those rules, the portal confirms it is open, and its verified response deadline is in the future. And expired, closed, irrelevant, or unverifiable bids stay out of the queue with a recorded reason.",
+      "scenarioId": "QA-01",
+      "version": 2,
+      "actor": "sales_reviewer",
+      "environment": "pilot_intake",
+      "fixtures": [
+        "open_notice",
+        "expired_notice",
+        "unverified_notice",
+        "closed_notice",
+        "irrelevant_notice"
+      ],
+      "surfaces": {
+        "desktopUi": true,
+        "mobileUi": false,
+        "backend": true
+      },
+      "assertions": {
+        "backend": "Read back the recorded admission or exclusion reason for every fixture."
+      },
+      "setup": "Make the official portal and test queue available.",
+      "actions": [
+        "Prepare open, expired, closed, irrelevant, and deadline-unverifiable notices.",
+        "Open each official notice and its latest published amendment, if any.",
+        "Check relevance, notice type, issuer, solicitation ID, response deadline, stated time zone, and current status.",
+        "Submit each candidate through pilot screening and inspect the resulting queue."
+      ]
     },
-    "assertions": {
-      "backend": "The intake records each admission or exclusion with its reason."
+    {
+      "id": "AC-02",
+      "title": "Account for every file in an extraction batch.",
+      "given": "a batch manifest lists the source files submitted for extraction.",
+      "when": "the batch finishes.",
+      "then": "every listed file has a result traceable to that file or an explicit processing error. And every required field and requested line item matches its cited source page or has a review flag for missing, conflicting, or unsupported data.",
+      "scenarioId": "QA-02",
+      "version": 1,
+      "actor": "batch_operator",
+      "environment": "pilot_intake",
+      "fixtures": [
+        "bounded_pdf_batch",
+        "item_schedule",
+        "conflicting_notice",
+        "unreadable_pdf"
+      ],
+      "surfaces": {
+        "desktopUi": false,
+        "mobileUi": false,
+        "backend": true
+      },
+      "setup": "Stage three to five authorized files with source expectations recorded in advance. Include an item schedule and a failure case.",
+      "actions": [
+        "Check the staged manifest and processor version, then start one bounded batch.",
+        "Match each manifest entry to a JSON object or error record using its source file reference.",
+        "Compare the required header fields and every requested item, including its quantity and unit, with the cited page. Exercise blank and conflicting values.",
+        "Read back review flags and source references for the affected fields and items."
+      ]
     },
-    "criteria": [
-      "AC-01"
-    ]
-  },
-  {
-    "scenarioId": "QA-02",
-    "version": 1,
-    "name": "Reconcile extraction for every file",
-    "actor": "batch_operator",
-    "environment": "pilot_intake",
-    "startingState": "Stage three to five authorized files with source expectations recorded before processing, including an item schedule and a meaningful failure case.",
-    "fixtures": [
-      "bounded_pdf_batch",
-      "item_schedule",
-      "conflicting_notice",
-      "unreadable_pdf"
-    ],
-    "actions": [
-      "Check the staged manifest and processor version, then start one bounded batch.",
-      "Reconcile every input to its extraction JSON or explicit error.",
-      "Compare required fields and each requested item, quantity and unit with its source page. Check blank and conflicting values.",
-      "Read back review flags and source references for the affected fields and items."
-    ],
-    "expected": "Every manifest file has a traceable result or explicit error. Each required field or item matches its cited source page or is flagged for review.",
-    "acceptanceSource": "story",
-    "surfaces": {
-      "desktopUi": false,
-      "mobileUi": false,
-      "backend": true
+    {
+      "id": "AC-03",
+      "title": "Review bid evidence and record the pursuit decision",
+      "given": "extraction has produced bid data and source evidence.",
+      "when": "the bid is prepared for review.",
+      "then": "Salesforce stores the bid draft, its review flags, and durable references to the source evidence, and Google Cloud Storage retains the original PDF and extraction JSON. An authorized reviewer can inspect the flagged values and record whether to pursue the bid.",
+      "scenarioId": "QA-03",
+      "version": 2,
+      "actor": "sales_reviewer",
+      "environment": "test_org",
+      "fixtures": [
+        "draft_with_items",
+        "draft_with_conflict"
+      ],
+      "surfaces": {
+        "desktopUi": true,
+        "mobileUi": false,
+        "backend": true
+      },
+      "assertions": {
+        "backend": "Read back draft data, decision, durable PDF reference, and stored extraction JSON."
+      },
+      "setup": "Load drafts with source evidence. Include an item schedule and a missing or conflicting field. Use the designated reviewer account.",
+      "actions": [
+        "Open the draft and inspect issuer, solicitation ID, published deadline, stated time zone, requested items, source links, and review status.",
+        "Compare the flags with the PDF and inspect the original and extraction JSON in authorized storage.",
+        "Record the pursuit decision on the draft."
+      ]
     },
-    "criteria": [
-      "AC-02"
-    ]
-  },
-  {
-    "scenarioId": "QA-03",
-    "version": 1,
-    "name": "Review a draft with its source evidence",
-    "actor": "sales_reviewer",
-    "environment": "test_org",
-    "startingState": "Load drafts with source evidence. Include an item schedule and a missing or conflicting field. Use the designated reviewer account.",
-    "fixtures": [
-      "draft_with_items",
-      "draft_with_conflict"
-    ],
-    "actions": [
-      "Open the draft in Salesforce and check issuer, solicitation ID, published deadline, stated time zone, requested items, source links, and review status.",
-      "Compare the review flags with the PDF and inspect the original and extraction JSON in authorized storage.",
-      "Open the source PDF from the draft and record a human pursuit decision.",
-      "Run QA-03a for the signed link path."
-    ],
-    "expected": "The designated reviewer can verify the draft against its source, see uncertainty, and record a pursuit decision.",
-    "acceptanceSource": "story",
-    "criteria": [
-      "AC-03"
-    ],
-    "surfaces": {
-      "desktopUi": true,
-      "mobileUi": false,
-      "backend": true
+    {
+      "id": "AC-04",
+      "title": "Preserve reviewed data when another document arrives.",
+      "given": "a Solicitation already exists for the same source or buyer and solicitation ID.",
+      "when": "another PDF is received for that bid.",
+      "then": "intake adds a separate Solicitation Document marked Needs Review under the existing Solicitation, creates no second Solicitation, and leaves reviewed fields and earlier documents intact. And a reviewer can open the incoming and earlier documents, record Duplicate or Amendment with notes, and approve any amendment changes before those changes are applied to the Solicitation.",
+      "scenarioId": "QA-04",
+      "version": 2,
+      "actor": "sales_reviewer",
+      "environment": "test_org",
+      "fixtures": [
+        "reviewed_solicitation",
+        "same_notice",
+        "amended_notice"
+      ],
+      "surfaces": {
+        "desktopUi": true,
+        "mobileUi": false,
+        "backend": true
+      },
+      "assertions": {
+        "backend": "Read back both arrivals before review to verify initial status, existing reviewed values, and earlier document references."
+      },
+      "setup": "Start with one reviewed Solicitation and its original PDF. Prepare a separately received copy and an amendment with the same identity.",
+      "actions": [
+        "Submit both incoming files and inspect the existing Solicitation and document entries before review.",
+        "Open both incoming PDFs and the original. Record Duplicate for the copy and Amendment for the amended PDF, with notes. Approve only amendment changes.",
+        "Read back reviewed data and all document references."
+      ]
     },
-    "assertions": {
-      "backend": "Read back draft data, decision, durable PDF reference, and stored extraction JSON."
+    {
+      "id": "AC-05",
+      "title": "Link multiple Opportunities and count the bid once.",
+      "given": "one Solicitation and several existing Opportunities.",
+      "when": "a reviewer links two or more Opportunities to that Solicitation using the optional lookup and leaves another blank.",
+      "then": "all linked Opportunities reference the same Solicitation, the unlinked Opportunity remains valid, and a Solicitation-based report counts that bid once.",
+      "scenarioId": "QA-05",
+      "version": 1,
+      "actor": "sales_reviewer",
+      "environment": "test_org",
+      "fixtures": [
+        "reviewed_solicitation",
+        "three_opportunities"
+      ],
+      "surfaces": {
+        "desktopUi": true,
+        "mobileUi": false,
+        "backend": true
+      },
+      "setup": "Prepare three existing synthetic Opportunities. Make the optional Solicitation lookup and Solicitation-based report available.",
+      "actions": [
+        "Save two Opportunities with the same lookup value and save the third with the lookup blank.",
+        "Open the saved records and the Solicitation related list. Run the report and read back the lookup values."
+      ]
+    },
+    {
+      "id": "AC-06",
+      "title": "Enforce access to the exact source PDF",
+      "given": "A Salesforce bid draft has a stored source PDF.",
+      "when": "A user requests the source PDF from the draft.",
+      "then": "An authorized reviewer can open the exact source PDF from the draft. A user without access to the bid cannot obtain a PDF link through Salesforce.",
+      "scenarioId": "QA-03a",
+      "version": 1,
+      "actor": "sales_reviewer",
+      "environment": "test_org",
+      "fixtures": [
+        "draft_with_items",
+        "no_access_user",
+        "alternate_document"
+      ],
+      "surfaces": {
+        "desktopUi": true,
+        "mobileUi": false,
+        "backend": true
+      },
+      "assertions": {
+        "backend": "Authorization binds the document and version. Expired links fail and signed URLs are absent from storage and logs."
+      },
+      "setup": "Deploy View document in the test environment. Prepare accounts with and without the required record, object, or field access.",
+      "actions": [
+        "Use View document as the designated reviewer. Compare the opened PDF with the fixture. Repeat with each record, object, and field restriction.",
+        "Try a changed document reference and a direct request without authorization in the approved test environment.",
+        "Reuse the authorized link after expiry and inspect persistence and logs."
+      ],
+      "observations": [
+        "Each record, object, or field restriction results in denial without a link.",
+        "The temporary link cannot access a different object.",
+        "Changing the document reference or making an unauthorized direct request results in denial without a link."
+      ]
     }
-  },
-  {
-    "scenarioId": "QA-03a",
-    "version": 1,
-    "name": "Enforce access to the exact source PDF",
-    "actor": "sales_reviewer",
-    "environment": "test_org",
-    "startingState": "Deploy the View document action in the test environment and prepare users with and without the required record, object, or field access.",
-    "fixtures": [
-      "draft_with_items",
-      "no_access_user",
-      "alternate_document"
-    ],
-    "actions": [
-      "As the authorized reviewer, select View document and compare the opened PDF with the draft source.",
-      "Repeat with each access restriction and confirm no link is issued.",
-      "Attempt a changed document reference and a direct request without authorization in the approved test environment.",
-      "Check that the link cannot access another object and fails after expiry. Inspect persistence and logs for leaked links."
-    ],
-    "expected": "Only an authorized request receives a temporary link scoped to the exact approved PDF.",
-    "acceptanceSource": "story",
-    "criteria": [
-      "AC-03"
-    ],
-    "surfaces": {
-      "desktopUi": true,
-      "mobileUi": false,
-      "backend": true
-    },
-    "assertions": {
-      "backend": "Authorization binds the document and version. Expired links fail and signed URLs are absent from storage and logs."
-    }
-  },
-  {
-    "scenarioId": "QA-04",
-    "version": 2,
-    "name": "Review a replay and an amendment",
-    "actor": "sales_reviewer",
-    "environment": "test_org",
-    "startingState": "Start with one reviewed Solicitation and its original source. Prepare a replay and an amendment with the same solicitation identity.",
-    "fixtures": [
-      "reviewed_solicitation",
-      "same_notice",
-      "amended_notice"
-    ],
-    "actions": [
-      "Submit the replay and the amendment. Inspect the existing Solicitation and both new document entries before review.",
-      "Open each PDF, record Duplicate or Amendment with notes, and approve only the amendment changes.",
-      "Read back reviewed data and all document references."
-    ],
-    "expected": "One Solicitation keeps the original and both incoming documents, with reviewed fields changing only after amendment approval.",
-    "acceptanceSource": "story",
-    "criteria": [
-      "AC-04"
-    ],
-    "surfaces": {
-      "desktopUi": true,
-      "mobileUi": false,
-      "backend": true
-    },
-    "assertions": {
-      "backend": "Both arrivals initially have Needs Review status. Earlier documents remain accessible and reviewed values survive ingestion."
-    }
-  },
-  {
-    "scenarioId": "QA-05",
-    "version": 1,
-    "name": "Link multiple Opportunities and count one bid",
-    "actor": "sales_reviewer",
-    "environment": "test_org",
-    "startingState": "Prepare one Solicitation and three existing synthetic Opportunities. Make the Solicitation lookup and solicitation-based report available.",
-    "fixtures": [
-      "reviewed_solicitation",
-      "three_opportunities"
-    ],
-    "actions": [
-      "On two Opportunities choose the same Solicitation and save. Leave the third lookup blank.",
-      "Open both linked records and the Solicitation related list. Confirm the third record still saves unlinked.",
-      "Run the solicitation-based report and read back the lookup values."
-    ],
-    "expected": "Both linked Opportunities reference the same Solicitation, the third stays unlinked, and the solicitation-based report counts one bid.",
-    "acceptanceSource": "story",
-    "surfaces": {
-      "desktopUi": true,
-      "mobileUi": false,
-      "backend": true
-    },
-    "criteria": [
-      "AC-05"
-    ]
-  }
-]
+  ]
+}

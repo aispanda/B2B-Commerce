@@ -1,6 +1,6 @@
 # BID-01 · Turn public medical supply bids into Salesforce records
 
-**Owner** · Pending confirmation · [Checklist](checklist.json) · [Scenarios](scenarios.json) · [Delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/a06a646d44542ba9c41c68da10dffbf01b2fd3c7/migrate/START.md)
+**Owner** · Pending confirmation · [Checklist](checklist.json) · [Acceptance criteria and verification](scenarios.json) · [Delivery guide](https://github.com/aispanda/Reusable-Delivery/blob/a06a646d44542ba9c41c68da10dffbf01b2fd3c7/migrate/START.md)
 
 **Outcome** · As a medical supply sales coordinator, I want relevant public RFQs and invitations to bid turned into Salesforce records for review so that I can identify bids worth pursuing before their deadlines.
 
@@ -12,17 +12,11 @@
 
 **Acceptance** · Pending human decision. All six formal scenarios are NOT RUN. Historical observations below do not close any criterion.
 
-## Acceptance criteria
+## Requirements and verification
 
-| ID | Title | Given | When | Then | Coverage |
-|---|---|---|---|---|---|
-| AC-01 | Screen bids for the open-bid queue. | a public solicitation has been submitted for intake. | its relevance and current status are checked against the agreed relevance rules and the buyer’s official portal. | it enters the open-bid queue only if it meets those rules, the portal confirms it is open, and its verified response deadline is in the future. **And** expired, closed, irrelevant, or unverifiable bids stay out of the queue with a recorded reason. | QA-01 |
-| AC-02 | Account for every file in an extraction batch. | a batch manifest lists the source files submitted for extraction. | the batch finishes. | every listed file has a result traceable to that file or an explicit processing error. **And** every required field and requested line item matches its cited source page or has a review flag for missing, conflicting, or unsupported data. | QA-02 |
-| AC-03 | Let a reviewer verify and decide on a bid. | extraction has produced bid data and source evidence. | the bid is prepared for review. | Salesforce stores the bid draft, its review flags, and durable references to the source evidence, and Google Cloud Storage retains the original PDF and extraction JSON. **And** an authorized reviewer can open the exact source PDF from the draft, inspect flagged values, and record whether to pursue the bid. **And** a user without access to the bid cannot obtain a PDF link through Salesforce. | QA-03, QA-03a |
-| AC-04 | Preserve reviewed data when another document arrives. | a Solicitation already exists for the same source or buyer and solicitation ID. | another PDF is received for that bid. | intake adds a separate Solicitation Document marked Needs Review under the existing Solicitation, creates no second Solicitation, and leaves reviewed fields and earlier documents intact. **And** a reviewer can open the incoming and earlier documents, record Duplicate or Amendment with notes, and approve any amendment changes before those changes are applied to the Solicitation. | QA-04 |
-| AC-05 | Link multiple Opportunities and count the bid once. | one Solicitation and several existing Opportunities. | a reviewer links two or more Opportunities to that Solicitation using the optional lookup and leaves another blank. | all linked Opportunities reference the same Solicitation, the unlinked Opportunity remains valid, and a Solicitation-based report counts that bid once. | QA-05 |
+See [acceptance criteria and scenario checks](scenarios.json).
 
-**AC-03 access decision** · The owner selected an on-demand short-lived signed link after Salesforce authorization. Holders can open the exact approved PDF until it expires. QA-03a covers this proposed implementation.
+**AC-06 access decision** · The owner selected an on-demand short-lived signed link after Salesforce authorization. Holders can open the exact approved PDF until it expires. QA-03a covers this proposed implementation. QA-03 covers review of the draft and its source evidence.
 
 **Open product decisions** · Define the relevance rules, decide who checks portal status, confirm required extraction fields, and decide whether a retry of the same intake event reuses its document record.
 
@@ -54,12 +48,12 @@ The reviewed offline mapper and LangGraph preview remain available through the d
 - **LEG-01, QA-02, QA-03** · Confirm billing and processing authorization, independent Salesforce access checks and the designated reviewer before dependent live validation.
 - **S-06, S-07, S-09, S-29, QA-02** · Apply and read back the selected prompts in a suitable test version before the next comparison. Review the remaining field disagreements against the source. Prompt matching alone cannot establish correct extraction.
 - **LEG-02A, S-28, S-30, LEG-03, QA-03a, QA-04** · Review and implement child-document intake, signed-link access, and review-first amendment handling before running the full intake pilot.
-- **LEG-04, AC-01–AC-05** · Assign an independent verifier and record the human acceptance decision once the required scenario evidence is available.
+- **LEG-04, AC-01 to AC-06** · Assign an independent verifier and record the human acceptance decision once the required scenario evidence is available.
 
 ## Files
 
 - [Checklist](checklist.json) · Build and setup tasks, dependencies, and task evidence references.
-- [Scenarios](scenarios.json) · Sanitized scenario definitions and required surfaces. Fixture aliases resolve in authorized storage when assigned.
+- [Acceptance criteria and verification](scenarios.json) · Acceptance criteria, verification cases, and required surfaces. Fixture aliases resolve in authorized storage when assigned.
 - [Document extraction configuration workbook](https://github.com/aispanda/B2B-Commerce/blob/02397197115665121481ba2279f3bffdce7904e5/epics/e05-procurement/stories/medical-supply-bid-discovery/document-extraction-configuration.xlsx) · Published baseline example.
 - [ABCMed emergency medical-supply demo scenario](https://github.com/aispanda/B2B-Commerce/blob/02397197115665121481ba2279f3bffdce7904e5/epics/e05-procurement/stories/medical-supply-bid-discovery/emergency-medical-supply-demo-scenario.md) · Demo narrative and future possibilities.
 - [Claude solution design review](https://github.com/aispanda/B2B-Commerce/blob/02397197115665121481ba2279f3bffdce7904e5/epics/e05-procurement/stories/medical-supply-bid-discovery/claude-solution-design-review.md) · Historical design alternatives.
