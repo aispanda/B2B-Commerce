@@ -6,23 +6,25 @@
 
 **Scope** · Public solicitations, bounded batch extraction, and reviewable drafts in the designated Salesforce test org. Bid submission, production writes, automatic Opportunity creation, exhibits, and general instruction text are outside the pilot.
 
-**Operations** · An operator selects notices from an official buyer portal and starts intake from an explicit batch manifest. The intake checks eligibility and matches each PDF to a reviewed, versioned extraction configuration. Unknown layouts, missing identity, and unsupported or conflicting values go to review. The reviewer inspects Salesforce drafts and source pages, decides whether to pursue the bid, and may link existing Opportunities.
+**Operations** · An operator selects notices from an official buyer portal and starts intake from an explicit batch manifest. Eligibility is checked against the official portal. Intake matches each PDF to a reviewed, versioned extraction configuration. Unknown layouts, missing identity, and unsupported or conflicting values go to review. The reviewer inspects Salesforce drafts and source pages, decides whether to pursue the bid, and may link existing Opportunities.
 
 **Demo result** · NOT RUN for the end-to-end demo. Historical observations from 19–21 November 2026 include a one-page extraction and transfer smoke test, signed-in pilot operator access to the draft and PDF, and a separate 22-page extraction comparison. The intended reviewer and full scenario surfaces remain unverified.
 
-**Acceptance** · Pending human decision. All six scenarios are NOT RUN on their version 1 definitions and common tested build. Historical observations below do not close any criterion.
+**Acceptance** · Pending human decision. All six formal scenarios are NOT RUN. Historical observations below do not close any criterion.
 
 ## Acceptance criteria
 
-| ID | Proposed criterion | Coverage |
+| ID | Criterion | Coverage |
 |---|---|---|
-| AC-01 | Defined by scenario | [QA-01](scenarios.json) |
-| AC-02 | Defined by scenario | [QA-02](scenarios.json) |
-| AC-03 | Salesforce stores reviewable bid data and source links. Google Cloud Storage holds original PDFs and extraction JSON. A person decides whether to pursue the bid. | QA-03 |
-| AC-04 | Identify a bid by its source or buyer and solicitation ID. When a known bid arrives again, keep the incoming PDF as a separate Solicitation Document marked Needs Review; do not create a second Solicitation or overwrite reviewed data. A reviewer records whether it is a duplicate or amendment and can update the Solicitation after review. Earlier documents remain available. | QA-04 |
-| AC-05 | Defined by scenario | [QA-05](scenarios.json) |
+| AC-01 | **Screen bids for the open-bid queue.** **Given** a public solicitation has been submitted for intake. **When** its relevance and current status are checked against the agreed relevance rules and the buyer’s official portal. **Then** it enters the open-bid queue only if it meets those rules, the portal confirms it is open, and its verified response deadline is in the future. **And** expired, closed, irrelevant, or unverifiable bids stay out of the queue with a recorded reason. | QA-01 |
+| AC-02 | **Account for every file in an extraction batch.** **Given** a batch manifest lists the source files submitted for extraction. **When** the batch finishes. **Then** every listed file has a result traceable to that file or an explicit processing error. **And** every required field and requested line item matches its cited source page or has a review flag for missing, conflicting, or unsupported data. | QA-02 |
+| AC-03 | **Let a reviewer verify and decide on a bid.** **Given** extraction has produced bid data and source evidence. **When** the bid is prepared for review. **Then** Salesforce stores the bid draft, its review flags, and durable references to the source evidence, and Google Cloud Storage retains the original PDF and extraction JSON. **And** an authorized reviewer can open the exact source PDF from the draft, inspect flagged values, and record whether to pursue the bid. **And** a user without access to the bid cannot obtain a PDF link through Salesforce. | QA-03, QA-03a |
+| AC-04 | **Preserve reviewed data when another document arrives.** **Given** a Solicitation already exists for the same source or buyer and solicitation ID. **When** another PDF is received for that bid. **Then** intake adds a separate Solicitation Document marked Needs Review under the existing Solicitation, creates no second Solicitation, and leaves reviewed fields and earlier documents intact. **And** a reviewer can open the incoming and earlier documents, record Duplicate or Amendment with notes, and approve any amendment changes before those changes are applied to the Solicitation. | QA-04 |
+| AC-05 | **Link multiple Opportunities and count the bid once.** **Given** one Solicitation and several existing Opportunities. **When** a reviewer links two or more Opportunities to that Solicitation using the optional lookup and leaves another blank. **Then** all linked Opportunities reference the same Solicitation, the unlinked Opportunity remains valid, and a Solicitation-based report counts that bid once. | QA-05 |
 
 **AC-03 access decision** · The owner selected an on-demand short-lived signed link after Salesforce authorization. Holders can open the exact approved PDF until it expires. QA-03a covers this proposed implementation.
+
+**Open product decisions** · Define the relevance rules, decide who checks portal status, confirm required extraction fields, and decide whether a retry of the same intake event reuses its document record.
 
 ## Intake and review design
 
@@ -50,8 +52,8 @@ The reviewed offline mapper and LangGraph preview remain available through the d
 ## Material blockers
 
 - **LEG-01, QA-02, QA-03** · Confirm billing and processing authorization, independent Salesforce access checks and the designated reviewer before dependent live validation.
-- **S-06, S-07, S-09, QA-02** · Apply and read back the selected prompts in a suitable test version before the next comparison. Review the remaining field disagreements against the source. Prompt matching alone cannot establish correct extraction.
-- **LEG-02A, LEG-03, QA-03a, QA-04** · Review and implement child-document intake, signed-link access, and review-first amendment handling before running the full intake pilot.
+- **S-06, S-07, S-09, S-29, QA-02** · Apply and read back the selected prompts in a suitable test version before the next comparison. Review the remaining field disagreements against the source. Prompt matching alone cannot establish correct extraction.
+- **LEG-02A, S-28, S-30, LEG-03, QA-03a, QA-04** · Review and implement child-document intake, signed-link access, and review-first amendment handling before running the full intake pilot.
 - **LEG-04, AC-01–AC-05** · Assign an independent verifier and record the human acceptance decision once the required scenario evidence is available.
 
 ## Files
@@ -68,4 +70,4 @@ The reviewed offline mapper and LangGraph preview remain available through the d
 
 **Task ID migration** · The 27 checklist task IDs keep their saved meanings. Legacy story execution IDs S-01, S-02, S-02a, S-03 and S-04 now map to LEG-01, LEG-02, LEG-02A, LEG-03 and LEG-04 respectively. Those references retain their old meaning in dated historical material.
 
-**Next** · Finish the S-06 test-version readback, complete the source comparison in S-07, then review the supported values and discrepancies with the intended reviewer in S-09. Executor and reviewer assignment remain pending.
+**Next** · Finish the S-06 test-version readback, complete the source comparison in S-07, then sign off the rerun with the intended reviewer in S-29. Already-known disagreements can be resolved in S-09 now. Executor and reviewer assignment remain pending.

@@ -1,15 +1,17 @@
 [
   {
     "scenarioId": "QA-01",
-    "version": 1,
+    "version": 2,
     "name": "Screen notices for the open bid queue",
     "actor": "sales_reviewer",
     "environment": "pilot_intake",
-    "startingState": "An official portal and the test queue are available. Prepare candidate notices with open, expired, and unverifiable deadlines.",
+    "startingState": "An official portal and the test queue are available. Prepare open, expired, closed, irrelevant, and deadline-unverifiable notices.",
     "fixtures": [
       "open_notice",
       "expired_notice",
-      "unverified_notice"
+      "unverified_notice",
+      "closed_notice",
+      "irrelevant_notice"
     ],
     "actions": [
       "Open each official notice and its latest published amendment, if any.",
@@ -17,7 +19,7 @@
       "Submit each candidate through pilot screening and inspect the resulting queue."
     ],
     "expected": "Only relevant public solicitations with a verified future deadline and an open status confirmed on the buyer's official portal can enter the open-bid queue.",
-    "acceptanceSource": "scenario",
+    "acceptanceSource": "story",
     "surfaces": {
       "desktopUi": true,
       "mobileUi": false,
@@ -25,7 +27,10 @@
     },
     "assertions": {
       "backend": "The intake records each admission or exclusion with its reason."
-    }
+    },
+    "criteria": [
+      "AC-01"
+    ]
   },
   {
     "scenarioId": "QA-02",
@@ -46,13 +51,16 @@
       "Compare required fields and each requested item, quantity and unit with its source page. Check blank and conflicting values.",
       "Read back review flags and source references for the affected fields and items."
     ],
-    "expected": "The batch produces a traceable result or an explicit error for every file. Each required field or line is supported by the source or flagged for review.",
-    "acceptanceSource": "scenario",
+    "expected": "Every manifest file has a traceable result or explicit error. Each required field or item matches its cited source page or is flagged for review.",
+    "acceptanceSource": "story",
     "surfaces": {
       "desktopUi": false,
       "mobileUi": false,
       "backend": true
-    }
+    },
+    "criteria": [
+      "AC-02"
+    ]
   },
   {
     "scenarioId": "QA-03",
@@ -119,7 +127,7 @@
   },
   {
     "scenarioId": "QA-04",
-    "version": 1,
+    "version": 2,
     "name": "Review a replay and an amendment",
     "actor": "sales_reviewer",
     "environment": "test_org",
@@ -132,7 +140,7 @@
     "actions": [
       "Submit the replay and the amendment. Inspect the existing Solicitation and both new document entries before review.",
       "Open each PDF, record Duplicate or Amendment with notes, and approve only the amendment changes.",
-      "Read back reviewed data, all document references, and the queue disposition of expired samples."
+      "Read back reviewed data and all document references."
     ],
     "expected": "One Solicitation keeps the original and both incoming documents, with reviewed fields changing only after amendment approval.",
     "acceptanceSource": "story",
@@ -164,12 +172,15 @@
       "Open both linked records and the Solicitation related list. Confirm the third record still saves unlinked.",
       "Run the solicitation-based report and read back the lookup values."
     ],
-    "expected": "An Opportunity's optional Solicitation lookup lets multiple existing Opportunities link to the same Solicitation. A solicitation-based count shows that bid once.",
-    "acceptanceSource": "scenario",
+    "expected": "Both linked Opportunities reference the same Solicitation, the third stays unlinked, and the solicitation-based report counts one bid.",
+    "acceptanceSource": "story",
     "surfaces": {
       "desktopUi": true,
       "mobileUi": false,
       "backend": true
-    }
+    },
+    "criteria": [
+      "AC-05"
+    ]
   }
 ]
