@@ -247,7 +247,7 @@ pre { white-space:pre-wrap; background:#e7f0ef; padding:10px; border-radius:6px;
       <label><input type="radio" name="story-source" value="files"> Files from your computer</label>
     </fieldset>
     <div class="load-github" id="load-github">
-      <p id="story-link-help" class="muted">Paste the public GitHub link to your <code>story.md</code> file. Follow the <a href="https://github.com/aispanda/Reusable-Delivery/blob/e5a6ad8d621a8fcf3c86f0a7d4afdab33137fc81/DELIVERY.md#copyable-story" target="_blank" rel="noopener noreferrer">reusable templates</a> and keep the three required files in the same folder. Add <code>blockers.json</code> when needed.</p>
+      <p id="story-link-help" class="muted">Paste the public GitHub link to your <code>story.md</code> file. Follow the <a href="https://github.com/aispanda/Reusable-Delivery/blob/a5c85c452d7bd6c275f927618caae3f118b63161/DELIVERY.md#copyable-story" target="_blank" rel="noopener noreferrer">reusable templates</a> and keep the three required files in the same folder. Add <code>blockers.json</code> when needed.</p>
       <form id="load-form" novalidate>
         <label class="sr-only" for="story-link">GitHub story link</label>
         <input id="story-link" type="url" inputmode="url" autocomplete="off" spellcheck="false" aria-describedby="story-link-help" placeholder="GitHub link to your story file">
@@ -1063,8 +1063,10 @@ function renderStory() {
       el('div', {class: 'card story-surface'}, el('h2', {}, 'User Story'),
         outcome ? el('p', {class: 'outcome'}, inline(outcome.text)) : null),
       factGroups.length ? el('div', {class: 'task-groups'}, factGroups) : null,
-      story.adminGuidance ? el('section', {class: 'card story-surface', id: 'x-' + story.adminGuidance.slug, 'aria-labelledby': 'admin-guidance-heading'},
-        el('h3', {id: 'admin-guidance-heading'}, 'Admin guidance'), renderBlocks(story.adminGuidance.blocks)) : null));
+      el('section', {class: 'card story-surface', id: 'x-' + (story.adminGuidance?.slug || 'sec-admin-guidance'), 'aria-labelledby': 'admin-guidance-heading'},
+        el('h3', {id: 'admin-guidance-heading'}, 'Admin guidance'),
+        story.adminGuidance ? renderBlocks(story.adminGuidance.blocks)
+          : el('p', {class: 'muted'}, 'Recommended for handoff. Add maintainer steps and a runbook link under Admin guidance in story.md when applicable.'))));
   } else {
     panel.append(el('div', {class: 'notice error'}, 'The story Markdown could not be loaded.'));
   }
