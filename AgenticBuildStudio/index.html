@@ -96,6 +96,7 @@ dl.kv dd { margin:2px 0 0; }
 .summary-strip { display:flex; flex-wrap:wrap; gap:8px 16px; font-size:.9rem; }
 .view-heading { position:relative; display:flex; align-items:center; flex-wrap:wrap; gap:6px 16px; }
 .view-heading h2 { margin:0; }
+.workflow-next { border-top:1px solid var(--line); padding-top:8px; margin-bottom:0; }
 .view-heading .summary-strip { align-items:center; justify-content:flex-end; margin-inline-start:auto; }
 .view-heading > .summary-strip > details[open] > div {
   position:absolute; inset-inline-end:0; top:100%; z-index:2; width:min(100%,36rem);
@@ -246,7 +247,7 @@ pre { white-space:pre-wrap; background:#e7f0ef; padding:10px; border-radius:6px;
       <label><input type="radio" name="story-source" value="files"> Files from your computer</label>
     </fieldset>
     <div class="load-github" id="load-github">
-      <p id="story-link-help" class="muted">Paste the public GitHub link to your <code>story.md</code> file. Follow the <a href="https://github.com/aispanda/Reusable-Delivery/blob/7aca2baf7d75b181afdae3c00383b2b54534a34b/DELIVERY.md#copyable-story" target="_blank" rel="noopener noreferrer">reusable templates</a> and keep all three files in the same folder.</p>
+      <p id="story-link-help" class="muted">Paste the public GitHub link to your <code>story.md</code> file. Follow the <a href="https://github.com/aispanda/Reusable-Delivery/blob/e5a6ad8d621a8fcf3c86f0a7d4afdab33137fc81/DELIVERY.md#copyable-story" target="_blank" rel="noopener noreferrer">reusable templates</a> and keep the three required files in the same folder. Add <code>blockers.json</code> when needed.</p>
       <form id="load-form" novalidate>
         <label class="sr-only" for="story-link">GitHub story link</label>
         <input id="story-link" type="url" inputmode="url" autocomplete="off" spellcheck="false" aria-describedby="story-link-help" placeholder="GitHub link to your story file">
@@ -270,6 +271,7 @@ pre { white-space:pre-wrap; background:#e7f0ef; padding:10px; border-radius:6px;
         <label><code>story.md</code><input type="file" name="story.md" accept=".md"></label>
         <label><code>checklist.json</code><input type="file" name="checklist.json" accept=".json"></label>
         <label><code>scenarios.json</code><input type="file" name="scenarios.json" accept=".json"></label>
+        <label><code>blockers.json</code> <span class="muted">(optional)</span><input type="file" name="blockers.json" accept=".json"></label>
       </div>
       <div class="row">
         <button id="open-story-files" class="primary" type="submit" disabled>Open story</button>
@@ -285,6 +287,7 @@ pre { white-space:pre-wrap; background:#e7f0ef; padding:10px; border-radius:6px;
     <ul>
       <li><a href="#tab=story" data-tab="story">User Story <span class="count" id="count-story"></span></a></li>
       <li><a href="#tab=checklist" data-tab="checklist">Agentic Workflow <span class="count" id="count-checklist"></span></a></li>
+      <li><a href="#tab=blockers" data-tab="blockers">Blockers</a></li>
     </ul>
     <button type="button" id="toggle-story-details" aria-controls="panel-story" hidden>Expand all</button>
   </nav>
@@ -294,6 +297,7 @@ pre { white-space:pre-wrap; background:#e7f0ef; padding:10px; border-radius:6px;
   <p id="nav-status" class="sr-only" role="status" aria-live="polite"></p>
   <section id="panel-story" data-panel="story" aria-label="User Story" hidden></section>
   <section id="panel-checklist" data-panel="checklist" aria-label="Agentic Workflow" hidden></section>
+  <section id="panel-blockers" data-panel="blockers" aria-label="Blockers" hidden></section>
 </main>
 <noscript><p class="bar-inner">This viewer needs JavaScript to load and display story files.</p></noscript>
 
@@ -302,7 +306,7 @@ pre { white-space:pre-wrap; background:#e7f0ef; padding:10px; border-radius:6px;
 
 // ───────────────────────── constants and embedded guidance ─────────────────────────
 const MAX_BYTES = 2000000;
-const EXAMPLE_LINK = 'https://github.com/aispanda/B2B-Commerce/blob/b54ab7b25eb762ea80cfcb65c45d61c94a5b1e6d/epics/e05-procurement/stories/medical-supply-bid-discovery/story.md';
+const EXAMPLE_LINK = 'https://github.com/aispanda/B2B-Commerce/blob/2c8ba28c7b1bdcdd634b55eee4426d5d2827e925/epics/e05-procurement/stories/medical-supply-bid-discovery/story.md';
 const ID_RE = /\b[A-Z][A-Z0-9]*-[A-Za-z0-9.]*[A-Za-z0-9]\b/g;
 const URL_RE = /https:\/\/[^\s<>()"'\]]*[^\s<>()"'\].,;:!?]/g;
 const SURFACES = [['desktopUi', 'Desktop UI'], ['mobileUi', 'Mobile UI'], ['backend', 'Backend']];
@@ -362,6 +366,7 @@ const state = {
   tasks: [],           // canonical checklist array
   criteria: [],
   scenarios: [],
+  blockers: [],
   files: {},
   ids: new Map(),      // id -> {kind, tab}
   warnings: [],
@@ -559,6 +564,29 @@ function parseScenarios(result) {
   return {criteria, list, state: 'loaded', message: criteria.length + ' criteria and ' + list.length + ' scenarios loaded'};
 }
 
+function parseBlockers(result) {
+  if (!result.ok) return {list: [], state: result.state, message: result.message};
+  const invalid = message => ({list: [], state: 'invalid', message});
+  let entries;
+  try { entries = JSON.parse(result.text); } catch { return invalid('is not valid JSON'); }
+  if (!Array.isArray(entries)) return invalid('needs an array of blocker records');
+  const short = value => typeof value === 'string' && /^\S+(\s+\S+){0,28}$/.test(value);
+  for (const [index, entry] of entries.entries()) {
+    if (!isObject(entry) || !['goal', 'blocker', 'currentFix'].every(key => short(entry[key]))) {
+      return invalid('needs a goal, blocker, and current fix of 1–29 words in record ' + (index + 1));
+    }
+    if ('documentationUrl' in entry &&
+        (typeof entry.documentationUrl !== 'string' || !/^https:\/\/\S+$/.test(entry.documentationUrl) || !safeHttps(entry.documentationUrl))) {
+      return invalid('needs an HTTPS documentation link in record ' + (index + 1));
+    }
+    if ('affectedIds' in entry && (!Array.isArray(entry.affectedIds) || !entry.affectedIds.every(id => typeof id === 'string'))) {
+      return invalid('needs a list of affected IDs in record ' + (index + 1));
+    }
+    if ('status' in entry && !short(entry.status)) return invalid('needs a short status in record ' + (index + 1));
+  }
+  return {list: entries, state: 'loaded', message: entries.length + ' loaded'};
+}
+
 async function loadSource(source, selectedFiles) {
   if (selectedFiles && state.legacy?.editing.size) throw new Error('Save or cancel the open draft edits first.');
   const loadId = ++latestSourceLoad;
@@ -566,13 +594,17 @@ async function loadSource(source, selectedFiles) {
     setLoadStatus('Loading story…');
     $('#load-source').hidden = true;
   }
-  const names = [source.storyFile, 'checklist.json', 'scenarios.json'];
-  const [storyRes, checkRes, scenRes] = await Promise.all(names.map(name => selectedFiles
-    ? selectedFiles.get(name).text().then(text => ({ok: true, text}), () => ({ok: false, state: 'error', message: 'could not be read'}))
-    : fetchText(source.rawDir + name, false)));
+  const names = [source.storyFile, 'checklist.json', 'scenarios.json', 'blockers.json'];
+  const [storyRes, checkRes, scenRes, blockerRes] = await Promise.all(names.map(name => {
+    if (!selectedFiles) return fetchText(source.rawDir + name, false);
+    const file = selectedFiles.get(name);
+    return file ? file.text().then(text => ({ok: true, text}), () => ({ok: false, state: 'error', message: 'could not be read'}))
+      : {ok: false, state: 'missing', message: 'was not selected'};
+  }));
   if (loadId !== latestSourceLoad) return false;
   const check = parseJsonArray(checkRes, 'checklist.json', 'stepId');
   const scen = parseScenarios(scenRes);
+  const blockers = parseBlockers(blockerRes);
   const story = storyRes.ok ? parseStory(storyRes.text) : null;
   const storyFile = story?.title ? {state: 'loaded', message: 'loaded'}
     : storyRes.ok ? {state: 'invalid', message: 'needs a story title'}
@@ -581,6 +613,7 @@ async function loadSource(source, selectedFiles) {
     [decodeURIComponent(source.storyFile)]: storyFile,
     'scenarios.json': scen, 'checklist.json': check
   };
+  if (blockers.state !== 'missing') files['blockers.json'] = blockers;
   if (selectedFiles) {
     const badFile = Object.entries(files).find(([, file]) => file.state !== 'loaded');
     if (badFile) throw new Error(badFile[0] + ' ' + badFile[1].message + '.');
@@ -596,6 +629,7 @@ async function loadSource(source, selectedFiles) {
   state.tasks = check.list.map(normalizeTask);
   state.criteria = scen.criteria ?? story?.criteria ?? [];
   state.scenarios = scen.list;
+  state.blockers = blockers.list;
   state.story = story;
   state.loaded = true;
   buildIndex();
@@ -630,6 +664,7 @@ async function loadSource(source, selectedFiles) {
 }
 function renderFileStatus(storyFilename) {
   const labels = [[storyFilename, 'User story'], ['scenarios.json', 'Criteria and verification'], ['checklist.json', 'Agentic Workflow']];
+  if (state.files['blockers.json']) labels.push(['blockers.json', 'Blockers']);
   const summary = $('#load-summary');
   summary.replaceChildren(...labels.map(([filename, label]) => {
     const stateValue = state.files[filename].state;
@@ -692,7 +727,10 @@ function parseStory(text) {
     if (b.type === 'heading' && b.level === 1 && !story.title) { story.title = plain(b.text); continue; }
     if (b.type === 'heading' && b.level === 2) { current = {title: plain(b.text), blocks: []}; story.sections.push(current); continue; }
     const fact = b.type === 'para' && b.text.match(/^\*\*([^*]+)\*\*\s*·\s*([\s\S]*)$/);
-    if (fact && /^next$/i.test(fact[1].trim())) continue;
+    if (fact && /^next$/i.test(fact[1].trim())) {
+      story.next = fact[2];
+      continue;
+    }
     if (!current) {
       if (fact) story.facts.push({label: fact[1].trim(), text: fact[2]});
       continue;
@@ -730,13 +768,17 @@ function parseStory(text) {
     }
   }
   story.files = story.sections.find(s => /^files$/i.test(s.title));
+  story.blockers = story.sections.find(s => /^(?:material )?blockers$/i.test(s.title));
+  story.adminGuidance = story.sections.find(s => /^admin guidance$/i.test(s.title) && s.blocks.length);
   return story;
 }
 function storyLink(label, href) {
   const text = plain(label);
   if (href.startsWith('#')) {
     const slug = 'sec-' + href.slice(1).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-    if (state.story?.files?.slug === slug) return el('a', {href: '#id=' + encodeURIComponent(slug)}, text);
+    if ([state.story?.files, state.story?.adminGuidance].some(section => section?.slug === slug)) {
+      return el('a', {href: '#id=' + encodeURIComponent(slug)}, text);
+    }
     return state.source?.storyLink ? extLink(new URL(href, state.source.storyLink).href, text) : document.createTextNode(text);
   }
   const base = state.source?.linkDir || state.source?.rawDir;
@@ -801,6 +843,7 @@ function buildIndex() {
   dup(state.criteria, 'id', 'criterion ID');
   state.criteria.forEach(c => add(c.id, 'criterion', 'story'));
   if (state.story?.files) ids.set(state.story.files.slug, {kind: 'section', tab: 'story'});
+  if (state.story?.adminGuidance) ids.set(state.story.adminGuidance.slug, {kind: 'section', tab: 'story'});
   state.ids = ids;
   const taskIds = new Set(state.tasks.map(t => t.stepId));
   const criterionIds = new Set(state.criteria.map(c => c.id));
@@ -881,6 +924,7 @@ function renderAll() {
   renderSourceExtras();
   renderStory();
   renderChecklist();
+  renderBlockers();
   say('#count-story', state.criteria.length ? '(' + state.criteria.length + ' criteria)' : '');
   say('#count-checklist', '(' + (state.checkView === 'legacy' && state.legacy ? state.legacy.data.tasks.length : state.tasks.length) + ')');
   showTab(state.tab);
@@ -908,7 +952,7 @@ function renderSourceExtras() {
   }
 }
 function showTab(tab) {
-  if (tab !== 'checklist') tab = 'story';
+  if (!['story', 'checklist', 'blockers'].includes(tab)) tab = 'story';
   state.tab = tab; prefs.tab = tab; savePrefs();
   document.querySelectorAll('[data-panel]').forEach(p => { p.hidden = p.dataset.panel !== tab; });
   document.querySelectorAll('nav.tabs a').forEach(a => {
@@ -1018,7 +1062,9 @@ function renderStory() {
     panel.append(el('div', {class: 'story-overview stack'},
       el('div', {class: 'card story-surface'}, el('h2', {}, 'User Story'),
         outcome ? el('p', {class: 'outcome'}, inline(outcome.text)) : null),
-      factGroups.length ? el('div', {class: 'task-groups'}, factGroups) : null));
+      factGroups.length ? el('div', {class: 'task-groups'}, factGroups) : null,
+      story.adminGuidance ? el('section', {class: 'card story-surface', id: 'x-' + story.adminGuidance.slug, 'aria-labelledby': 'admin-guidance-heading'},
+        el('h3', {id: 'admin-guidance-heading'}, 'Admin guidance'), renderBlocks(story.adminGuidance.blocks)) : null));
   } else {
     panel.append(el('div', {class: 'notice error'}, 'The story Markdown could not be loaded.'));
   }
@@ -1131,6 +1177,37 @@ function runHistory(sc) {
       r.comments ? [el('br'), el('span', {class: 'muted'}, 'Comments: '), r.comments] : ''))) : emptyValue('No runs for this scenario.')));
 }
 
+function renderBlockers() {
+  const panel = $('#panel-blockers');
+  panel.replaceChildren(el('div', {class: 'card'}, el('h2', {}, 'Blockers')));
+  const file = state.files['blockers.json'];
+  if (file && file.state !== 'loaded') {
+    panel.append(el('p', {class: 'notice error'}, 'blockers.json ' + file.message + '.'));
+    return;
+  }
+  if (!file && state.story?.blockers?.blocks.length) {
+    panel.append(el('div', {class: 'card'}, renderBlocks(state.story.blockers.blocks)));
+    return;
+  }
+  if (!state.blockers.length) {
+    panel.append(el('p', {class: 'card muted'}, 'No blockers recorded.'));
+    return;
+  }
+  for (const entry of state.blockers) {
+    const ids = entry.affectedIds || [];
+    const documentation = entry.documentationUrl
+      ? extLink(entry.documentationUrl, 'Documentation') : null;
+    panel.append(el('article', {class: 'card stack'},
+      ids.length || entry.status ? el('div', {class: 'row'},
+        ids.map(id => idLink(id)), entry.status ? badge(entry.status) : null) : null,
+      el('dl', {class: 'kv task-fields task-column'},
+        kv('Goal', inline(entry.goal)),
+        kv('Blocker', inline(entry.blocker)),
+        kv('Current fix', inline(entry.currentFix)),
+        documentation ? kv('Documentation', documentation) : null)));
+  }
+}
+
 // ───────────────────────── Checklist tab ─────────────────────────
 function reusableArtifact(task) {
   return {planned: task.reusableArtifact?.planned ?? task.githubPublish,
@@ -1208,6 +1285,13 @@ function renderChecklist() {
     if (state.checkView === 'legacy') { renderLegacy(panel); return; }
   }
   const file = state.files['checklist.json'];
+  const counts = {};
+  state.tasks.forEach(t => { counts[t.status] = (counts[t.status] || 0) + 1; });
+  panel.append(el('div', {class: 'card stack'},
+    el('div', {class: 'view-heading'}, el('h2', {}, 'Agentic Workflow'),
+      state.tasks.length ? el('div', {class: 'summary-strip'},
+        TASK_STATUSES.filter(s => counts[s]).map(s => el('span', {}, badge(s), ' ', counts[s]))) : null),
+    state.story?.next ? el('p', {class: 'workflow-next'}, el('strong', {}, 'Next '), inline(state.story.next)) : null));
   if (!state.tasks.length) {
     panel.append(el('div', {class: 'notice ' + (file?.state === 'loaded' ? '' : 'error')}, file?.state === 'loaded' ? 'checklist.json contains no tasks.' : 'checklist.json ' + (file?.message || 'is not loaded') + '.'));
     return;
@@ -1225,13 +1309,7 @@ function renderChecklist() {
       return card;
     }));
   };
-  const counts = {};
-  state.tasks.forEach(t => { counts[t.status] = (counts[t.status] || 0) + 1; });
-  panel.append(el('div', {class: 'card stack'},
-    el('div', {class: 'view-heading'}, el('h2', {}, 'Agentic Workflow'),
-      el('div', {class: 'summary-strip'},
-        TASK_STATUSES.filter(s => counts[s]).map(s => el('span', {}, badge(s), ' ', counts[s]))))),
-    checklistControls(TASK_FIELDS, draw), shownCount, listBox);
+  panel.append(checklistControls(TASK_FIELDS, draw), shownCount, listBox);
   draw();
 }
 function taskCard(task, fields, all, opts = {}) {
@@ -1511,7 +1589,7 @@ const storyFilesForm = $('#story-files-form');
 const storyFileInputs = [...storyFilesForm.querySelectorAll('input[type=file]')];
 const openStoryFiles = $('#open-story-files');
 const fileFeedback = $('#story-files-status');
-const storyFilesReady = () => storyFileInputs.every(input => input.files.length === 1);
+const storyFilesReady = () => storyFileInputs.every(input => input.name === 'blockers.json' || input.files.length === 1);
 storyFilesForm.addEventListener('change', e => {
   const input = e.target;
   const file = input.files[0];
