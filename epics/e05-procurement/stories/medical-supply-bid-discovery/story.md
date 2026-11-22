@@ -45,10 +45,7 @@ The reviewed offline mapper and LangGraph preview remain available through the d
 
 ## Material blockers
 
-- **LEG-01, QA-02, QA-03** · Confirm billing and processing authorization, independent Salesforce access checks and the designated reviewer before dependent live validation.
-- **S-06, S-07, S-09, S-29, QA-02** · Apply and read back the selected prompts in a suitable test version before the next comparison. Review the remaining field disagreements against the source. Prompt matching alone cannot establish correct extraction.
-- **LEG-02A, S-28, S-30, LEG-03, QA-03a, QA-04** · Review and implement child-document intake, signed-link access, and review-first amendment handling before running the full intake pilot.
-- **LEG-04, AC-01 to AC-06** · Assign an independent verifier and record the human acceptance decision once the required scenario evidence is available.
+[Blockers and current fixes](blockers.json).
 
 ## Files
 

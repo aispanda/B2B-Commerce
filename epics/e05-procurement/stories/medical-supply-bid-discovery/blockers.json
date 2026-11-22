@@ -1,0 +1,54 @@
+[
+  {
+    "affectedIds": [
+      "LEG-01",
+      "QA-02",
+      "QA-03"
+    ],
+    "goal": "Establish platform access and permission to process the authorized BID-01 pilot.",
+    "blocker": "MCP access and the designated reviewer remain unverified. Billing account status was observed; credits and applicable processing authorization need confirmation.",
+    "currentFix": "Verify Salesforce CLI and MCP independently, confirm billing and processing authorization, and identify the designated reviewer before live validation.",
+    "documentationUrl": "https://github.com/aispanda/Reusable-Delivery/tree/main/references"
+  },
+  {
+    "affectedIds": [
+      "S-06",
+      "S-07",
+      "S-09",
+      "S-29",
+      "QA-02"
+    ],
+    "goal": "Rerun extraction using the selected prompts and compare the results with the source.",
+    "blocker": "The selected prompts have not been read back on a suitable test version, and field disagreements remain unresolved.",
+    "currentFix": "Apply and read back selected prompts on a suitable test version; compare disputed values against the source. Prompt matching alone cannot establish accuracy.",
+    "documentationUrl": "https://docs.cloud.google.com/document-ai/docs/ce-with-genai#auto-labeling-with-the-foundation-model"
+  },
+  {
+    "affectedIds": [
+      "LEG-02A",
+      "S-28",
+      "S-30",
+      "LEG-03",
+      "QA-03a",
+      "QA-04"
+    ],
+    "goal": "Run the full intake pilot with document history, signed-link access, and review-first amendments.",
+    "blocker": "The child-document, signed-link, and review-first amendment paths still need implementation and test-org verification.",
+    "currentFix": "Review and implement the intake and access design, then authorize, deploy, and verify the revision before the pilot.",
+    "documentationUrl": "https://docs.cloud.google.com/storage/docs/access-control/signed-urls"
+  },
+  {
+    "affectedIds": [
+      "LEG-04",
+      "AC-01",
+      "AC-02",
+      "AC-03",
+      "AC-04",
+      "AC-05",
+      "AC-06"
+    ],
+    "goal": "Record human acceptance after independently reviewing the evidence for all six criteria.",
+    "blocker": "The independent verifier is unassigned and required verification evidence is still pending.",
+    "currentFix": "Assign an independent verifier, collect evidence for every required surface, and record the scope of the human decision."
+  }
+]
