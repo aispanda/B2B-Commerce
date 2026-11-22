@@ -1,0 +1,720 @@
+[
+  {
+    "stepId": "S-16",
+    "task": "Define the pilot scope and acceptance boundary.",
+    "ownerType": "Human",
+    "status": "Closed",
+    "inputs": "Business goal, candidate documents, and intended destination.",
+    "outputs": "Pilot scope and acceptance criteria.",
+    "completion": "Confirm document family, reviewer, destination, and test boundary.",
+    "scope": "One scoped pilot.",
+    "direction": "Record business intent and boundaries with the human owner.",
+    "guardrails": "Separate pilot evidence from production readiness.",
+    "evidence": "BID-01 story records the pilot scope and acceptance boundary.",
+    "comments": "Pilot scope and acceptance boundary were recorded in the BID-01 story.",
+    "githubPublish": false,
+    "value": "The team can align work with the intended business outcome.",
+    "supports": [
+      "AC-01",
+      "AC-02",
+      "AC-03",
+      "AC-04",
+      "AC-05"
+    ],
+    "result": "Pass"
+  },
+  {
+    "stepId": "S-17",
+    "task": "Verify the cloud project and processing prerequisites.",
+    "ownerType": "AI",
+    "status": "In progress",
+    "inputs": "Authorized project, intended region, access, and processor requirements.",
+    "outputs": "Cloud prerequisites record.",
+    "completion": "Confirm project, access, location compatibility, limits, and billing.",
+    "scope": "One authorized pilot environment.",
+    "direction": "Inspect the selected Cloud Storage and Document AI environment.",
+    "guardrails": "Resolve billing and access before new processing.",
+    "evidence": "BID-01 story records the pilot bucket and processor.",
+    "comments": "Billing and credits were not independently verified.",
+    "model": "gpt-6.2-sol",
+    "githubPublish": false,
+    "value": "Operators can identify missing access or billing prerequisites before processing.",
+    "supports": [
+      "QA-02"
+    ],
+    "result": "Pending"
+  },
+  {
+    "stepId": "S-18",
+    "task": "Create or reuse the pilot storage bucket.",
+    "ownerType": "AI",
+    "status": "In progress",
+    "inputs": "Authorized project, region, privacy, and retention requirements.",
+    "outputs": "Private pilot bucket and configuration record.",
+    "completion": "Read back the bucket location, access, retention, and intended project.",
+    "scope": "One storage bucket for the pilot.",
+    "direction": "Reuse a suitable bucket or create one after approval.",
+    "guardrails": "Preserve access restrictions and avoid exposing sensitive identifiers.",
+    "evidence": "The BID-01 story records a private pilot bucket.",
+    "comments": "The handoff confirms the bucket existed; a full configuration readback is not recorded.",
+    "model": "gpt-6.2-sol",
+    "githubPublish": false,
+    "value": "Operators have a private place to stage authorized documents.",
+    "supports": [
+      "QA-02",
+      "QA-03"
+    ],
+    "result": "Pending"
+  },
+  {
+    "stepId": "S-19",
+    "task": "Organize storage prefixes and stage authorized samples.",
+    "ownerType": "AI",
+    "status": "Closed",
+    "inputs": "Authorized samples, source links, and storage access.",
+    "outputs": "Staged files and provenance manifest.",
+    "completion": "Match staged objects to their manifest entries and confirm intended access.",
+    "scope": "Pilot sample staging and reusable prefix conventions.",
+    "direction": "Choose relevant input, review, output, and archive prefixes; stage the approved sample set.",
+    "guardrails": "Keep provenance; naming alone does not enforce access or classification.",
+    "evidence": "Pilot staging readback matched staged samples to the provenance manifest.",
+    "comments": "Pilot samples were staged. The broader folder convention remains proposed.",
+    "model": "GPT-6.1 Terra",
+    "githubPublish": false,
+    "value": "Reviewers can find staged samples and trace their origin.",
+    "supports": [
+      "QA-02"
+    ],
+    "result": "Pass"
+  },
+  {
+    "stepId": "S-20",
+    "task": "Apply and verify approved bucket labels and tags.",
+    "ownerType": "AI",
+    "status": "Pending design",
+    "inputs": "Pilot bucket, existing labels, effective tags, approved naming rules.",
+    "outputs": "Verified labels, tag decision, before-and-after readback.",
+    "completion": "Read back approved labels; log tag omission or verify effective tags and access.",
+    "scope": "One pilot bucket; label and tag decision.",
+    "direction": "Inspect labels and inherited tags. Propose env=pilot, story=bid-01, workload=bid-intake, owner=approved-team. Apply approved values only.",
+    "guardrails": "Preserve labels and object metadata. Add tags only for approved policy or access.",
+    "comments": "Neon design proposal; no approvals, applications, or timing measured.",
+    "model": "gpt-6.2-sol",
+    "docs": "https://docs.cloud.google.com/storage/docs/using-bucket-labels\nhttps://docs.cloud.google.com/storage/docs/tags-and-labels",
+    "value": "Operators can identify the pilot bucket’s owner and workload without tracing account history or asking another team.",
+    "metric": "Minimize time to find bucket owner and workload. Proposed target: ≤2 minutes.",
+    "reuseOpportunity": "Bucket-template saves setup.",
+    "supports": [
+      "QA-02"
+    ],
+    "result": "NOT RUN"
+  },
+  {
+    "stepId": "S-21",
+    "task": "Record and verify document object metadata.",
+    "ownerType": "AI",
+    "status": "Closed",
+    "inputs": "Staged files and approved provenance keys.",
+    "outputs": "Per-object metadata and a provenance manifest.",
+    "completion": "Read back object metadata and reconcile it with the manifest.",
+    "scope": "Pilot document provenance.",
+    "direction": "Record approved source identifiers, timestamps, and object versions as applicable.",
+    "guardrails": "Keep sensitive information out of metadata and shared inventories.",
+    "evidence": "Pilot metadata readback verified the approved provenance fields on 20 objects.",
+    "model": "GPT-6.1 Terra",
+    "docs": "https://docs.cloud.google.com/storage/docs/metadata",
+    "comments": "Metadata readback was verified for 20 pilot objects.",
+    "value": "Reviewers can trace each document back to its source.",
+    "reuseOpportunity": "Use S-20 storage template for provenance metadata; saves duplicate field design.",
+    "supports": [
+      "QA-02",
+      "QA-03"
+    ],
+    "githubPublish": false,
+    "result": "Pass"
+  },
+  {
+    "stepId": "S-22",
+    "task": "Review document classifications and routing rules.",
+    "ownerType": "Human",
+    "status": "In progress",
+    "inputs": "Representative samples and proposed document categories.",
+    "outputs": "Reviewed category rules and an unknown-document route.",
+    "completion": "Confirm category boundaries and handling for ambiguous documents.",
+    "scope": "Pilot document classification decisions.",
+    "direction": "Compare candidate categories with the source documents.",
+    "guardrails": "Route uncertain cases for review; validate automation separately.",
+    "evidence": "Pilot classifier had Erie Invitation to Bid and Other labels. One sample was suggested as Erie.",
+    "comments": "Human confirmation, a second sample, and formal prediction testing remain open. Automated routing was not validated.",
+    "value": "Operators can identify document families and route uncertain cases for review.",
+    "reuseOpportunity": "Classifier routing template: saves repeated unknown-category and confidence-rule design after validation.",
+    "supports": [
+      "QA-01",
+      "QA-02"
+    ],
+    "githubPublish": true,
+    "result": "Pending"
+  },
+  {
+    "stepId": "S-23",
+    "task": "Select the fields applicable to the document family.",
+    "ownerType": "Human",
+    "status": "In progress",
+    "inputs": "Representative sample, candidate schema, and desired data fields.",
+    "outputs": "Reviewed field selection and exclusions.",
+    "completion": "Check chosen fields, types, requiredness, and repeated structures against the source.",
+    "scope": "Fields for the selected pilot document family.",
+    "direction": "Review schema suggestions; refine relevant fields and disable unrelated fields.",
+    "guardrails": "Keep source evidence and validate generated suggestions before use.",
+    "evidence": "BID-01 transcript: schema generation rejected the full PDF at its 15-page limit; page one yielded a draft.",
+    "comments": "Exhibits were disabled initially; submission instructions were disabled later. The subsequent full-document run returned both item groups.",
+    "githubPublish": false,
+    "value": "Reviewers can focus extraction on the fields the business needs.",
+    "reuseOpportunity": "Use S-05 configuration workbook to save repeated field-definition setup.",
+    "supports": [
+      "QA-02",
+      "QA-03"
+    ],
+    "result": "Pending"
+  },
+  {
+    "stepId": "S-24",
+    "task": "Configure the baseline extractor from the selected fields.",
+    "ownerType": "AI",
+    "status": "Closed",
+    "inputs": "Selected fields, authorized processor, and pilot document family.",
+    "outputs": "Versioned baseline extractor configuration.",
+    "completion": "Verify active fields and processor version before the baseline run in S-01.",
+    "scope": "Baseline processor and schema only.",
+    "direction": "Apply the reviewed schema and record the effective processor version.",
+    "guardrails": "Preserve prior settings and distinguish configuration from extraction quality.",
+    "evidence": "Pilot extractor was enabled, the one-page schema was applied, and a one-page test returned fields.",
+    "comments": "The later run used a zero-training version. Its description prompt included the full cell and leading code.",
+    "model": "gpt-6.2-sol",
+    "githubPublish": false,
+    "value": "Operators can use a defined schema for a repeatable extraction test.",
+    "reuseOpportunity": "Use S-05 configuration workbook to save repeated extractor schema setup.",
+    "supports": [
+      "QA-02"
+    ],
+    "result": "Pass"
+  },
+  {
+    "stepId": "S-25",
+    "task": "Recover an edited pilot annotation from the original OCR.",
+    "status": "Closed",
+    "ownerType": "Human",
+    "inputs": "Pilot annotation, source page, and existing sibling labels.",
+    "outputs": "Fresh source-grounded annotation and pilot readback record.",
+    "completion": "Verify the new label contains the full selected OCR span and the separate code remains under the same item.",
+    "scope": "One multiline item description in the pilot.",
+    "direction": "Replace the edited child with a fresh full-cell selection and retain the separate code label.",
+    "guardrails": "Leave detected OCR text intact. Treat overlap compatibility as a separate check.",
+    "comments": "Selected annotations were saved in Workbench. Dataset-wide labeling and overlap verification remain separate; see S-11 and S-26.",
+    "evidence": "Pilot label readback showed the original OCR span and separate code on the same saved item.",
+    "docs": "https://docs.cloud.google.com/document-ai/docs/label-documents",
+    "githubPublish": false,
+    "value": "Reviewers retain a source-grounded annotation for later verification.",
+    "supports": [
+      "QA-02"
+    ],
+    "result": "Pass"
+  },
+  {
+    "status": "Closed",
+    "task": "Run the baseline extraction on a representative pilot document.",
+    "evidence": "Full 22-page zero-training extraction returned raw JSON for source comparison.",
+    "stepId": "S-01",
+    "ownerType": "Automation",
+    "assignee": "Pending confirmation",
+    "inputs": "Selected pilot document and baseline extractor schema.",
+    "outputs": "Raw extraction JSON.",
+    "completion": "Verify the run covered the entire pilot document and retained the raw extraction JSON.",
+    "tool": "Google Document AI Custom Extractor",
+    "docs": "https://docs.cloud.google.com/document-ai/docs/send-request#batch-processing",
+    "comments": "Pilot: Erie 2025 public 22-page PDF. QA-02 separately checks traceable results or errors per PDF and verifies items, quantities, and units against source pages.",
+    "direction": "Run the baseline extractor. Keep the raw JSON and source-page references for later comparison.",
+    "scope": "One representative pilot document, processed end to end with the baseline schema.",
+    "guardrails": "Record the actual output. Validate extraction quality separately against the source.",
+    "githubPublish": false,
+    "value": "Reviewers can inspect a complete baseline extraction against the source.",
+    "supports": [
+      "QA-02"
+    ],
+    "result": "Pass"
+  },
+  {
+    "status": "Closed",
+    "task": "Retest revised field descriptions on the same pilot document.",
+    "evidence": "A focused zero-training retest processed all 22 pages after changing only the payment-terms description.",
+    "stepId": "S-02",
+    "ownerType": "Automation",
+    "assignee": "Pending confirmation",
+    "inputs": "Original pilot document, baseline extraction, and revised field descriptions.",
+    "outputs": "Retest JSON and comparison for each changed field.",
+    "completion": "Verify the same document and revised descriptions were used. Compare each changed field against the baseline and source.",
+    "tool": "Google Document AI Custom Extractor",
+    "docs": "https://docs.cloud.google.com/document-ai/docs/ce-mechanisms",
+    "comments": "Erie: narrowed only payment_terms. Page 4 was blank; the retest returned “quote net.” from page 6. Recheck in S-07; refine in S-08.",
+    "scope": "One or more fields with baseline extraction issues.",
+    "direction": "Record the changes, rerun the document, and verify each changed field against its source.",
+    "guardrails": "Retain the unexpected result as evidence. Flag unsupported values before using them.",
+    "githubPublish": false,
+    "value": "Reviewers see whether payment extraction improved.",
+    "supports": [
+      "QA-02"
+    ],
+    "result": "Pass"
+  },
+  {
+    "status": "Closed",
+    "task": "Review extractor fields and propose prompt improvements.",
+    "evidence": "Antigravity reviewed the workbook and public PDF and proposed descriptions for 28 active fields.",
+    "stepId": "S-03",
+    "ownerType": "AI",
+    "assignee": "Antigravity",
+    "inputs": "Approved workbook, public source PDF and Google documentation",
+    "outputs": "Field-level prompt suggestions.",
+    "completion": "Suggestions returned; they are proposals and require source-based testing.",
+    "model": "Gemini 4 Neon",
+    "reasoning": "Medium",
+    "tool": "Google Antigravity",
+    "docs": "https://docs.cloud.google.com/document-ai/docs/ce-mechanisms",
+    "scope": "Active extractor fields and their source context in the pilot document.",
+    "direction": "Compare workbook configuration with document context and official Google documentation.",
+    "guardrails": "Treat suggestions as untested; do not invent document values.",
+    "githubPublish": false,
+    "value": "Reviewers get field-specific prompt suggestions grounded in the source.",
+    "supports": [
+      "QA-02"
+    ],
+    "result": "Pass",
+    "comments": "Medium reasoning observed for response."
+  },
+  {
+    "status": "Closed",
+    "task": "Select candidate field descriptions for testing.",
+    "evidence": "28 active-field candidates saved locally; awaiting extraction tests and any refinement.",
+    "stepId": "S-04",
+    "ownerType": "AI",
+    "assignee": "Antigravity",
+    "inputs": "Proposed field descriptions and source context.",
+    "outputs": "JSON file of selected prompt candidates.",
+    "completion": "Verify that each selected description is traceable to an active field and marked untested.",
+    "model": "Gemini 4 Neon",
+    "reasoning": "Medium",
+    "tool": "Google Antigravity",
+    "docs": "https://docs.cloud.google.com/document-ai/docs/ce-mechanisms",
+    "scope": "Existing active fields selected for the pilot.",
+    "direction": "Refine suggested descriptions to reduce overfitting and preserve field definitions.",
+    "guardrails": "Do not rename fields, change occurrence settings, enable disabled fields or assume accuracy.",
+    "githubPublish": false,
+    "value": "Operators get a consistent set of candidate descriptions to test.",
+    "supports": [
+      "QA-02"
+    ],
+    "requires": [
+      "S-03"
+    ],
+    "result": "Pass",
+    "comments": "Medium reasoning observed when requested."
+  },
+  {
+    "status": "Closed",
+    "task": "Record selected prompts in the configuration workbook, keeping current and proposed descriptions distinguishable.",
+    "evidence": "All 28 candidates added to the draft workbook; original descriptions and disabled fields preserved. The published workbook has not yet been updated.",
+    "stepId": "S-05",
+    "ownerType": "AI",
+    "assignee": "Codex",
+    "inputs": "Current configuration workbook and selected candidate descriptions.",
+    "outputs": "Draft configuration workbook with current descriptions, proposed descriptions, and validation status.",
+    "completion": "Verify that each selected proposal is alongside its current description, labeled untested, and that disabled fields are unchanged.",
+    "model": "GPT-6",
+    "reasoning": "Pending confirmation",
+    "tool": "Codex; spreadsheet artifact tool",
+    "scope": "Record candidate prompts alongside existing field descriptions in the draft workbook.",
+    "direction": "Populate the proposed-prompt and status columns for each active field.",
+    "guardrails": "Keep original descriptions and disabled fields unchanged; label candidates untested.",
+    "comments": "Workbook changes are local. Exact GPT-6 variant unconfirmed.",
+    "githubPublish": true,
+    "value": "Reviewers can compare current and proposed prompts.",
+    "reuseOpportunity": "Workbook saves configuration.",
+    "supports": [
+      "QA-02"
+    ],
+    "requires": [
+      "S-04"
+    ],
+    "result": "Pass"
+  },
+  {
+    "status": "Open",
+    "task": "Apply the selected prompts to a suitable Document AI test version.",
+    "stepId": "S-06",
+    "ownerType": "AI",
+    "assignee": "Codex",
+    "inputs": "S-05 workbook snapshot, selected prompts, baseline schema, and test processor version.",
+    "outputs": "Test version with verified prompt snapshot",
+    "completion": "Read back test settings and confirm they match the selected workbook prompts.",
+    "docs": "https://docs.cloud.google.com/document-ai/docs/ce-with-genai#auto-labeling-with-the-foundation-model",
+    "direction": "Resolve unclear workbook fields with a reviewer before applying selected prompts.",
+    "scope": "Apply selected prompts to a Document AI pilot test version.",
+    "guardrails": "Preserve prior versions and evidence; do not train or write Salesforce records.",
+    "model": "gpt-6.2-sol",
+    "comments": "Proposed model for applying and verifying configuration; exact workbook-to-config parity and final assignment remain pending.",
+    "githubPublish": false,
+    "value": "Operators can test the selected prompts in an identifiable processor version.",
+    "reuseOpportunity": "Use S-05 configuration workbook to avoid reassembling selected field prompts.",
+    "supports": [
+      "QA-02"
+    ],
+    "requires": [
+      "S-05"
+    ],
+    "result": "NOT RUN"
+  },
+  {
+    "status": "In progress",
+    "task": "Rerun the pilot document and compare results with the baseline and source.",
+    "evidence": "Full zero-training run completed. Retest returned page 6 policy for blank page 4 payment terms; item groups intact.",
+    "stepId": "S-07",
+    "ownerType": "Automation",
+    "assignee": "Pending assignment",
+    "inputs": "Same pilot document, verified test version, baseline JSON.",
+    "outputs": "New raw JSON and source comparison.",
+    "completion": "Compare required fields, item rows, and source pages; log missing, conflicting, or unsupported values.",
+    "tool": "Google Document AI batch processing",
+    "docs": "https://docs.cloud.google.com/document-ai/docs/send-request#batch-processing",
+    "scope": "One pilot document using the updated test version.",
+    "direction": "Run verified test version, keep JSON, compare values and page anchors.",
+    "guardrails": "Use authorized PDF only; flag unsupported, missing, or conflicting values.",
+    "comments": "Later payment_terms retest did not reverify other fields; remaining field and source checks stay open.",
+    "value": "Reviewers can identify improvements and remaining extraction errors.",
+    "reuseOpportunity": "Source-comparison template: saves rebuilding expected, observed, page-reference, and discrepancy tables.",
+    "supports": [
+      "QA-02"
+    ],
+    "githubPublish": true,
+    "result": "Pending"
+  },
+  {
+    "status": "Open",
+    "task": "Revise targeted prompts when the pilot retest exposes failures.",
+    "stepId": "S-08",
+    "ownerType": "AI",
+    "assignee": "Antigravity",
+    "inputs": "Specific failed fields, observed output and source evidence",
+    "outputs": "Targeted revised prompts",
+    "completion": "Compare revised results with source. Record the changed prompt, version, and outcome for each attempt.",
+    "model": "Gemini 4 Neon",
+    "reasoning": "Pending confirmation",
+    "tool": "Google Antigravity",
+    "scope": "Refine specific prompts that fail the bounded single-document test.",
+    "direction": "Use the observed failure to make one targeted change before each retest. Reuse the same authorized PDF.",
+    "guardrails": "Proposed cap: two retests within approved spend. Stop sooner if the check passes or no new fix is worth testing. Retain evidence.",
+    "comments": "Proposed model for targeted prompt refinement in the existing Antigravity discussion.",
+    "githubPublish": false,
+    "value": "Operators can address observed failures with targeted prompt refinements.",
+    "supports": [
+      "QA-02"
+    ],
+    "requires": [
+      "S-07"
+    ],
+    "result": "NOT RUN"
+  },
+  {
+    "status": "Open",
+    "task": "Review source disagreements and extraction quality with the user.",
+    "stepId": "S-09",
+    "ownerType": "Human",
+    "assignee": "Rajeev",
+    "inputs": "Original PDF, comparison and conflicting extractions",
+    "outputs": "Recorded human review decisions",
+    "completion": "Reviewer identifies correct source values and resolves or records remaining uncertainty.",
+    "direction": "Neither model result is automatically accepted as ground truth.",
+    "scope": "Resolve discrepancies between source evidence and extracted values.",
+    "guardrails": "Keep original evidence; neither model is ground truth; block unsupported time zones or p6 policy in RFQ fields.",
+    "comments": "Human sign-off on source disagreements remains pending.",
+    "githubPublish": false,
+    "value": "Sales reviewers can resolve conflicting facts before relying on them.",
+    "supports": [
+      "QA-02",
+      "QA-03"
+    ],
+    "result": "NOT RUN"
+  },
+  {
+    "status": "Open",
+    "task": "Prepare training examples and independent holdout examples.",
+    "stepId": "S-10",
+    "ownerType": "AI",
+    "assignee": "Pending assignment",
+    "inputs": "Candidate documents, provenance, and proposed schema.",
+    "outputs": "Training and independent holdout inventory",
+    "completion": "Confirm document identities, layouts, duplicates, access, source provenance and separate assignments.",
+    "scope": "Select examples that represent the intended document population and reserve independent holdouts.",
+    "direction": "Inventory provenance, document identity, layout, duplicates and train/test assignments.",
+    "guardrails": "Keep holdouts independent; do not process further PDFs contrary to any active approval restriction.",
+    "model": "gpt-6.2-sol",
+    "comments": "Proposed model for inventory and evidence reconciliation; final assignment remains pending.",
+    "value": "Evaluators can test performance on documents separate from training examples.",
+    "reuseOpportunity": "Dataset split checklist: saves repeating provenance, duplicate, and holdout checks.",
+    "supports": [
+      "QA-02"
+    ],
+    "result": "NOT RUN"
+  },
+  {
+    "stepId": "S-26",
+    "task": "Verify the overlapping child annotations before reuse.",
+    "status": "Open",
+    "ownerType": "Human",
+    "inputs": "Pilot annotations from S-25 and the applicable processor configuration.",
+    "outputs": "Compatibility check and proceed-or-rework decision.",
+    "completion": "Reopen the saved item and verify both children survive under one parent. Record separate evaluation results when available.",
+    "scope": "Full-cell description and overlapping product-code child.",
+    "direction": "Read back both labels and anchors. Check processor support before counting the sample as training-ready.",
+    "guardrails": "Visible overlap alone does not prove training or evaluation compatibility.",
+    "comments": "Gemini Neon identified distinct checks for persistence and extraction. Both need direct evidence.",
+    "docs": "https://docs.cloud.google.com/document-ai/docs/label-documents",
+    "githubPublish": false,
+    "value": "Operators can determine whether overlapping item annotations are usable.",
+    "supports": [
+      "QA-02"
+    ],
+    "requires": [
+      "S-25"
+    ],
+    "result": "NOT RUN"
+  },
+  {
+    "status": "Open",
+    "task": "Label and verify the selected dataset examples.",
+    "stepId": "S-11",
+    "ownerType": "Human",
+    "assignee": "Pending assignment",
+    "inputs": "Selected documents and schema",
+    "outputs": "Reviewed labeled examples",
+    "completion": "Check source spans, all relevant item rows, blank fields and dataset assignment.",
+    "docs": "https://docs.cloud.google.com/document-ai/docs/label-documents",
+    "scope": "Label selected examples for relevant fields and requested-item rows.",
+    "direction": "Assign source-grounded annotations and verify completeness and dataset split.",
+    "guardrails": "Preserve OCR text; do not fabricate blank values or mark incomplete labels as reviewed.",
+    "comments": "The pilot annotation recovery and save happened in S-25. Dataset-wide labeling remains open, after the overlap check in S-26.",
+    "value": "Model evaluators get source-checked examples for training and testing.",
+    "reuseOpportunity": "Use S-10 dataset checklist to save repeating labeling completeness checks.",
+    "supports": [
+      "QA-02"
+    ],
+    "requires": [
+      "S-10",
+      "S-26"
+    ],
+    "result": "NOT RUN"
+  },
+  {
+    "status": "Open",
+    "task": "Train or configure an appropriate processor version.",
+    "stepId": "S-12",
+    "ownerType": "Automation",
+    "assignee": "Pending assignment",
+    "inputs": "Reviewed training/test sets; verified model requirements and billing",
+    "outputs": "Identified processor version",
+    "completion": "Training or configuration completes and version, dataset counts and cost evidence are recorded.",
+    "tool": "Google Document AI",
+    "docs": "https://docs.cloud.google.com/document-ai/docs/ce-with-genai",
+    "scope": "Create an appropriate trained or configured processor version.",
+    "direction": "Verify model-specific dataset requirements, permissions and billing; record the actual version.",
+    "guardrails": "Respect approved spend and access; no production writes or unsupported training claims.",
+    "comments": "The full-document foundation-model run used zero training. Custom training remains open.",
+    "githubPublish": false,
+    "value": "Operators get an identifiable processor version configured for evaluation.",
+    "supports": [
+      "QA-02"
+    ],
+    "requires": [
+      "S-11"
+    ],
+    "result": "NOT RUN"
+  },
+  {
+    "status": "Open",
+    "task": "Evaluate on held-out labeled examples, including missing and populated fields.",
+    "stepId": "S-13",
+    "ownerType": "Automation",
+    "assignee": "Pending assignment",
+    "inputs": "Processor version; held-out labeled documents with populated and missing fields",
+    "outputs": "Field-level evaluation and error evidence",
+    "completion": "Report supported precision/recall, missed items and false positives; do not infer success for unscored fields.",
+    "docs": "https://docs.cloud.google.com/document-ai/docs/evaluate",
+    "scope": "Evaluate the chosen version on independent labeled documents.",
+    "direction": "Check expected fields and item rows against source pages. Flag false fields sourced from excluded sections and table notes that are not products.",
+    "guardrails": "Do not claim success for unscored fields or extrapolate from the training set.",
+    "comments": "The earlier held-out Form Parser and mapper check was separate. Custom Extractor held-out evaluation has not run.",
+    "githubPublish": false,
+    "value": "Reviewers can assess errors on independent examples before relying on results.",
+    "reuseOpportunity": "S-07 comparison template saves evaluation setup.",
+    "supports": [
+      "QA-02"
+    ],
+    "requires": [
+      "S-12"
+    ],
+    "result": "NOT RUN"
+  },
+  {
+    "stepId": "S-27",
+    "task": "Validate downstream cleanup of a leading item code.",
+    "status": "Open",
+    "ownerType": "Automation",
+    "inputs": "Extraction with separate raw description and source code, plus matching and nonmatching test fixtures.",
+    "outputs": "Clean display description and validation results.",
+    "completion": "Remove the exact leading code only when it matches the separate field. Verify unmatched text and raw evidence stay intact.",
+    "scope": "Optional downstream normalization after overlap validation.",
+    "direction": "Test deterministic prefix removal on matching, nonmatching, and missing code cases.",
+    "guardrails": "Preserve raw OCR and page provenance. Route ambiguous cases for review.",
+    "comments": "Gemini Neon suggested downstream cleanup; no workflow or tool is selected.",
+    "value": "Reviewers can see clean item descriptions while retaining source text.",
+    "reuseOpportunity": "Code-prefix cleanup fixture: saves rebuilding the raw-versus-cleaned comparison after validation.",
+    "supports": [
+      "QA-03"
+    ],
+    "result": "NOT RUN"
+  },
+  {
+    "status": "Open",
+    "task": "Record reproducible steps and decisions in the reusable workflow guide.",
+    "stepId": "S-14",
+    "ownerType": "AI",
+    "assignee": "Pending assignment",
+    "inputs": "Observed setup steps, decisions, failures and verified results",
+    "outputs": "Reusable Markdown guide for the validated document-processing workflow.",
+    "completion": "Guide provides generic steps for storage, schema, labeling, review and evaluation; distinguish untested guidance.",
+    "scope": "Document the reusable document-processing workflow for humans and agents.",
+    "direction": "Capture verified navigation, decisions, exceptions and links while marking untested steps.",
+    "guardrails": "Use generic names; omit credentials, private links and claims of unverified success.",
+    "model": "GPT-6.1 Terra",
+    "comments": "A local workflow guide draft exists. Proposed model for documenting verified workflow steps; final assignment remains pending.",
+    "githubPublish": true,
+    "value": "Future teams can repeat the verified workflow and understand its limits.",
+    "reuseOpportunity": "Workflow guide saves repeated process discovery.",
+    "supports": [
+      "QA-02"
+    ],
+    "result": "NOT RUN"
+  },
+  {
+    "status": "Open",
+    "task": "Update the GitHub workbook and story references when the reviewed changes are ready.",
+    "stepId": "S-15",
+    "ownerType": "AI",
+    "assignee": "Pending assignment",
+    "inputs": "Reviewed workbook changes, current branch state and publication permissions",
+    "outputs": "Sanitized workbook, synthetic sample, matching expected JSON, and verified story links.",
+    "completion": "Verify the workbook, sample, and expected JSON agree. Check published files and links for restricted material.",
+    "tool": "Codex; GitHub",
+    "direction": "Compare with prior publication, remove pilot data, and publish reviewed files through the approved workflow.",
+    "scope": "Publish reviewed workbook changes and reconcile the associated story references.",
+    "guardrails": "Preserve concurrent edits and existing criteria; exclude private chats, secrets and restricted evidence.",
+    "model": "gpt-6.2-sol",
+    "comments": "The published workbook still contains the earlier configuration. The enhanced workbook remains a local draft. Planned model assignment is pending.",
+    "githubPublish": false,
+    "value": "Reviewers can find the current reusable configuration and story references.",
+    "supports": [
+      "QA-02"
+    ],
+    "result": "NOT RUN"
+  },
+  {
+    "stepId": "LEG-01",
+    "task": "Verify independent read-only platform access and billing prerequisites.",
+    "status": "In progress",
+    "ownerType": "Human",
+    "outputs": "Record the authorized target identities and availability for each connection.",
+    "completion": "Separately verify Salesforce CLI and Headless 360 MCP, plus Google Cloud project, storage, Document AI and billing.",
+    "supports": [
+      "QA-02",
+      "QA-03"
+    ],
+    "comments": "Storage and processor access, Salesforce CLI and pilot operator access observed. MCP and billing verification remain open.",
+    "result": "Pending",
+    "githubPublish": false
+  },
+  {
+    "stepId": "LEG-02",
+    "task": "Prepare a bounded scenario batch and validate source checks.",
+    "status": "In progress",
+    "ownerType": "Human",
+    "outputs": "Fixture manifest, documentation map and source expectations.",
+    "completion": "Manually verify a known case and a missing or conflicting case against independent source evidence.",
+    "supports": [
+      "QA-01",
+      "QA-02"
+    ],
+    "comments": "Historical one-file and local synthetic checks are partial. The complete scenario batch and fixture expectations are pending.",
+    "result": "Pending",
+    "githubPublish": false
+  },
+  {
+    "stepId": "LEG-02A",
+    "task": "Design the Solicitation Document child and reviewer access.",
+    "status": "Pending design",
+    "ownerType": "AI",
+    "outputs": "Reviewed child schema, optional lookup, document access and review design.",
+    "completion": "Verify the design against test-org metadata, permissions, signed link restrictions, replay handling and reviewer workflow.",
+    "supports": [
+      "QA-03",
+      "QA-03a",
+      "QA-04",
+      "QA-05"
+    ],
+    "comments": "Lookup and layout were observed. Child record, signed link and separate reviewer verification are pending.",
+    "result": "NOT RUN",
+    "githubPublish": false
+  },
+  {
+    "stepId": "LEG-03",
+    "task": "Run the authorized bounded intake pilot and verify test drafts.",
+    "status": "Open",
+    "ownerType": "Automation",
+    "outputs": "Batch evidence and test drafts available for scenario review.",
+    "completion": "Verify draft intake, document history, replay, amendment review and Opportunity linking on the tested build.",
+    "supports": [
+      "QA-02",
+      "QA-03",
+      "QA-03a",
+      "QA-04",
+      "QA-05"
+    ],
+    "comments": "Requires reviewed intake implementation and authorized processing and test writes.",
+    "result": "NOT RUN",
+    "githubPublish": false,
+    "requires": [
+      "LEG-01",
+      "LEG-02",
+      "LEG-02A"
+    ]
+  },
+  {
+    "stepId": "LEG-04",
+    "task": "Independently inspect pilot scenarios and record the human acceptance decision.",
+    "status": "Open",
+    "ownerType": "Human",
+    "outputs": "Surface-specific scenario results and recorded acceptance decision.",
+    "completion": "Review scenario evidence and gaps against all five criteria. Record who accepted what, or leave acceptance pending.",
+    "supports": [
+      "AC-01",
+      "AC-02",
+      "AC-03",
+      "AC-04",
+      "AC-05"
+    ],
+    "comments": "Independent reviewer assignment and acceptance are pending.",
+    "result": "NOT RUN",
+    "githubPublish": false,
+    "requires": [
+      "LEG-03"
+    ]
+  }
+]
