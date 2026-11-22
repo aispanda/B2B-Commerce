@@ -3,9 +3,6 @@
     {
       "id": "AC-01",
       "title": "Screen bids for the open-bid queue.",
-      "given": "a public solicitation has been submitted for intake.",
-      "when": "its relevance and current status are checked against the agreed relevance rules and the buyer’s official portal.",
-      "then": "it enters the open-bid queue only if it meets those rules, the portal confirms it is open, and its verified response deadline is in the future. And expired, closed, irrelevant, or unverifiable bids stay out of the queue. And for every screened notice, intake records whether it was admitted or excluded and why.",
       "scenarioId": "QA-01",
       "version": 2,
       "actor": "sales_reviewer",
@@ -22,23 +19,18 @@
         "mobileUi": false,
         "backend": true
       },
-      "assertions": {
-        "backend": "Read back the recorded admission or exclusion reason for every fixture."
-      },
-      "setup": "Make the official portal and test queue available.",
       "actions": [
-        "Prepare open, expired, closed, irrelevant, and deadline-unverifiable notices.",
         "Open each official notice and its latest published amendment, if any.",
-        "Check relevance, notice type, issuer, solicitation ID, response deadline, stated time zone, and current status.",
-        "Submit each candidate through pilot screening and inspect the resulting queue."
-      ]
+        "Check relevance against the agreed rules and confirm current status on the buyer’s portal. Check notice type, issuer, solicitation ID, response deadline, and stated time zone.",
+        "Submit each candidate through pilot screening and inspect the resulting queue.",
+        "Backend: Read back the recorded admission or exclusion reason for every fixture."
+      ],
+      "startingState": "Candidate public solicitations are submitted for intake. The buyer’s official portal and test queue are available. Candidates include open, expired, closed, irrelevant, and deadline-unverifiable notices.",
+      "expectedResult": "It enters the open-bid queue only if it meets those rules, the portal confirms it is open, and its verified response deadline is in the future. And expired, closed, irrelevant, or unverifiable bids stay out of the queue. And for every screened notice, intake records whether it was admitted or excluded and why."
     },
     {
       "id": "AC-02",
       "title": "Account for every file in an extraction batch.",
-      "given": "a batch manifest lists the source files submitted for extraction.",
-      "when": "the batch finishes.",
-      "then": "every listed file has a result traceable to that file or an explicit processing error. And every required field and requested line item matches its cited source page or has a review flag for missing, conflicting, or unsupported data.",
       "scenarioId": "QA-02",
       "version": 1,
       "actor": "batch_operator",
@@ -54,20 +46,18 @@
         "mobileUi": false,
         "backend": true
       },
-      "setup": "Stage three to five authorized files with source expectations recorded in advance. Include an item schedule and a failure case.",
       "actions": [
-        "Check the staged manifest and processor version, then start one bounded batch.",
+        "Check the staged manifest and processor version. Start one bounded batch and wait for it to finish.",
         "Match each manifest entry to a JSON object or error record using its source file reference.",
         "Compare the required header fields and every requested item, including its quantity and unit, with the cited page. Exercise blank and conflicting values.",
         "Read back review flags and source references for the affected fields and items."
-      ]
+      ],
+      "startingState": "A batch manifest lists three to five authorized source files staged for extraction, including an item schedule and a failure case. Source expectations are recorded in advance.",
+      "expectedResult": "Every listed file has a result traceable to that file or an explicit processing error. And every required field and requested line item matches its cited source page or has a review flag for missing, conflicting, or unsupported data."
     },
     {
       "id": "AC-03",
       "title": "Review bid evidence and record the pursuit decision",
-      "given": "extraction has produced bid data and source evidence.",
-      "when": "the bid is prepared for review.",
-      "then": "Salesforce stores the bid draft, its review flags, and durable references to the source evidence, and Google Cloud Storage retains the original PDF and extraction JSON. An authorized reviewer can inspect the flagged values and record whether to pursue the bid.",
       "scenarioId": "QA-03",
       "version": 2,
       "actor": "sales_reviewer",
@@ -81,22 +71,18 @@
         "mobileUi": false,
         "backend": true
       },
-      "assertions": {
-        "backend": "Read back draft data, decision, durable PDF reference, and stored extraction JSON."
-      },
-      "setup": "Load drafts with source evidence. Include an item schedule and a missing or conflicting field. Use the designated reviewer account.",
       "actions": [
-        "Open the draft and inspect issuer, solicitation ID, published deadline, stated time zone, requested items, source links, and review status.",
+        "Prepare the bid for review. Open the draft and inspect issuer, solicitation ID, published deadline, stated time zone, requested items, source links, and review status.",
         "Compare the flags with the PDF and inspect the original and extraction JSON in authorized storage.",
-        "Record the pursuit decision on the draft."
-      ]
+        "Record the pursuit decision on the draft.",
+        "Backend: Read back the draft data, pursuit decision, durable PDF reference, and stored extraction JSON."
+      ],
+      "startingState": "Extraction has produced bid data and source evidence. Drafts are loaded with source evidence, an item schedule, and a missing or conflicting field. The designated reviewer account is available.",
+      "expectedResult": "Salesforce stores the bid draft, its review flags, and durable references to the source evidence, and Google Cloud Storage retains the original PDF and extraction JSON. An authorized reviewer can inspect the flagged values and record whether to pursue the bid, and Salesforce retains that decision."
     },
     {
       "id": "AC-04",
       "title": "Preserve reviewed data when another document arrives.",
-      "given": "a Solicitation already exists for the same source or buyer and solicitation ID.",
-      "when": "another PDF is received for that bid.",
-      "then": "intake adds a separate Solicitation Document marked Needs Review under the existing Solicitation, creates no second Solicitation, and leaves reviewed fields and earlier documents intact. And a reviewer can open the incoming and earlier documents, record Duplicate or Amendment with notes, and approve any amendment changes before those changes are applied to the Solicitation.",
       "scenarioId": "QA-04",
       "version": 2,
       "actor": "sales_reviewer",
@@ -111,22 +97,17 @@
         "mobileUi": false,
         "backend": true
       },
-      "assertions": {
-        "backend": "Read back both arrivals before review to verify initial status, existing reviewed values, and earlier document references."
-      },
-      "setup": "Start with one reviewed Solicitation and its original PDF. Prepare a separately received copy and an amendment with the same identity.",
       "actions": [
-        "Submit both incoming files and inspect the existing Solicitation and document entries before review.",
+        "Submit both incoming files. Before review, use the backend to read back the existing Solicitation, both document entries and their initial status, reviewed values, and earlier document references.",
         "Open both incoming PDFs and the original. Record Duplicate for the copy and Amendment for the amended PDF, with notes. Approve only amendment changes.",
         "Read back reviewed data and all document references."
-      ]
+      ],
+      "startingState": "A reviewed Solicitation and its original PDF exist. A separately received copy and an amendment share its source or buyer and solicitation ID.",
+      "expectedResult": "Intake adds a separate Solicitation Document marked Needs Review under the existing Solicitation, creates no second Solicitation, and leaves reviewed fields and earlier documents intact. And a reviewer can open the incoming and earlier documents, record Duplicate or Amendment with notes, and approve any amendment changes before those changes are applied to the Solicitation."
     },
     {
       "id": "AC-05",
       "title": "Link multiple Opportunities and count the bid once.",
-      "given": "one Solicitation and several existing Opportunities.",
-      "when": "a reviewer links two or more Opportunities to that Solicitation using the optional lookup and leaves another blank.",
-      "then": "all linked Opportunities reference the same Solicitation, the unlinked Opportunity remains valid, and a Solicitation-based report counts that bid once.",
       "scenarioId": "QA-05",
       "version": 1,
       "actor": "sales_reviewer",
@@ -140,18 +121,16 @@
         "mobileUi": false,
         "backend": true
       },
-      "setup": "Prepare three existing synthetic Opportunities. Make the optional Solicitation lookup and Solicitation-based report available.",
       "actions": [
-        "Save two Opportunities with the same lookup value and save the third with the lookup blank.",
+        "Use the optional lookup to link two or more Opportunities to the same Solicitation, leaving another blank. Save all three fixture records.",
         "Open the saved records and the Solicitation related list. Run the report and read back the lookup values."
-      ]
+      ],
+      "startingState": "One Solicitation and three existing synthetic Opportunities are available. The optional Solicitation lookup and Solicitation-based report are available.",
+      "expectedResult": "All linked Opportunities reference the same Solicitation, the unlinked Opportunity remains valid, and a Solicitation-based report counts that bid once."
     },
     {
       "id": "AC-06",
       "title": "Enforce access to the exact source PDF",
-      "given": "A Salesforce bid draft has a stored source PDF.",
-      "when": "A user requests the source PDF from the draft.",
-      "then": "An authorized reviewer can open the exact source PDF from the draft. A user without access to the bid cannot obtain a PDF link through Salesforce.",
       "scenarioId": "QA-03a",
       "version": 1,
       "actor": "sales_reviewer",
@@ -166,20 +145,14 @@
         "mobileUi": false,
         "backend": true
       },
-      "assertions": {
-        "backend": "Authorization binds the document and version. Expired links fail and signed URLs are absent from storage and logs."
-      },
-      "setup": "Deploy View document in the test environment. Prepare accounts with and without the required record, object, or field access.",
       "actions": [
-        "Use View document as the designated reviewer. Compare the opened PDF with the fixture. Repeat with each record, object, and field restriction.",
+        "Use View document to request the source PDF from the draft as the designated reviewer. Compare the opened PDF with the fixture. Repeat with each record, object, and field restriction.",
+        "Backend: Inspect the authorization binding for the issued link. Verify the referenced document and version and check that the link cannot access a different object.",
         "Try a changed document reference and a direct request without authorization in the approved test environment.",
-        "Reuse the authorized link after expiry and inspect persistence and logs."
+        "Backend: Reuse the authorized link after expiry and inspect persistence and logs for signed URLs."
       ],
-      "observations": [
-        "Each record, object, or field restriction results in denial without a link.",
-        "The temporary link cannot access a different object.",
-        "Changing the document reference or making an unauthorized direct request results in denial without a link."
-      ]
+      "startingState": "A Salesforce bid draft has a stored source PDF. View document is deployed in the test environment. Accounts cover allowed access and record, object, and field restrictions.",
+      "expectedResult": "An authorized reviewer can open the exact source PDF from the draft. The link is bound to that document and version and cannot access a different object. A user who lacks required record, object, or field access cannot obtain a PDF link through Salesforce. A changed document reference or unauthorized direct request is denied without issuing a link. The link fails after expiry, and signed URLs are absent from storage and logs."
     }
   ]
 }
