@@ -1,0 +1,1521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self' https://raw.githubusercontent.com; img-src data:; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Agentic Build Studio · AI Spanda</title>
+<style>
+:root { color-scheme: light; --ink:#142c31; --muted:#4a6268; --paper:#f1f7f6; --line:#cadbd9; --soft:#f7fbfa; --accent:#00685f; --white:#fff;
+  --pass:#1d6b33; --fail:#a3271d; --warn:#7a5200; --idle:#4a5660;
+  --pass-bg:#e9f5ec; --fail-bg:#fbecec; --warn-bg:#fff3d8; --idle-bg:#edf1f4; --progress-bg:#e4f2ef; }
+* { box-sizing:border-box; }
+html { scroll-padding-top:72px; }
+body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif; overflow-wrap:anywhere; }
+a { color:var(--accent); }
+:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+.skip { position:absolute; left:-999px; top:8px; background:var(--white); padding:6px 10px; z-index:10; }
+.skip:focus { left:8px; }
+main, .bar-inner { width:min(1100px, 94vw); margin:0 auto; }
+main { padding:8px 0 72px; }
+header.top { padding:12px 0 10px; }
+h1 { font-size:clamp(1.55rem,4.5vw,2.4rem); line-height:1.1; letter-spacing:-.03em; margin:0 0 8px; }
+.studio-brand { color:#12141a; background:#fffdf8; border-top:3px solid #e4a51e; border-radius:10px; padding:14px clamp(12px,3vw,24px) 16px; }
+.studio-wordmark { display:inline-flex; align-items:center; gap:7px; color:inherit; font-size:1rem; font-weight:750; letter-spacing:-.02em; text-decoration:none; margin-bottom:7px; }
+.studio-wordmark:hover { text-decoration:underline; }
+.studio-wordmark img { display:block; border-radius:50%; }
+.studio-wordmark strong { color:#2f6fe0; }
+.studio-tagline { color:#4c5360; margin:0; }
+.studio-story { font-size:1.12rem; line-height:1.35; margin:14px 0 9px; }
+h2 { font-size:1.25rem; margin:0 0 10px; }
+h3 { font-size:1.05rem; margin:0; }
+p { margin:.35rem 0 .7rem; }
+.muted, .blank { color:var(--muted); }
+.card { background:var(--white); border:1px solid var(--line); border-radius:10px; padding:14px 16px; min-width:0; }
+.stack > * + * { margin-top:12px; }
+.row { display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; }
+button, .button { background:var(--white); color:var(--accent); border:1px solid var(--accent); border-radius:6px; font:inherit; font-weight:650; padding:6px 12px; cursor:pointer; text-decoration:none; display:inline-block; }
+button.primary { background:var(--accent); color:var(--white); }
+button.copy-link { border:0; background:transparent; text-decoration:underline; text-underline-offset:2px; }
+button.copy-link:hover { background:var(--progress-bg); }
+button:disabled { opacity:.55; cursor:not-allowed; }
+input, select, textarea { font:inherit; color:var(--ink); background:var(--white); border:1px solid #819a9b; border-radius:5px; padding:7px 8px; max-width:100%; }
+input[type=checkbox] { width:auto; }
+textarea { width:100%; min-height:64px; resize:vertical; }
+label { font-weight:600; }
+.load-github form { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; }
+.load input[type=url] { width:100%; }
+@media (max-width:560px) { .load-github form { grid-template-columns:1fr; } }
+.source-choice { display:flex; flex-wrap:wrap; gap:6px 16px; padding:0 0 8px; margin:0 0 8px; border:0; border-bottom:1px solid var(--line); }
+.source-choice label { display:inline-flex; align-items:center; gap:5px; cursor:pointer; }
+.source-choice input { margin:0; accent-color:var(--accent); }
+.load-feedback { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 12px; align-items:start; margin-top:8px; }
+.load-actions { display:flex; align-items:center; flex-wrap:wrap; gap:4px 10px; min-width:0; }
+.load-actions > p { margin:0; font-size:.88rem; }
+.load-summary { display:flex; flex-wrap:wrap; gap:4px 6px; list-style:none; padding:0; margin:0; }
+.load-item { display:inline-flex; align-items:center; gap:5px; padding:3px 8px; border-radius:5px; font-size:.83rem; font-weight:650; }
+.load-item.loaded { background:var(--pass-bg); color:var(--pass); }
+.load-item.missing { background:var(--warn-bg); color:var(--warn); }
+.load-item.problem { background:var(--fail-bg); color:var(--fail); }
+.load-source { font-size:.88rem; padding-block:7px; }
+.load-source[open] { width:min(48vw,36rem); }
+.load-source > summary { width:max-content; margin-inline-start:auto; color:var(--accent); cursor:pointer; }
+.load-source > p { color:var(--muted); margin:.25rem 0; }
+.story-file-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:8px 12px; margin-bottom:8px; }
+.story-file-grid > label { display:grid; gap:3px; min-width:0; font-size:.88rem; }
+.story-file-grid input { width:100%; min-width:0; font-weight:400; }
+.file-feedback { margin:0; font-size:.88rem; }
+@media (max-width:520px) {
+  .load-source[open] { grid-column:1 / -1; width:auto; }
+}
+.files { display:flex; flex-wrap:wrap; gap:6px 14px; font-size:.9rem; padding:0; margin:6px 0 0; list-style:none; }
+.notice { border-left:4px solid var(--accent); background:var(--soft); padding:10px 12px; border-radius:6px; }
+.notice.error { border-left-color:var(--fail); }
+.notice.warn { border-left-color:var(--warn); }
+.bar { position:sticky; top:0; z-index:5; background:var(--paper); border-bottom:1px solid var(--line); }
+nav.tabs ul { list-style:none; margin:0; padding:8px 0; display:flex; flex-wrap:wrap; gap:6px; }
+nav.tabs a { display:block; padding:7px 13px; border-radius:6px; text-decoration:none; font-weight:650; }
+nav.tabs a[aria-current=page] { background:var(--white); color:var(--ink); font-weight:750; }
+.count { font-weight:500; color:var(--muted); font-size:.85rem; }
+.badge { display:inline-block; font-size:.8rem; font-weight:700; line-height:1.3; padding:3px 8px; border-radius:4px; white-space:nowrap; color:var(--idle); background:var(--idle-bg); }
+.badge.s-pass, .badge.s-closed { color:var(--pass); background:var(--pass-bg); }
+.badge.s-fail { color:var(--fail); background:var(--fail-bg); }
+.badge.s-blocked, .badge.s-stale, .badge.s-pending, .badge.s-indesign { color:var(--warn); background:var(--warn-bg); }
+.badge.s-inprogress { color:var(--accent); background:var(--progress-bg); }
+.badge.s-pass::before, .badge.s-closed::before { content:"✓ "; }
+.badge.s-fail::before { content:"✕ "; }
+.badge.s-blocked::before { content:"■ "; }
+.badge.s-stale::before { content:"↺ "; }
+.id { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.85rem; font-weight:700; color:var(--accent); }
+dl.kv dt { font-weight:700; font-size:.85rem; }
+dl.kv dd { margin:2px 0 0; }
+.story-surface { border:0; border-radius:4px; padding:12px; }
+.summary-strip { display:flex; flex-wrap:wrap; gap:8px 16px; font-size:.9rem; }
+.view-heading { position:relative; display:flex; align-items:center; flex-wrap:wrap; gap:6px 16px; }
+.view-heading h2 { margin:0; }
+.view-heading .summary-strip { align-items:center; justify-content:flex-end; margin-inline-start:auto; }
+.view-heading > .summary-strip > details[open] > div {
+  position:absolute; inset-inline-end:0; top:100%; z-index:2; width:min(100%,36rem);
+  padding:10px 12px; background:var(--white); border:1px solid var(--line); border-radius:8px;
+}
+details.item { background:var(--white); border:1px solid var(--line); border-radius:10px; min-width:0; }
+details.item + details.item { margin-top:10px; }
+details.item > summary { list-style:none; cursor:pointer; padding:9px 12px; min-height:44px; display:grid; grid-template-columns:minmax(0,1fr) 1rem; gap:3px 10px; align-items:center; border-radius:10px; }
+details.item > summary::-webkit-details-marker { display:none; }
+details.item > summary::after { content:"+"; color:var(--accent); font-weight:700; grid-column:2; grid-row:1; }
+details.item[open] > summary::after { content:"−"; }
+details.item > summary:hover { background:var(--soft); }
+.sum-title { font-weight:650; display:block; }
+.item-body { border-top:1px solid var(--line); background:var(--soft); padding:14px 16px 16px; border-radius:0 0 10px 10px; }
+.detail-list { background:var(--white); border:1px solid var(--line); border-radius:10px; }
+.detail-list > details.item { border:0; border-radius:0; background:transparent; margin:0; }
+.detail-list > details.item:not([hidden]) ~ details.item:not([hidden]) { border-top:1px solid var(--line); }
+.detail-list > details.item > summary { border-radius:0; }
+.detail-list > details.item > summary::after { text-align:center; }
+.detail-list .item-body { border-radius:0; }
+details.record-item > summary { grid-template-columns:3.9rem minmax(0,1fr) auto 1rem; }
+details.record-item > summary::after { grid-column:4; }
+.criterion-row { display:grid; grid-template-columns:3.9rem minmax(0,1fr); align-items:start; gap:4px 10px; min-height:44px; padding:9px 12px; }
+.criterion-group + .criterion-group { border-top:1px solid var(--line); }
+.criterion-title { display:block; font-weight:700; margin-bottom:3px; }
+.criterion-step + .criterion-step { margin-top:2px; }
+.criterion-scenarios { margin:0 12px 12px; }
+.criterion-scenarios h3 { margin:0 0 5px; font-size:.9rem; }
+.criterion-scenarios > .muted { margin:5px 0 0; }
+@media (max-width:700px) {
+  .criterion-row { grid-template-columns:3.5rem minmax(0,1fr); }
+}
+.supporting-tasks > summary { color:var(--accent); cursor:pointer; }
+.supporting-task-list { list-style:none; margin:4px 0 0; padding:0; }
+.supporting-task-list > li { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 10px; align-items:start; padding:4px 0; }
+.supporting-task-list > li + li { border-top:1px solid var(--field-line,#e5eeec); }
+.story-section-content { display:flow-root; border-radius:4px; background:var(--white); padding:5px 10px; }
+details.task-item > summary {
+  grid-template-columns:3.9rem minmax(0,1fr) minmax(8rem,18%) minmax(6rem,14%) 7.5rem 1rem;
+}
+details.task-item > summary::after { grid-column:6; }
+.task-agent, .task-owner, .task-status, .task-waiting { font-size:.85rem; color:var(--muted); }
+.task-waiting { grid-column:2 / -2; }
+dl.kv { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr)); gap:12px 18px; margin:0; }
+dl.kv .wide { grid-column:1 / -1; }
+.task-body { padding:9px 12px 11px; background:var(--paper); }
+.task-groups { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 12px; }
+.task-groups:has(> .task-column:only-child) { grid-template-columns:minmax(0,1fr); }
+.task-column, .task-group { min-width:0; }
+.task-column { --field-line:#e5eeec; border-radius:4px; background:var(--white); }
+.task-group + .task-group, dl.task-fields > div + div { border-top:1px solid var(--field-line); }
+.task-footer { margin-top:7px; }
+.task-footer > .row { margin:0; padding:3px 6px; border-radius:4px; background:var(--white); }
+.task-footer p.row { margin:0; }
+.task-footer button { padding:3px 7px; border-radius:4px; font-size:.84rem; }
+.task-footer .task-disclosure { display:inline-flex; align-items:center; gap:8px; min-height:30px; margin-inline-end:auto; border-color:transparent; background:transparent; }
+.task-footer .task-disclosure:hover { background:var(--soft); }
+.task-disclosure > span { display:grid; place-items:center; width:18px; height:18px; border-radius:4px; background:var(--paper); }
+.task-disclosure > span::before { content:""; width:7px; height:7px; border:solid currentColor; border-width:0 2px 2px 0; transform:rotate(-45deg); }
+.task-disclosure[aria-expanded=true] > span::before { transform:rotate(45deg); }
+.task-unfilled { margin-top:6px; }
+dl.task-fields { display:block; }
+dl.task-fields > div { display:grid; grid-template-columns:min(40%,10.5rem) minmax(0,1fr); align-items:start; gap:9px; padding:4px 8px; }
+.story-overview dl.task-fields > div { grid-template-columns:min(32%,7rem) minmax(0,1fr); }
+dl.task-fields dt, dl.task-fields dd { font-size:.88rem; line-height:1.42; overflow-wrap:anywhere; min-width:0; }
+#panel-story .story-overview :is(dt, dd),
+#panel-story .criterion-row > .id { font-family:inherit; font-size:inherit; line-height:inherit; }
+dl.task-fields dd { margin:0; }
+dl.task-fields .idref { white-space:nowrap; }
+@media (max-width:820px) {
+  details.task-item > summary { grid-template-columns:3.5rem minmax(0,1fr) 1rem; gap:3px 8px; }
+  details.task-item > summary::after { grid-column:3; }
+  .task-summary-meta { grid-column:2; display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; }
+  .task-waiting { grid-column:2; }
+}
+@media (max-width:700px) {
+  details.record-item > summary { grid-template-columns:3.5rem minmax(0,1fr) 1rem; gap:3px 8px; }
+  details.record-item > summary::after { grid-column:3; }
+  .record-status { grid-column:2; }
+  .task-groups { grid-template-columns:minmax(0,1fr); row-gap:6px; }
+}
+@media (min-width:821px) { .task-summary-meta { display:contents; } }
+ol.actions, ul.plain { margin:4px 0 0; padding-left:1.3rem; }
+details.help { display:inline; }
+details.help > summary { display:inline-block; list-style:none; cursor:pointer; width:1.35em; height:1.35em; line-height:1.3em; text-align:center; border:1px solid var(--accent); border-radius:50%; color:var(--accent); font-size:.75rem; font-weight:700; margin-left:4px; vertical-align:1px; }
+details.help > summary::-webkit-details-marker { display:none; }
+details.help[open] > div { display:block; font-weight:400; font-size:.85rem; color:var(--muted); margin:4px 0; }
+.controls { display:flex; flex-wrap:wrap; gap:10px 14px; align-items:end; margin:0 0 12px; }
+.controls label { display:grid; gap:3px; font-size:.88rem; }
+details.panel { background:var(--white); border:1px solid var(--line); border-radius:8px; }
+details.panel > summary { cursor:pointer; padding:8px 12px; font-weight:650; color:var(--accent); }
+details.panel > div { padding:4px 12px 12px; }
+.checks { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr)); gap:4px 12px; }
+.checks label { font-weight:400; display:flex; gap:6px; align-items:center; }
+table.md { width:100%; border-collapse:collapse; table-layout:fixed; margin:8px 0; font-size:.93rem; }
+table.md th, table.md td { border-top:1px solid var(--line); padding:8px; text-align:left; vertical-align:top; }
+table.md th { background:var(--soft); font-size:.85rem; }
+@media (max-width:720px) {
+  table.md, table.md tbody, table.md tr, table.md td { display:block; width:100%; }
+  table.md thead { position:absolute; left:-9999px; }
+  table.md tr { border:1px solid var(--line); border-radius:8px; margin:8px 0; padding:4px 0; }
+  table.md td { border:0; padding:4px 10px; }
+  table.md td::before { content:attr(data-label); display:block; font-size:.78rem; font-weight:700; color:var(--muted); }
+}
+code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.88em; background:#e7f0ef; padding:0 3px; border-radius:3px; }
+pre { white-space:pre-wrap; background:#e7f0ef; padding:10px; border-radius:6px; }
+.edit-form .fields { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr)); gap:12px; }
+.edit-form .fields label { display:grid; gap:4px; }
+.edit-form .fields .wide { grid-column:1 / -1; }
+.edit-form input:not([type=checkbox]), .edit-form select { width:100%; }
+.field-help { font-weight:400; font-size:.8rem; color:var(--muted); }
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+[hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="top bar-inner">
+  <div class="studio-brand">
+    <a class="studio-wordmark" href="https://aispanda.com/">
+      <img src="data:image/png;base64,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" width="34" height="34" alt=""><span>AI <strong>Spanda</strong></span>
+    </a>
+    <h1>Agentic Build Studio</h1>
+    <p class="studio-tagline">Design the agent harness. Set guardrails, automate checks, and keep humans in control.</p>
+  </div>
+  <h2 class="studio-story" id="title" hidden></h2>
+  <section class="load card" aria-labelledby="load-heading">
+    <h2 id="load-heading" class="sr-only">Load a story</h2>
+    <fieldset class="source-choice" id="source-choice">
+      <legend class="sr-only">Story source</legend>
+      <label><input type="radio" name="story-source" value="github" checked> GitHub link</label>
+      <label><input type="radio" name="story-source" value="files"> Files from your computer</label>
+    </fieldset>
+    <div class="load-github" id="load-github">
+      <p id="story-link-help" class="muted">Paste the public GitHub link to your <code>story.md</code> file. Follow the <a href="https://github.com/aispanda/Reusable-Delivery/blob/a6c2ed64dfc43575f56f63695f0023c7ced010e9/DELIVERY.md#copyable-story" target="_blank" rel="noopener noreferrer">reusable templates</a> and keep all three files in the same folder.</p>
+      <form id="load-form" novalidate>
+        <label class="sr-only" for="story-link">GitHub story link</label>
+        <input id="story-link" type="url" inputmode="url" autocomplete="off" spellcheck="false" aria-describedby="story-link-help" placeholder="GitHub link to your story file">
+        <button class="primary" type="submit">Load story</button>
+      </form>
+      <div class="load-feedback">
+        <div class="load-actions">
+          <button type="button" id="example-btn">Use sample</button>
+          <p id="load-status" role="status" aria-live="polite"></p>
+          <ul class="load-summary" id="load-summary" aria-label="File status" aria-live="polite" hidden></ul>
+        </div>
+        <details class="load-source" id="load-source" hidden>
+          <summary>Source details</summary>
+          <p id="source-location"></p>
+          <ul class="files" id="file-status" aria-label="File details"></ul>
+        </details>
+      </div>
+    </div>
+    <form id="story-files-form" hidden>
+      <div class="story-file-grid">
+        <label><code>story.md</code><input type="file" name="story.md" accept=".md"></label>
+        <label><code>checklist.json</code><input type="file" name="checklist.json" accept=".json"></label>
+        <label><code>scenarios.json</code><input type="file" name="scenarios.json" accept=".json"></label>
+      </div>
+      <div class="row">
+        <button id="open-story-files" class="primary" type="submit" disabled>Open story</button>
+        <p id="story-files-status" class="file-feedback" role="status"></p>
+      </div>
+    </form>
+    <div id="story-source-extras"></div>
+  </section>
+</header>
+
+<div class="bar" id="bar" hidden>
+  <nav class="tabs bar-inner" aria-label="Story views">
+    <ul>
+      <li><a href="#tab=story" data-tab="story">User Story <span class="count" id="count-story"></span></a></li>
+      <li><a href="#tab=checklist" data-tab="checklist">Agentic Workflow <span class="count" id="count-checklist"></span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<main id="content" tabindex="-1">
+  <p id="nav-status" class="sr-only" role="status" aria-live="polite"></p>
+  <section id="panel-story" data-panel="story" aria-label="User Story" hidden></section>
+  <section id="panel-checklist" data-panel="checklist" aria-label="Agentic Workflow" hidden></section>
+</main>
+<noscript><p class="bar-inner">This viewer needs JavaScript to load and display story files.</p></noscript>
+
+<script>
+'use strict';
+
+// ───────────────────────── constants and embedded guidance ─────────────────────────
+const MAX_BYTES = 2000000;
+const EXAMPLE_LINK = 'https://github.com/aispanda/B2B-Commerce/blob/b54ab7b25eb762ea80cfcb65c45d61c94a5b1e6d/epics/e05-procurement/stories/medical-supply-bid-discovery/story.md';
+const ID_RE = /\b[A-Z][A-Z0-9]*-[A-Za-z0-9.]*[A-Za-z0-9]\b/g;
+const URL_RE = /https:\/\/[^\s<>()"'\]]*[^\s<>()"'\].,;:!?]/g;
+const SURFACES = [['desktopUi', 'Desktop UI'], ['mobileUi', 'Mobile UI'], ['backend', 'Backend']];
+const TASK_STATUSES = ['In design', 'Open', 'In progress', 'Blocked', 'Pass'];
+const SUMMARY_ORDER = ['Fail', 'Blocked', 'NOT RUN', 'Stale'];
+const PREF_KEY = 'delivery-viewer:prefs:v1';
+
+// Condensed from templates/checklist.fields.json. [key, label, group, kind, shownByDefault, help]
+const TASK_FIELDS = [
+  ['ownerType', 'Owner type', 'Ownership', 'text', true, 'Automation for test runs, AI for drafting or review, Human for acceptance.'],
+  ['model', 'Model', 'Ownership', 'text', true, 'AI model for drafting or review. For deterministic runs see Solution approach.'],
+  ['reasoning', 'Reasoning', 'Ownership', 'text', true, 'Reasoning level used, if known.'],
+  ['agent', 'Agent', 'Ownership', 'text', true, 'Optional agent assignment once planned.'],
+  ['requires', 'Prerequisite tasks', 'Links', 'tasks', true, 'Direct prerequisite tasks. Each must reach Pass before this task starts.'],
+  ['supports', 'Supports', 'Links', 'refs', true, 'Story criteria, checks or scenarios this task supports.'],
+  ['inputs', 'Expected inputs', 'Plan', 'text', true, 'Artifacts and access needed to start.'],
+  ['outputs', 'Expected outputs', 'Plan', 'links', true, 'Deliverable and format.'],
+  ['completion', 'Task AC', 'Plan', 'text', true, 'How to verify this task’s output before closing it.'],
+  ['scope', 'Scope', 'Plan', 'text', false, 'What the task covers and what is out of scope.'],
+  ['direction', 'Solution approach', 'Plan', 'text', false, 'Runner, build, environment and fixture.'],
+  ['guardrails', 'Guardrails', 'Plan', 'text', false, 'What code enforces, what needs evidence, retry caps and stop rules.'],
+  ['docs', 'Documentation', 'Plan', 'links', true, 'Exact guide section, skill or repository file.'],
+  ['value', 'Value', 'Value', 'text', false, 'Who benefits and what improves.'],
+  ['metric', 'Success metric', 'Value', 'text', false, 'Optional measure. Untested targets are Proposed.'],
+  ['uiQa', 'UI QA?', 'Value', 'bool', false, 'Whether a browser journey needs checking.'],
+  ['mobileQa', 'Mobile QA?', 'Value', 'bool', false, 'Whether a mobile layout or device capability needs checking.'],
+  ['evidence', 'Result evidence', 'Evidence', 'text', true, 'Files or records that show what actually happened.'],
+  ['comments', 'Comments', 'Evidence', 'text', true, 'What happened, what failed and the next step.'],
+  ['reusableArtifact', 'Reusable artifact', 'Publication', 'artifact', true, 'A template or script that could save work on another use case, and whether preparation is planned.'],
+  ['githubFile', 'Published GitHub file', 'Publication', 'github', false, 'Exact published file.']
+].map(([key, label, group, kind, shown, help]) => ({key, label, group, kind, shown, help}));
+
+// Condensed from templates/scenarios.fields.json.
+const SCENARIO_HELP = {
+  actor: 'Alias for the role or test account.',
+  environment: 'Alias for a required environment. Runs must match it.',
+  version: 'Increases when a change affects what the scenario proves. Older runs then show as Stale.',
+  startingState: 'What must be true before the first action.',
+  fixtures: 'Aliases for test records or files, resolved only in restricted storage.',
+  expected: 'One observable business outcome.',
+  surfaces: 'Each required surface must pass on the selected revision and scenario version.',
+  assertions: 'What to inspect on a required surface to verify the expected result.'
+};
+const STATUS_HELP = {
+  'Pass': 'Every required surface passed on the selected revision and current scenario version.',
+  'Fail': 'A required surface failed on the selected revision.',
+  'Blocked': 'A required check could not finish.',
+  'NOT RUN': 'A required surface has no applicable run result.',
+  'Stale': 'The only result is from a different revision or scenario version.'
+};
+
+// ───────────────────────── state ─────────────────────────
+const state = {
+  loaded: false,
+  source: null,        // {kind:'github'|'files', label, rawDir, linkDir, pinned, ref, storyLink}
+  story: null,         // parsed story
+  tasks: [],           // canonical checklist array
+  criteria: [],
+  scenarios: [],
+  files: {},
+  ids: new Map(),      // id -> {kind, tab}
+  warnings: [],
+  runs: null,          // private results (memory only)
+  runsName: '',
+  runWarnings: [],
+  revision: '',
+  tab: 'story',
+  checkView: 'story',  // 'story' | 'legacy'
+  legacy: null
+};
+let prefs = readPrefs();
+let latestSourceLoad = 0;
+
+// ───────────────────────── small helpers ─────────────────────────
+const $ = selector => document.querySelector(selector);
+function el(tag, attrs, ...children) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k === 'class') node.className = v;
+    else if (k === 'text') node.textContent = v;
+    else if (k.startsWith('on')) node.addEventListener(k.slice(2), v);
+    else node.setAttribute(k, v === true ? '' : String(v));
+  }
+  for (const child of children.flat(Infinity)) {
+    if (child == null || child === false) continue;
+    node.append(child instanceof Node ? child : document.createTextNode(String(child)));
+  }
+  return node;
+}
+function statusClass(text) { return 's-' + String(text || '').toLowerCase().replace(/[^a-z]/g, ''); }
+function taskStatus(status, result) {
+  if (status === 'Pending design') return 'In design';
+  if (status === 'Closed') return result && result !== 'Pass' ? 'In progress' : 'Pass';
+  return status;
+}
+function normalizeTask({result, status, ...task}) {
+  return {...task, status: taskStatus(status, result)};
+}
+function badge(text, title) { return el('span', {class: 'badge ' + statusClass(text), title}, text || 'Unknown'); }
+function say(target, text) { const n = typeof target === 'string' ? $(target) : target; if (n) n.textContent = text; }
+function setLoadStatus(message) {
+  say('#load-status', message);
+  $('#load-summary').hidden = true;
+}
+function plain(md) { return String(md || '').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/\*\*|`/g, '').trim(); }
+function isObject(v) { return v && typeof v === 'object' && !Array.isArray(v); }
+function words(v) { return typeof v === 'string' ? v.trim().split(/\s+/).filter(Boolean).length : Array.isArray(v) ? v.reduce((n, x) => n + words(x), 0) : 0; }
+
+function readPrefs() {
+  const base = {tab: 'story', status: '', search: '', fields: {}, showEmpty: false};
+  try {
+    const stored = {...base, ...(JSON.parse(localStorage.getItem(PREF_KEY) || 'null') || {})};
+    return {...stored, status: taskStatus(stored.status)};
+  } catch { return base; }
+}
+function savePrefs() { try { localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); } catch { /* storage unavailable */ } }
+function fieldShown(field) { return field.key in prefs.fields ? prefs.fields[field.key] === true : field.shown !== false; }
+
+function safeHttps(href) {
+  try {
+    const u = new URL(href);
+    if (u.protocol !== 'https:' || u.username || u.password) return null;
+    return u;
+  } catch { return null; }
+}
+function extLink(href, label) {
+  const u = safeHttps(href);
+  if (!u) return document.createTextNode(label || href);
+  return el('a', {href: u.href, target: '_blank', rel: 'noopener noreferrer', referrerpolicy: 'no-referrer'}, label || u.href);
+}
+function idLink(id, label) {
+  const known = state.ids.get(id);
+  if (!known) return document.createTextNode(label || id);
+  return el('a', {href: '#id=' + encodeURIComponent(id), class: 'idref', 'data-id': id}, label || id);
+}
+function linkIds(text) {
+  const frag = document.createDocumentFragment();
+  let last = 0;
+  for (const m of String(text).matchAll(ID_RE)) {
+    if (!state.ids.has(m[0])) continue;
+    frag.append(text.slice(last, m.index), idLink(m[0]));
+    last = m.index + m[0].length;
+  }
+  frag.append(text.slice(last));
+  return frag;
+}
+function linkify(text) {
+  const frag = document.createDocumentFragment();
+  const s = String(text ?? '');
+  let last = 0;
+  for (const m of s.matchAll(URL_RE)) {
+    frag.append(linkIds(s.slice(last, m.index)), extLink(m[0]));
+    last = m.index + m[0].length;
+  }
+  frag.append(linkIds(s.slice(last)));
+  return frag;
+}
+
+// ───────────────────────── source links and fetching ─────────────────────────
+function parseStoryLink(input) {
+  const text = String(input || '').trim();
+  if (!text) throw new Error('Paste a GitHub link to a story.md file.');
+  let u;
+  try { u = new URL(text); } catch { throw new Error('That is not a complete link. It should start with https://github.com/.'); }
+  if (u.protocol !== 'https:' || u.username || u.password) throw new Error('Use an https link without a user name or password.');
+  const parts = u.pathname.split('/').filter(Boolean).map(p => { try { return decodeURIComponent(p); } catch { return p; } });
+  if (parts.some(p => p === '..' || p === '.' || /[\\]/.test(p))) throw new Error('The link contains an unsupported path segment.');
+  let owner, repo, rest;
+  if (u.hostname === 'github.com') {
+    if (parts.length < 5 || parts[2] !== 'blob') throw new Error('Use a GitHub file link containing /blob/, for example https://github.com/OWNER/REPO/blob/COMMIT/PATH/story.md.');
+    [owner, repo] = parts; rest = parts.slice(3);
+  } else if (u.hostname === 'raw.githubusercontent.com') {
+    if (parts.length < 4) throw new Error('The raw link is missing a revision or file path.');
+    [owner, repo] = parts; rest = parts.slice(2);
+  } else {
+    throw new Error('Only github.com and raw.githubusercontent.com links are supported.');
+  }
+  const file = rest[rest.length - 1];
+  if (!/\.md$/i.test(file)) throw new Error('The link must point to a Markdown story file such as story.md.');
+  const dir = rest.slice(0, -1).map(encodeURIComponent).join('/');
+  const ref = rest[0] === 'refs' && rest.length > 3 ? rest.slice(0, 3).join('/') : rest[0];
+  const pinned = /^[0-9a-f]{40}$/i.test(rest[0]);
+  const repoPath = encodeURIComponent(owner) + '/' + encodeURIComponent(repo);
+  return {
+    kind: 'github',
+    storyLink: 'https://github.com/' + repoPath + '/blob/' + rest.map(encodeURIComponent).join('/'),
+    rawDir: 'https://raw.githubusercontent.com/' + repoPath + '/' + dir + '/',
+    linkDir: 'https://github.com/' + repoPath + '/blob/' + dir + '/',
+    storyFile: encodeURIComponent(file),
+    label: owner + '/' + repo + ' · ' + rest.slice(1, -1).join('/'),
+    ref, pinned
+  };
+}
+async function fetchText(url, local) {
+  let response;
+  try {
+    response = await fetch(url, {cache: 'no-store', credentials: local ? 'same-origin' : 'omit', referrerPolicy: 'no-referrer', redirect: 'follow'});
+  } catch {
+    return {ok: false, state: 'error', message: 'could not be reached (network or browser blocked the request)'};
+  }
+  const expected = local ? location.origin : 'https://raw.githubusercontent.com';
+  if (!response.url || new URL(response.url).origin !== expected) return {ok: false, state: 'error', message: 'redirected to an unexpected host'};
+  if (response.status === 404) return {ok: false, state: 'missing', message: 'not found at this revision'};
+  if (!response.ok) return {ok: false, state: 'error', message: 'returned HTTP ' + response.status};
+  const declared = Number(response.headers.get('content-length') || 0);
+  if (declared > MAX_BYTES) return {ok: false, state: 'error', message: 'is larger than 2 MB'};
+  const text = await response.text();
+  if (text.length > MAX_BYTES) return {ok: false, state: 'error', message: 'is larger than 2 MB'};
+  return {ok: true, text};
+}
+function parseJsonArray(result, name, idKey) {
+  if (!result.ok) return {list: [], state: result.state, message: result.message};
+  let data;
+  try { data = JSON.parse(result.text); } catch (e) { return {list: [], state: 'invalid', message: 'is not valid JSON (' + e.message + ')'}; }
+  if (!Array.isArray(data)) return {list: [], state: 'invalid', message: 'is not a JSON array of ' + (idKey === 'stepId' ? 'tasks' : 'scenarios')};
+  const list = data.filter(x => isObject(x) && typeof x[idKey] === 'string');
+  const skipped = data.length - list.length;
+  return {list, state: 'loaded', message: list.length + ' loaded' + (skipped ? ', ' + skipped + ' unreadable entries skipped' : '')};
+}
+
+function parseScenarios(result) {
+  const legacy = () => parseJsonArray(result, 'scenarios.json', 'scenarioId');
+  if (!result.ok) return legacy();
+  let data;
+  try { data = JSON.parse(result.text); } catch { return legacy(); }
+  if (Array.isArray(data)) return legacy();
+  const hasText = value => typeof value === 'string' && value.trim();
+  const hasTestFields = c => hasText(c.startingState) && hasText(c.expectedResult) &&
+    Array.isArray(c.actions) && c.actions.length && c.actions.every(hasText);
+  const idPattern = /^[A-Z][A-Z0-9]*-[A-Za-z0-9.]+$/;
+  const valid = isObject(data) && Array.isArray(data.criteria) && data.criteria.every(c =>
+    isObject(c) && typeof c.id === 'string' && idPattern.test(c.id) && hasText(c.title) &&
+    (hasTestFields(c) || ['given', 'when', 'then'].every(key => hasText(c[key]))) &&
+    typeof c.scenarioId === 'string' && idPattern.test(c.scenarioId));
+  if (!valid) return {list: [], state: 'invalid', message: 'needs IDs, titles, starting states, actions, and expected results'};
+  const ids = data.criteria.flatMap(c => [c.id, c.scenarioId]);
+  if (new Set(ids).size !== ids.length) return {list: [], state: 'invalid', message: 'needs unique criterion and verification IDs'};
+  const criteria = data.criteria.map(c => {
+    if (hasTestFields(c)) {
+      return {id: c.id, title: c.title, test: {startingState: c.startingState, actions: c.actions, expectedResult: c.expectedResult}};
+    }
+    return {id: c.id, title: c.title,
+      steps: ['given', 'when', 'then'].map(key => '**' + key[0].toUpperCase() + key.slice(1) + '** ' + c[key])};
+  });
+  const list = data.criteria.map(c => {
+    const {id, title, given, when, then, expectedResult, ...check} = c;
+    if (hasTestFields(c)) {
+      delete check.startingState;
+      delete check.actions;
+    }
+    return {...check, criteria: [id]};
+  });
+  return {criteria, list, state: 'loaded', message: criteria.length + ' criteria and ' + list.length + ' scenarios loaded'};
+}
+
+async function loadSource(source, selectedFiles) {
+  if (selectedFiles && state.legacy?.editing.size) throw new Error('Save or cancel the open draft edits first.');
+  const loadId = ++latestSourceLoad;
+  if (!selectedFiles) {
+    setLoadStatus('Loading story…');
+    $('#load-source').hidden = true;
+  }
+  const names = [source.storyFile, 'checklist.json', 'scenarios.json'];
+  const [storyRes, checkRes, scenRes] = await Promise.all(names.map(name => selectedFiles
+    ? selectedFiles.get(name).text().then(text => ({ok: true, text}), () => ({ok: false, state: 'error', message: 'could not be read'}))
+    : fetchText(source.rawDir + name, false)));
+  if (loadId !== latestSourceLoad) return false;
+  const check = parseJsonArray(checkRes, 'checklist.json', 'stepId');
+  const scen = parseScenarios(scenRes);
+  const story = storyRes.ok ? parseStory(storyRes.text) : null;
+  const storyFile = story?.title ? {state: 'loaded', message: 'loaded'}
+    : storyRes.ok ? {state: 'invalid', message: 'needs a story title'}
+    : {state: storyRes.state, message: storyRes.message};
+  const files = {
+    [decodeURIComponent(source.storyFile)]: storyFile,
+    'scenarios.json': scen, 'checklist.json': check
+  };
+  if (selectedFiles) {
+    const badFile = Object.entries(files).find(([, file]) => file.state !== 'loaded');
+    if (badFile) throw new Error(badFile[0] + ' ' + badFile[1].message + '.');
+  }
+  state.files = files;
+  if (state.source && (selectedFiles || state.source.rawDir !== source.rawDir || state.source.storyFile !== source.storyFile)) {
+    state.runs = null;
+    state.runWarnings = [];
+    state.runsName = '';
+    state.revision = '';
+  }
+  state.source = source;
+  state.tasks = check.list.map(normalizeTask);
+  state.criteria = scen.criteria ?? story?.criteria ?? [];
+  state.scenarios = scen.list;
+  state.story = story;
+  state.loaded = true;
+  buildIndex();
+  const failed = Object.values(state.files).filter(f => f.state !== 'loaded').length;
+  if (selectedFiles) {
+    state.checkView = 'story';
+    setLoadStatus('');
+    $('#load-source').hidden = true;
+    $('#story-link').value = '';
+  } else {
+    $('#story-files-status').hidden = true;
+    setLoadStatus('');
+    renderFileStatus(decodeURIComponent(source.storyFile));
+    say('#source-location', source.label + ' · ' +
+      (source.pinned ? 'Pinned commit ' + source.ref.slice(0, 7) : 'Unpinned ' + source.ref + ' (can change)'));
+    $('#load-source').open = failed > 0;
+    $('#load-source').hidden = false;
+  }
+  const url = new URL(location.href);
+  if (source.kind === 'github') url.searchParams.set('story', source.storyLink);
+  else url.searchParams.delete('story');
+  history.replaceState(null, '', url.pathname + url.search + (location.hash || '#tab=' + prefs.tab));
+  $('#bar').hidden = false;
+  say('#title', state.story?.title || '');
+  $('#title').hidden = !state.story?.title;
+  document.title = state.story?.title
+    ? state.story.title + ' · Agentic Build Studio'
+    : 'Agentic Build Studio · AI Spanda';
+  renderAll();
+  route();
+  return true;
+}
+function renderFileStatus(storyFilename) {
+  const labels = [[storyFilename, 'User story'], ['scenarios.json', 'Criteria and verification'], ['checklist.json', 'Agentic Workflow']];
+  const summary = $('#load-summary');
+  summary.replaceChildren(...labels.map(([filename, label]) => {
+    const stateValue = state.files[filename].state;
+    const visual = stateValue === 'loaded' ? 'loaded' : stateValue === 'missing' ? 'missing' : 'problem';
+    return el('li', {class: 'load-item ' + visual},
+      el('span', {'aria-hidden': 'true'}, visual === 'loaded' ? '✓' : visual === 'missing' ? '—' : '✕'),
+      label,
+      visual === 'loaded' ? el('span', {class: 'sr-only'}, ' loaded')
+        : visual === 'missing' ? ' missing' : ' couldn’t load');
+  }));
+  summary.hidden = false;
+  const list = $('#file-status');
+  list.replaceChildren(...Object.entries(state.files).map(([name, f]) =>
+    el('li', {}, badge(f.state === 'loaded' ? 'Loaded' : f.state === 'missing' ? 'Missing' : 'Problem'), ' ', el('code', {}, name), ' ', f.message)));
+}
+
+// ───────────────────────── Markdown (safe subset, DOM only) ─────────────────────────
+function parseBlocks(text) {
+  const lines = String(text).replace(/\r\n?/g, '\n').split('\n');
+  const blocks = [];
+  let i = 0;
+  const isTableSep = l => /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)*\|?\s*$/.test(l || '');
+  const cells = l => l.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map(c => c.trim());
+  while (i < lines.length) {
+    const line = lines[i];
+    if (!line.trim()) { i++; continue; }
+    let m;
+    if (/^```/.test(line)) {
+      const body = []; i++;
+      while (i < lines.length && !/^```/.test(lines[i])) body.push(lines[i++]);
+      i++; blocks.push({type: 'code', text: body.join('\n')}); continue;
+    }
+    if ((m = line.match(/^(#{1,6})\s+(.*?)\s*#*\s*$/))) { blocks.push({type: 'heading', level: m[1].length, text: m[2]}); i++; continue; }
+    if (line.trim().startsWith('|') && isTableSep(lines[i + 1])) {
+      const head = cells(line); i += 2; const rows = [];
+      while (i < lines.length && lines[i].trim().startsWith('|')) rows.push(cells(lines[i++]));
+      blocks.push({type: 'table', head, rows}); continue;
+    }
+    if (/^\s*[-*+]\s+/.test(line) || /^\s*\d+[.)]\s+/.test(line)) {
+      const ordered = /^\s*\d/.test(line); const items = [];
+      while (i < lines.length && (ordered ? /^\s*\d+[.)]\s+/ : /^\s*[-*+]\s+/).test(lines[i])) {
+        let item = lines[i++].replace(/^\s*([-*+]|\d+[.)])\s+/, '');
+        while (i < lines.length && /^\s{2,}\S/.test(lines[i]) && !/^\s*([-*+]|\d+[.)])\s+/.test(lines[i])) item += ' ' + lines[i++].trim();
+        items.push(item);
+      }
+      blocks.push({type: 'list', ordered, items}); continue;
+    }
+    const para = [line.trim()]; i++;
+    while (i < lines.length && lines[i].trim() && !/^(#{1,6}\s|```|\s*[-*+]\s|\s*\d+[.)]\s)/.test(lines[i]) &&
+      !(lines[i].trim().startsWith('|') && isTableSep(lines[i + 1]))) para.push(lines[i++].trim());
+    blocks.push({type: 'para', text: para.join(' ')});
+  }
+  return blocks;
+}
+function parseStory(text) {
+  const blocks = parseBlocks(text);
+  const story = {title: '', facts: [], sections: [], criteria: []};
+  let current = null;
+  for (const b of blocks) {
+    if (b.type === 'heading' && b.level === 1 && !story.title) { story.title = plain(b.text); continue; }
+    if (b.type === 'heading' && b.level === 2) { current = {title: plain(b.text), blocks: []}; story.sections.push(current); continue; }
+    const fact = b.type === 'para' && b.text.match(/^\*\*([^*]+)\*\*\s*·\s*([\s\S]*)$/);
+    if (fact && /^next$/i.test(fact[1].trim())) continue;
+    if (!current) {
+      if (fact) story.facts.push({label: fact[1].trim(), text: fact[2]});
+      continue;
+    }
+    current.blocks.push(b);
+  }
+  const used = new Set();
+  story.sections.forEach(s => {
+    let slug = 'sec-' + (s.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'section');
+    while (used.has(slug)) slug += '-x';
+    used.add(slug); s.slug = slug;
+  });
+  const crit = story.sections.find(s => /acceptance criteria/i.test(s.title));
+  const table = crit?.blocks.find(b => b.type === 'table');
+  if (table) {
+    const cols = table.head.map(heading => plain(heading).toLowerCase());
+    const titleIndex = cols.indexOf('title');
+    const criterionIndex = cols.indexOf('criterion');
+    const keywords = ['Given', 'When', 'Then'];
+    const stepIndices = keywords.map(keyword => cols.indexOf(keyword.toLowerCase()));
+    const structured = stepIndices.every(index => index >= 0);
+    for (const row of table.rows) {
+      const id = plain(row[0]);
+      if (!/^[A-Z][A-Z0-9]*-[A-Za-z0-9.]+$/.test(id)) continue;
+      const wording = structured ? '' : row[criterionIndex < 0 ? 1 : criterionIndex] || '';
+      const combined = titleIndex < 0 && wording.match(/^\*\*(.+?)\*\*\s+(?=\*\*Given\*\*)/i);
+      const title = titleIndex < 0 ? combined?.[1] : row[titleIndex];
+      const text = combined ? wording.slice(combined[0].length) : wording;
+      const steps = structured
+        ? stepIndices.map((index, i) => '**' + keywords[i] + '** ' + (row[index] || ''))
+        : /^\*\*Given\*\*/i.test(text)
+          ? text.split(/\s+(?=\*\*(?:When|Then|And|But)\*\*(?:\s|$))/i)
+          : [text];
+      story.criteria.push({id, title, text, steps});
+    }
+  }
+  story.files = story.sections.find(s => /^files$/i.test(s.title));
+  return story;
+}
+function storyLink(label, href) {
+  const text = plain(label);
+  if (href.startsWith('#')) {
+    const slug = 'sec-' + href.slice(1).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    if (state.story?.files?.slug === slug) return el('a', {href: '#id=' + encodeURIComponent(slug)}, text);
+    return state.source?.storyLink ? extLink(new URL(href, state.source.storyLink).href, text) : document.createTextNode(text);
+  }
+  const base = state.source?.linkDir || state.source?.rawDir;
+  let abs;
+  try { abs = new URL(href, base); } catch { return document.createTextNode(text); }
+  const sibling = state.source && abs.href.startsWith(base) ? abs.pathname.split('/').pop() : '';
+  if (sibling === 'checklist.json' || sibling === 'scenarios.json') {
+    if (state.ids.has(text)) return idLink(text);
+    return el('a', {href: '#tab=' + (sibling === 'checklist.json' ? 'checklist' : 'scenarios')}, text);
+  }
+  if (state.source?.kind === 'local' && !/^https:/i.test(href)) return el('span', {title: 'Local file link not opened from the viewer'}, text);
+  return extLink(abs.href, text);
+}
+function inline(text) {
+  const frag = document.createDocumentFragment();
+  const s = String(text ?? '');
+  const re = /(`[^`\n]+`)|\*\*(.+?)\*\*|\[([^\]\n]+)\]\(([^)\s]+)\)|(https:\/\/[^\s<>()"'\]]*[^\s<>()"'\].,;:!?])/g;
+  let last = 0, m;
+  while ((m = re.exec(s))) {
+    frag.append(linkIds(s.slice(last, m.index)));
+    if (m[1]) frag.append(el('code', {}, m[1].slice(1, -1)));
+    else if (m[2]) frag.append(el('strong', {}, inline(m[2])));
+    else if (m[3]) frag.append(storyLink(m[3], m[4]));
+    else if (m[5]) frag.append(extLink(m[5]));
+    last = re.lastIndex;
+  }
+  frag.append(linkIds(s.slice(last)));
+  return frag;
+}
+function renderBlocks(blocks) {
+  return blocks.map(b => {
+    if (b.type === 'heading') return el('h' + Math.min(6, b.level + 1), {}, inline(b.text));
+    if (b.type === 'para') return el('p', {}, inline(b.text));
+    if (b.type === 'code') return el('pre', {}, el('code', {}, b.text));
+    if (b.type === 'list') return el(b.ordered ? 'ol' : 'ul', {class: 'plain'}, b.items.map(it => el('li', {}, inline(it))));
+    if (b.type === 'table') {
+      const head = b.head.map(plain);
+      return el('table', {class: 'md'},
+        el('thead', {}, el('tr', {}, head.map(h => el('th', {scope: 'col'}, h)))),
+        el('tbody', {}, b.rows.map(r => el('tr', {}, head.map((h, i) => el('td', {'data-label': h}, inline(r[i] || '')))))));
+    }
+    return null;
+  });
+}
+
+// ───────────────────────── index, links and data checks ─────────────────────────
+function buildIndex() {
+  const ids = new Map();
+  const warnings = [];
+  const add = (id, kind, tab) => {
+    if (ids.has(id) && ids.get(id).kind !== kind) warnings.push(id + ' is used as both a ' + ids.get(id).kind + ' and a ' + kind + '.');
+    if (!ids.has(id)) ids.set(id, {kind, tab});
+  };
+  const dup = (list, key, label) => {
+    const seen = new Set();
+    for (const x of list) { if (seen.has(x[key])) warnings.push('Duplicate ' + label + ' ' + x[key] + '; only the first is linked.'); seen.add(x[key]); }
+  };
+  dup(state.scenarios, 'scenarioId', 'scenario ID');
+  dup(state.tasks, 'stepId', 'task ID');
+  state.scenarios.forEach(s => add(s.scenarioId, 'scenario', 'story'));
+  state.tasks.forEach(t => add(t.stepId, 'task', 'checklist'));
+  dup(state.criteria, 'id', 'criterion ID');
+  state.criteria.forEach(c => add(c.id, 'criterion', 'story'));
+  if (state.story?.files) ids.set(state.story.files.slug, {kind: 'section', tab: 'story'});
+  state.ids = ids;
+  const taskIds = new Set(state.tasks.map(t => t.stepId));
+  const criterionIds = new Set(state.criteria.map(c => c.id));
+  const refIds = new Set([...state.scenarios.map(s => s.scenarioId), ...criterionIds]);
+  for (const t of state.tasks) {
+    for (const r of Array.isArray(t.requires) ? t.requires : []) {
+      if (r === t.stepId) warnings.push(t.stepId + ' requires itself.');
+      else if (!taskIds.has(r)) warnings.push(t.stepId + ' requires unknown task ' + r + '.');
+    }
+    if (state.story && state.scenarios.length) {
+      for (const r of Array.isArray(t.supports) ? t.supports : []) if (!refIds.has(r)) warnings.push(t.stepId + ' supports ' + r + ', which is not a story criterion or scenario.');
+    }
+    if (t.status && !TASK_STATUSES.includes(t.status)) warnings.push(t.stepId + ' has an unrecognized status "' + t.status + '".');
+  }
+  for (const s of state.scenarios) {
+    if (!Number.isInteger(s.version) || s.version < 1) warnings.push(s.scenarioId + ' has no valid version.');
+    if (!isObject(s.surfaces) || !SURFACES.some(([k]) => s.surfaces[k] === true)) warnings.push(s.scenarioId + ' requires no surface.');
+    if (state.story || state.criteria.length) {
+      const references = Array.isArray(s.criteria) ? s.criteria : [];
+      for (const c of references) if (!criterionIds.has(c)) warnings.push(s.scenarioId + ' cites unknown criterion ' + c + '.');
+      if (!scenarioCriteria(s).length) warnings.push(s.scenarioId + ' has no linked acceptance criterion.');
+    }
+  }
+  state.warnings = warnings;
+}
+function scenarioCriteria(scenario) {
+  const references = Array.isArray(scenario.criteria) ? scenario.criteria : [];
+  return state.criteria.filter(c => references.includes(c.id));
+}
+function tasksSupporting(ids) {
+  const set = new Set(ids);
+  return state.tasks.filter(t => Array.isArray(t.supports) && t.supports.some(x => set.has(x)));
+}
+
+// ───────────────────────── private results (local only, memory only) ─────────────────────────
+function validateRuns(data) {
+  if (!Array.isArray(data)) throw new Error('The results file must be a JSON array of runs.');
+  const seen = new Set(); const runs = []; const warnings = [];
+  data.forEach((r, i) => {
+    const where = 'Run ' + (i + 1);
+    if (!isObject(r)) { warnings.push(where + ' is not an object; ignored.'); return; }
+    const missing = ['runId', 'scenarioId', 'scenarioVersion', 'surface', 'revision', 'result', 'observed', 'runAt', 'method'].filter(k => r[k] == null || r[k] === '');
+    if (missing.length) { warnings.push(where + ' is missing ' + missing.join(', ') + '; ignored.'); return; }
+    if (seen.has(r.runId)) throw new Error('Duplicate run ID ' + r.runId + '. Correct the file; runs are never merged.');
+    seen.add(r.runId);
+    if (!['Pass', 'Fail', 'Blocked'].includes(r.result)) { warnings.push(r.runId + ' has result "' + r.result + '"; ignored.'); return; }
+    if (!SURFACES.some(([k]) => k === r.surface)) { warnings.push(r.runId + ' has an unknown surface; ignored.'); return; }
+    const t = Date.parse(r.runAt);
+    if (Number.isNaN(t) || !/T\d{2}:\d{2}/.test(r.runAt) || !/(Z|[+-]\d{2}:\d{2})$/.test(r.runAt)) { warnings.push(r.runId + ' has no valid RFC 3339 run time; ignored.'); return; }
+    const sc = state.scenarios.find(s => s.scenarioId === r.scenarioId);
+    if (!sc) { warnings.push(r.runId + ' names unknown scenario ' + r.scenarioId + '; ignored.'); return; }
+    if (sc.surfaces?.[r.surface] !== true) { warnings.push(r.runId + ' tests a surface ' + r.scenarioId + ' does not require; ignored.'); return; }
+    if (r.scenarioVersion > sc.version) warnings.push(r.runId + ' uses a newer scenario version than the loaded definition.');
+    if (r.result === 'Blocked' && !String(r.comments || '').trim()) { warnings.push(r.runId + ' is Blocked without comments; ignored.'); return; }
+    if (r.result !== 'Blocked' && !String(r.evidence || '').trim()) { warnings.push(r.runId + ' has no evidence reference; ignored.'); return; }
+    runs.push({...r, _t: t, _i: i});
+  });
+  return {runs, warnings};
+}
+function deriveScenario(sc) {
+  const required = SURFACES.filter(([k]) => sc.surfaces?.[k] === true);
+  const per = required.map(([key, label]) => {
+    const applicable = (state.runs || []).filter(r => r.scenarioId === sc.scenarioId && r.surface === key && (!sc.environment || r.environment === sc.environment));
+    const latest = list => list.reduce((best, r) => (!best || r._t > best._t || (r._t === best._t && r._i > best._i)) ? r : best, null);
+    const current = latest(applicable.filter(r => r.revision === state.revision && r.scenarioVersion === sc.version));
+    if (current) return {key, label, status: current.result, run: current};
+    const older = latest(applicable);
+    if (older) return {key, label, status: 'Stale', run: older};
+    return {key, label, status: 'NOT RUN', run: null};
+  });
+  const status = per.length && per.every(p => p.status === 'Pass') ? 'Pass' : (SUMMARY_ORDER.find(s => per.some(p => p.status === s)) || 'NOT RUN');
+  return {status, per};
+}
+
+// ───────────────────────── rendering: shell and routing ─────────────────────────
+function renderAll() {
+  renderSourceExtras();
+  renderStory();
+  renderChecklist();
+  say('#count-story', state.criteria.length ? '(' + state.criteria.length + ' criteria)' : '');
+  say('#count-checklist', '(' + (state.checkView === 'legacy' && state.legacy ? state.legacy.data.tasks.length : state.tasks.length) + ')');
+  showTab(state.tab);
+}
+function renderSourceExtras() {
+  const source = $('#story-source-extras');
+  source.replaceChildren();
+  const files = state.story?.files;
+  const references = (files?.blocks || []).flatMap(block => {
+    if (block.type === 'list') {
+      const items = block.items.filter(item => !/^\[[^\]]+\]\((?:\.\/)?(?:checklist|scenarios)\.json\)(?:\s|$)/i.test(item));
+      return items.length ? [{...block, items}] : [];
+    }
+    return block.type === 'table' || (block.type === 'para' && /\]\([^)]+\)|https:\/\//.test(block.text)) ? [block] : [];
+  });
+  if (references.length) {
+    source.append(el('details', {class: 'load-source', id: 'x-' + files.slug},
+      el('summary', {}, files.title),
+      el('div', {class: 'story-section-content'}, renderBlocks(references))));
+  }
+  if (state.warnings.length) {
+    source.append(el('details', {class: 'load-source'},
+      el('summary', {}, 'Data checks (' + state.warnings.length + ')'),
+      el('ul', {class: 'plain'}, state.warnings.map(w => el('li', {}, linkIds(w))))));
+  }
+}
+function showTab(tab) {
+  if (tab !== 'checklist') tab = 'story';
+  state.tab = tab; prefs.tab = tab; savePrefs();
+  document.querySelectorAll('[data-panel]').forEach(p => { p.hidden = p.dataset.panel !== tab; });
+  document.querySelectorAll('nav.tabs a').forEach(a => {
+    if (a.dataset.tab === tab) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+  });
+}
+function route() {
+  if (!state.loaded) return;
+  let hash = location.hash.slice(1);
+  try { hash = decodeURIComponent(hash); } catch { hash = ''; }
+  if (hash.startsWith('tab=')) {
+    showTab(hash.slice(4));
+    if (hash === 'tab=scenarios') $('#crit-h')?.scrollIntoView({block: 'start'});
+    return;
+  }
+  if (hash.startsWith('id=')) { focusId(hash.slice(3)); return; }
+  showTab(prefs.tab || 'story');
+}
+function focusId(id) {
+  const known = state.ids.get(id);
+  if (!known) { say('#nav-status', id + ' was not found in the loaded files.'); return; }
+  if (known.kind === 'task' && state.checkView === 'legacy') { state.checkView = 'story'; renderChecklist(); }
+  showTab(known.tab);
+  let node = document.getElementById('x-' + id);
+  if (node && node.hidden && known.kind === 'task') {
+    prefs.status = ''; prefs.search = ''; savePrefs(); renderChecklist();
+    node = document.getElementById('x-' + id);
+    say('#nav-status', 'Filters cleared to show ' + id + '.');
+  }
+  if (!node) return;
+  if (node.tagName === 'DETAILS') node.open = true;
+  const target = node.querySelector(':scope > summary') || node;
+  if (!target.hasAttribute('tabindex') && target.tagName !== 'SUMMARY') target.setAttribute('tabindex', '-1');
+  node.scrollIntoView({block: 'start'});
+  target.focus({preventScroll: true});
+}
+function copyLinkButton(id) {
+  return el('button', {type: 'button', class: 'copy-link', onclick: async e => {
+    e.preventDefault();
+    e.stopPropagation();
+    const url = new URL(location.href); url.hash = 'id=' + id;
+    try { await navigator.clipboard.writeText(url.href); say(e.target.nextSibling, 'Link copied.'); }
+    catch { say(e.target.nextSibling, 'Copy failed. Use this address: ' + url.href); }
+  }}, 'Copy link to ' + id);
+}
+function copyRow(id, tag = 'p') { return el(tag, {class: 'row'}, copyLinkButton(id), el('span', {class: 'muted', role: 'status'})); }
+function kv(label, value, help, wide) {
+  return el('div', {class: wide ? 'wide' : null},
+    el('dt', {}, label, help ? el('details', {class: 'help'}, el('summary', {'aria-label': 'About ' + label}, '?'), el('div', {}, help)) : null),
+    el('dd', {}, value));
+}
+function emptyValue(text = 'Not recorded') {
+  if (text !== 'Not recorded' && text !== 'Not decided') return el('span', {class: 'blank'}, text);
+  return el('span', {class: 'blank'}, el('span', {'aria-hidden': 'true'}, '-'), el('span', {class: 'sr-only'}, text));
+}
+function supportingTaskRows(tasks) {
+  return el('ul', {class:'supporting-task-list'}, tasks.map(t =>
+    el('li', {}, el('span', {}, idLink(t.stepId), ' ', t.task || ''), badge(t.status))));
+}
+function supportingTasks(tasks) {
+  if (!tasks.length) return emptyValue('None');
+  return el('details', {class:'supporting-tasks'},
+    el('summary', {}, tasks.length === 1 ? '1 linked task' : tasks.length + ' linked tasks'),
+    supportingTaskRows(tasks));
+}
+function taskDisclosure(label, content) {
+  return el('button', {
+    class: 'task-disclosure', type: 'button', 'aria-expanded': 'false', 'aria-controls': content.id,
+    onclick: e => {
+      content.hidden = !content.hidden;
+      e.currentTarget.setAttribute('aria-expanded', String(!content.hidden));
+    }
+  }, el('span', {'aria-hidden': 'true'}), label);
+}
+
+// ───────────────────────── Story tab ─────────────────────────
+function renderStory() {
+  const panel = $('#panel-story');
+  panel.replaceChildren();
+  const story = state.story;
+  if (story) {
+    const outcome = story.facts.find(f => /^outcome$/i.test(f.label));
+    const factGroups = ['scope', 'operations'].map(label =>
+      story.facts.filter(f => f.label.toLowerCase() === label))
+      .filter(group => group.length)
+      .map(group => el('dl', {class: 'kv task-fields task-column'},
+        group.map(f => kv(f.label, inline(f.text)))));
+    panel.append(el('div', {class: 'story-overview stack'},
+      el('div', {class: 'card story-surface'}, el('h2', {}, 'User Story'),
+        outcome ? el('p', {class: 'outcome'}, inline(outcome.text)) : null),
+      factGroups.length ? el('div', {class: 'task-groups'}, factGroups) : null));
+  } else {
+    panel.append(el('div', {class: 'notice error'}, 'The story Markdown could not be loaded.'));
+  }
+  panel.append(renderAcceptance());
+}
+
+function renderAcceptance() {
+  const section = el('section', {'aria-labelledby': 'crit-h', class: 'stack', style: 'margin-top:14px'});
+  const derived = state.scenarios.map(sc => [sc, deriveScenario(sc), scenarioCriteria(sc)]);
+  const counts = {};
+  derived.forEach(([, result]) => { counts[result.status] = (counts[result.status] || 0) + 1; });
+  const statusSummary = derived.length ? el('div', {class: 'summary-strip'},
+    Object.entries(counts).map(([status, count]) => el('span', {title: STATUS_HELP[status]}, badge(status), ' ', count)),
+    el('details', {class: 'help'}, el('summary', {'aria-label': 'About scenario statuses'}, '?'),
+      el('div', {}, el('dl', {class: 'kv'}, Object.entries(STATUS_HELP).map(([status, help]) => kv(status, help)))))) : null;
+  const head = el('div', {class: 'card stack'},
+    el('div', {class: 'view-heading'}, el('h2', {id: 'crit-h'}, 'Acceptance criteria'), statusSummary));
+  if (state.runs) {
+    const revs = [...new Set(state.runs.slice().sort((a, b) => b._t - a._t).map(r => r.revision))];
+    const revision = el('input', {
+      id: 'rev-select', list: 'tested-revisions', value: state.revision, maxlength: '80',
+      onchange: e => { state.revision = e.target.value.trim(); renderAll(); showTab('story'); }
+    });
+    const choices = el('datalist', {id: 'tested-revisions'}, revs.map(r => el('option', {value: r})));
+    head.append(el('div', {class: 'notice warn'}, 'Private results from ', el('code', {}, state.runsName), ' are shown on this device only. They are kept in memory and cleared when you reload.'),
+      el('label', {class: 'row', for: 'rev-select'}, 'Selected build or revision', revision), choices,
+      state.runWarnings.length ? el('details', {class: 'panel'}, el('summary', {}, 'Result file checks (' + state.runWarnings.length + ')'), el('div', {}, el('ul', {class: 'plain'}, state.runWarnings.map(w => el('li', {}, w))))) : null);
+  }
+  section.append(head);
+  const file = state.files['scenarios.json'];
+  if (file?.state && file.state !== 'loaded') {
+    section.append(el('p', {class: 'notice error'}, 'scenarios.json ' + file.message + '.'));
+  }
+  if (!state.criteria.length && !derived.length && file?.state === 'loaded') {
+    section.append(el('p', {class: 'notice warn'}, 'No acceptance criteria or scenarios were provided.'));
+  }
+  const criteria = el('div', {class: 'detail-list'});
+  for (const criterion of state.criteria) {
+    const scenarios = derived.filter(([, , linked]) => linked.includes(criterion));
+    const group = el('article', {class: 'criterion-group', id: 'x-' + criterion.id, tabindex: '-1'},
+      el('div', {class: 'criterion-row'},
+        el('span', {class: 'id'}, criterion.id),
+        el('div', {},
+          criterion.title ? el('strong', {class: 'criterion-title'}, inline(criterion.title)) : null,
+          criterion.test ? [
+            el('div', {class: 'criterion-step'}, el('strong', {}, 'Starting state '), inline(criterion.test.startingState)),
+            el('div', {class: 'criterion-step'}, el('strong', {}, 'Actions'),
+              el('ol', {class: 'actions'}, criterion.test.actions.map(action => el('li', {}, inline(action))))),
+            el('div', {class: 'criterion-step'}, el('strong', {}, 'Expected result '), inline(criterion.test.expectedResult))
+          ] : criterion.steps.map(step => el('div', {class: 'criterion-step'}, inline(step))))));
+    const linked = el('div', {class: 'criterion-scenarios'});
+    if (scenarios.length > 1) linked.append(el('h3', {}, 'Scenario checks'));
+    if (scenarios.length) {
+      linked.append(el('div', {class: 'detail-list'}, scenarios.map(([scenario, result, matches]) =>
+        matches[0] === criterion ? renderScenario(scenario, result, scenarios.length === 1)
+          : el('p', {class: 'story-section-content'}, idLink(scenario.scenarioId, scenario.scenarioId + ' · ' + scenario.name)))));
+    } else {
+      linked.append(el('p', {class: 'muted'}, 'No scenario is linked to this criterion.'));
+    }
+    group.append(linked);
+    criteria.append(group);
+  }
+  if (criteria.childElementCount) section.append(criteria);
+  const unlinked = derived.filter(([, , linked]) => !linked.length);
+  if (unlinked.length) {
+    section.append(el('div', {class: 'card stack'},
+      el('h3', {}, 'Scenarios without a linked criterion'),
+      el('div', {class: 'detail-list'}, unlinked.map(([scenario, result]) => renderScenario(scenario, result)))));
+  }
+  return section;
+}
+
+function renderScenario(sc, d, singleCheck = false) {
+  const tasks = tasksSupporting([sc.scenarioId]);
+  const setupNote = sc.setup ?? sc.startingState;
+  const setup = el('dl', {class: 'kv task-fields task-column'},
+    kv('Actor', sc.actor ? el('code', {}, sc.actor) : emptyValue(), SCENARIO_HELP.actor),
+    kv('Environment', sc.environment ? el('code', {}, sc.environment) : emptyValue('Any'), SCENARIO_HELP.environment),
+    kv('Version', String(sc.version ?? '—'), SCENARIO_HELP.version),
+    setupNote ? kv(sc.setup ? 'Setup' : 'Starting state', linkify(setupNote), SCENARIO_HELP.startingState, true) : null,
+    kv('Fixtures', Array.isArray(sc.fixtures) && sc.fixtures.length ? sc.fixtures.map((f, i) => [i ? ', ' : '', el('code', {}, f)]) : emptyValue('None'), SCENARIO_HELP.fixtures, true),
+    Array.isArray(sc.actions) && sc.actions.length ? kv('Actions', el('ol', {class: 'actions'}, sc.actions.map(a => el('li', {}, linkify(a)))), null, true) : null);
+  const verification = el('dl', {class: 'kv task-fields task-column'},
+    sc.expected ? kv('Expected result', el('span', {}, linkify(sc.expected)), SCENARIO_HELP.expected, true) : null,
+    Array.isArray(sc.observations) && sc.observations.length
+      ? kv('Observations to check', el('ul', {class: 'plain'}, sc.observations.map(value => el('li', {}, linkify(value)))), 'A fixture-specific signal or readback that helps verify the expected result.', true) : null,
+    isObject(sc.assertions) ? kv('Surface assertions', el('ul', {class: 'plain'}, SURFACES.filter(([k]) => sc.assertions[k]).map(([k, l]) => el('li', {}, el('strong', {}, l + ': '), linkify(sc.assertions[k])))), SCENARIO_HELP.assertions, true) : null,
+    kv('Required surfaces', el('ul', {class: 'plain'}, d.per.map(p => el('li', {}, p.label + ' ', badge(p.status), p.run ? [' · ', runSummary(p.run)] : ''))), SCENARIO_HELP.surfaces, true),
+    kv('Supporting tasks', supportingTasks(tasks), 'Task status is separate from the scenario result.', true));
+  return el('details', {class: 'item record-item', id: 'x-' + sc.scenarioId},
+    el('summary', {},
+      el('span', {class: 'id'}, sc.scenarioId),
+      el('span', {class: 'sum-title'}, singleCheck ? 'Verification details' : sc.name || 'Verification details'),
+      el('span', {class: 'record-status'}, badge(d.status))),
+    el('div', {class: 'item-body task-body record-body'},
+      el('div', {class: 'task-groups'}, setup, verification), runHistory(sc)));
+}
+function runSummary(r) {
+  return el('span', {}, r.revision, ' · v', String(r.scenarioVersion), ' · ', new Date(r._t).toLocaleString(), ' · ', r.method);
+}
+function runHistory(sc) {
+  if (!state.runs) return null;
+  const runs = state.runs.filter(r => r.scenarioId === sc.scenarioId).sort((a, b) => b._t - a._t || b._i - a._i);
+  return el('details', {class: 'panel', style: 'margin-top:12px'}, el('summary', {}, 'Private run history (' + runs.length + ')'),
+    el('div', {}, runs.length ? el('ul', {class: 'plain'}, runs.map(r => el('li', {},
+      el('strong', {}, r.runId), ' ', badge(r.result), ' ', SURFACES.find(([k]) => k === r.surface)[1], ' · ', runSummary(r),
+      r.environment ? ' · ' + r.environment : '', r.testedAs ? ' · as ' + r.testedAs + (r.identityVerified ? ' (verified)' : ' (identity not verified)') : '',
+      el('br'), r.observed, r.evidence ? [el('br'), el('span', {class: 'muted'}, 'Evidence reference (private, not opened): '), el('code', {}, r.evidence)] : '',
+      r.comments ? [el('br'), el('span', {class: 'muted'}, 'Comments: '), r.comments] : ''))) : emptyValue('No runs for this scenario.')));
+}
+
+// ───────────────────────── Checklist tab ─────────────────────────
+function reusableArtifact(task) {
+  return {planned: task.reusableArtifact?.planned ?? task.githubPublish,
+    description: task.reusableArtifact?.description ?? task.reuseOpportunity};
+}
+function renderValue(field, value, task, artifacts) {
+  const kind = field.kind;
+  if (kind === 'artifact' || field.key === 'githubPublish') {
+    const {planned, description} = reusableArtifact(task);
+    const decision = planned === true ? 'Planned' : planned === false ? 'Not planned' : '';
+    if (!description) return decision || emptyValue('Not decided');
+    return el('span', {}, linkify(description), decision ? el('span', {class: 'muted'}, ' · ' + decision) : null);
+  }
+  if (kind === 'bool') return value === true ? 'Yes' : value === false ? 'No' : emptyValue('Not decided');
+  if (Array.isArray(value)) {
+    if (!value.length) return emptyValue();
+    return el('span', {}, value.map((id, i) => [i ? ', ' : '', artifacts ? el('span', {}, idLink(id), artifacts[id] ? ' · ' + artifacts[id] : '') : idLink(id)]));
+  }
+  if (value == null || value === '') {
+    if (kind === 'github' && reusableArtifact(task).planned === true && task.status === 'Pass') return emptyValue('No published link recorded');
+    return emptyValue(field.emptyText);
+  }
+  if (kind === 'github') {
+    const u = safeHttps(value);
+    const ok = u && u.hostname === 'github.com' && u.pathname.split('/')[3] === 'blob';
+    return ok ? extLink(u.href) : emptyValue('GitHub file URL needs correction');
+  }
+  if (typeof value === 'object') return el('code', {}, JSON.stringify(value));
+  return el('span', {style: 'white-space:pre-line'}, linkify(String(value)));
+}
+function waitingOn(task, all) {
+  if (task.status !== 'Open' || !Array.isArray(task.requires)) return [];
+  return task.requires.filter(id => all.find(t => t.stepId === id)?.status !== 'Pass');
+}
+function checklistControls(fields, onChange) {
+  const statusSel = el('select', {id: 'flt-status', onchange: e => { prefs.status = e.target.value; savePrefs(); onChange(); }},
+    el('option', {value: ''}, 'All statuses'), TASK_STATUSES.map(s => el('option', {value: s, selected: prefs.status === s || null}, s)));
+  const search = el('input', {id: 'flt-search', type: 'search', value: prefs.search || '', placeholder: 'ID or words', oninput: e => { prefs.search = e.target.value; savePrefs(); onChange(true); }});
+  const groups = [...new Set(fields.map(f => f.group))];
+  const display = el('details', {class: 'panel'}, el('summary', {}, 'Choose visible fields'),
+    el('div', {class: 'stack'},
+      el('p', {class: 'muted'}, 'Choose which details show when a task is expanded. Choices are saved in this browser.'),
+      groups.map(g => el('fieldset', {style: 'border:0;padding:0;margin:0'}, el('legend', {class: 'muted', style: 'font-size:.85rem'}, g),
+        el('div', {class: 'checks'}, fields.filter(f => f.group === g).map(f => el('label', {}, el('input', {type: 'checkbox', checked: fieldShown(f) || null,
+          onchange: e => { prefs.fields[f.key] = e.target.checked; savePrefs(); onChange(); }}), f.label))))),
+      el('label', {style: 'font-weight:400'}, el('input', {type: 'checkbox', checked: prefs.showEmpty || null, onchange: e => { prefs.showEmpty = e.target.checked; savePrefs(); onChange(); }}), ' Include an Unfilled fields section'),
+      el('p', {class: 'row'}, el('button', {type: 'button', onclick: () => {
+        for (const field of fields) prefs.fields[field.key] = true;
+        savePrefs();
+        for (const control of display.querySelectorAll('fieldset input[type=checkbox]')) control.checked = true;
+        onChange();
+      }}, 'Show all fields'), el('button', {type: 'button', onclick: () => {
+        try { localStorage.removeItem(PREF_KEY); } catch { /* ignore */ }
+        prefs = readPrefs(); renderAll(); say('#nav-status', 'Display preferences reset.');
+      }}, 'Reset display preferences'))));
+  return el('div', {class: 'controls'},
+    el('label', {for: 'flt-status'}, 'Status', statusSel),
+    el('label', {for: 'flt-search'}, 'Find', search),
+    el('div', {style: 'flex:1 1 220px'}, display));
+}
+function taskMatches(task) {
+  if (prefs.status && task.status !== prefs.status) return false;
+  const q = (prefs.search || '').trim().toLowerCase();
+  if (!q) return true;
+  return [task.stepId, task.task, task.comments, task.evidence].some(v => String(v || '').toLowerCase().includes(q));
+}
+function renderChecklist() {
+  const panel = $('#panel-checklist');
+  if (state.legacy?.editing.size && state.checkView === 'legacy' && panel.childElementCount) return;
+  panel.replaceChildren();
+  if (state.legacy) {
+    panel.append(el('div', {class: 'row', role: 'group', 'aria-label': 'Checklist source', style: 'margin-bottom:10px'},
+      el('button', {type: 'button', 'aria-pressed': String(state.checkView === 'story'), class: state.checkView === 'story' ? 'primary' : null, onclick: () => { if (state.legacy.editing.size) { say('#legacy-status', 'Save or cancel open edits first.'); return; } state.checkView = 'story'; renderAll(); showTab('checklist'); }}, 'Story checklist (read only)'),
+      el('button', {type: 'button', 'aria-pressed': String(state.checkView === 'legacy'), class: state.checkView === 'legacy' ? 'primary' : null, onclick: () => { state.checkView = 'legacy'; renderAll(); showTab('checklist'); }}, 'Saved draft (editable)')));
+    if (state.checkView === 'legacy') { renderLegacy(panel); return; }
+  }
+  const file = state.files['checklist.json'];
+  if (!state.tasks.length) {
+    panel.append(el('div', {class: 'notice ' + (file?.state === 'loaded' ? '' : 'error')}, file?.state === 'loaded' ? 'checklist.json contains no tasks.' : 'checklist.json ' + (file?.message || 'is not loaded') + '.'));
+    return;
+  }
+  const listBox = el('div', {class: 'detail-list'});
+  const shownCount = el('p', {class: 'muted', role: 'status', 'aria-live': 'polite'});
+  const draw = () => {
+    const visible = state.tasks.filter(taskMatches);
+    say(shownCount, 'Showing ' + visible.length + ' of ' + state.tasks.length + ' tasks. Task status is read only here.');
+    const expanded = new Set([...listBox.querySelectorAll('details.item[open]')].map(card => card.id));
+    listBox.replaceChildren(...state.tasks.map(t => {
+      const card = taskCard(t, TASK_FIELDS, state.tasks);
+      card.hidden = !taskMatches(t);
+      card.open = expanded.has(card.id);
+      return card;
+    }));
+  };
+  const counts = {};
+  state.tasks.forEach(t => { counts[t.status] = (counts[t.status] || 0) + 1; });
+  panel.append(el('div', {class: 'card stack'},
+    el('div', {class: 'view-heading'}, el('h2', {}, 'Agentic Workflow'),
+      el('div', {class: 'summary-strip'},
+        TASK_STATUSES.filter(s => counts[s]).map(s => el('span', {}, badge(s), ' ', counts[s]))))),
+    checklistControls(TASK_FIELDS, draw), shownCount, listBox);
+  draw();
+}
+function taskCard(task, fields, all, opts = {}) {
+  const id = (opts.idPrefix || 'x-') + task.stepId;
+  const waits = waitingOn(task, all);
+  const agent = typeof task.agent === 'string' ? task.agent.trim() : '';
+  const model = task.ownerType === 'AI' && typeof task.model === 'string' ? task.model.trim() : '';
+  const body = el('div', {class: 'task-groups'});
+  const plan = el('div', {class: 'task-column'});
+  const outcomes = el('div', {class: 'task-column'});
+  const groups = new Map();
+  const unfilled = el('div', {class: 'task-groups'});
+  const unfilledPlan = el('dl', {class: 'task-column kv task-fields'});
+  const unfilledOutcomes = el('dl', {class: 'task-column kv task-fields'});
+  const artifact = reusableArtifact(task);
+  const outcomeGroups = new Set(['Value', 'Evidence', 'Publication']);
+  for (const f of fields) {
+    if (!fieldShown(f)) continue;
+    const v = task[f.key];
+    const isArtifact = f.kind === 'artifact' || f.key === 'githubPublish';
+    const empty = isArtifact ? artifact.planned == null && !artifact.description
+      : v == null || v === '' || (Array.isArray(v) && !v.length);
+    const needsPublishedLink = f.kind === 'github' && artifact.planned === true && task.status === 'Pass';
+    if (empty && !needsPublishedLink) {
+      if (prefs.showEmpty) {
+        const column = outcomeGroups.has(f.group) ? unfilledOutcomes : unfilledPlan;
+        column.append(kv(f.label, renderValue(f, v, task, opts.artifacts), f.help));
+      }
+      continue;
+    }
+    if (!groups.has(f.group)) {
+      const list = el('dl', {class: 'kv task-fields'});
+      groups.set(f.group, list);
+      (outcomeGroups.has(f.group) ? outcomes : plan).append(el('section', {class: 'task-group'}, el('h3', {class: 'sr-only'}, f.group), list));
+    }
+    groups.get(f.group).append(kv(f.label, renderValue(f, v, task, opts.artifacts), f.help));
+  }
+  for (const column of [plan, outcomes]) if (column.childElementCount) body.append(column);
+  if (!body.childElementCount) body.append(el('p', {class: 'muted'}, 'No selected details have values. Use Choose visible fields to show more.'));
+  const unfilledCount = unfilledPlan.childElementCount + unfilledOutcomes.childElementCount;
+  for (const column of [unfilledPlan, unfilledOutcomes]) if (column.childElementCount) unfilled.append(column);
+  unfilled.id = id + '-unfilled';
+  unfilled.classList.add('task-unfilled');
+  unfilled.hidden = true;
+  const disclosure = unfilledCount ? taskDisclosure('Unfilled fields (' + unfilledCount + ')', unfilled) : null;
+  const copy = opts.idPrefix ? null : copyRow(task.stepId);
+  const footer = disclosure || copy
+    ? el('div', {class: 'task-footer'}, el('div', {class: 'row'}, disclosure, copy), unfilledCount ? unfilled : null)
+    : null;
+  return el('details', {class: 'item task-item', id, 'data-status': task.status || ''},
+    el('summary', {},
+      el('span', {class: 'id'}, task.stepId || 'No ID'),
+      el('span', {class: 'sum-title'}, task.task || 'Untitled task'),
+      el('span', {class: 'task-summary-meta'},
+        el('span', {class: 'task-agent'}, 'Agent ', agent || emptyValue()),
+        el('span', {class: 'task-owner'}, task.ownerType || '', model ? ' · ' + model : null),
+        el('span', {class: 'task-status'}, el('span', {class: 'sr-only'}, 'Status: '), badge(task.status || 'No status'))),
+      waits.length ? el('span', {class: 'task-waiting'}, 'Waiting on ' + waits.join(', ')) : null),
+    el('div', {class: 'item-body task-body'}, opts.before || null, body, opts.after || null, footer));
+}
+
+// ───────────────────────── Legacy preview editing (/api/draft, index based) ─────────────────────────
+async function draftRequest(options) {
+  const response = await fetch('/api/draft', {cache: 'no-store', credentials: 'same-origin', ...options});
+  let body = null;
+  try { body = await response.json(); } catch { /* handled below */ }
+  if (!response.ok) {
+    const error = new Error(body?.error || 'The draft server returned HTTP ' + response.status + '.');
+    error.status = response.status;
+    throw error;
+  }
+  if (!isObject(body) || !isObject(body.changes) || body.revision == null) throw new Error('The draft server response is missing changes or revision.');
+  return body;
+}
+function legacyFields(data) {
+  const all = [...(data.columns || []), ...(data.details || [])].filter(f => isObject(f) && typeof f.key === 'string');
+  const seen = new Map();
+  for (const f of all) if (!seen.has(f.key)) seen.set(f.key, f);
+  return [...seen.values()].filter(f => f.visible !== false && !['task', 'stepId', 'assignee', 'tool', 'reuseOpportunity', 'result'].includes(f.key)).map(f => ({
+    ...f, label: f.key === 'githubPublish' ? 'Reusable artifact' : f.label || f.key, group: f.group || 'Details', help: f.help || '',
+    kind: f.format === 'checkbox' ? 'bool' : f.format === 'githubFile' ? 'github' : ['docs', 'outputs'].includes(f.key) ? 'links' : 'text',
+    shown: true, editable: f.editable !== false && f.key !== 'status'
+  }));
+}
+function legacyLocked(lg) {
+  return new Set(['status', 'stepId', ...[...(lg.data.columns || []), ...(lg.data.details || [])].filter(f => f?.editable === false).map(f => f.key)]);
+}
+function legacyChangesFor(lg, index) {
+  const locked = legacyLocked(lg);
+  return Object.fromEntries(Object.entries(lg.draft?.changes?.[index] || {}).filter(([k]) => !locked.has(k)));
+}
+function legacyTasks(lg) { return lg.data.tasks.map((t, i) => normalizeTask({...t, ...legacyChangesFor(lg, i)})); }
+function legacyDraftProblems(lg) {
+  const problems = [];
+  for (const key of Object.keys(lg.draft?.changes || {})) {
+    if (!/^\d+$/.test(key) || Number(key) >= lg.data.tasks.length) problems.push('Saved changes for row ' + key + ' do not match any task in this baseline and are not applied.');
+    else if ('status' in (lg.draft.changes[key] || {})) problems.push('Saved changes for row ' + key + ' include a status; status is read only and that change is not applied.');
+  }
+  for (const k of ['baseline', 'source']) {
+    if (lg.draft && lg.draft[k] != null && lg.draft[k] !== lg.data.source) problems.push('The draft server reports ' + k + ' "' + lg.draft[k] + '", which differs from this baseline. Saving is disabled.');
+  }
+  return problems;
+}
+async function openLegacy() {
+  say('#local-status', 'Opening saved draft…');
+  const res = await fetchText('checklist.json', true);
+  if (!res.ok) { say('#local-status', 'checklist.json beside this page ' + res.message + '.'); return; }
+  let data;
+  try { data = JSON.parse(res.text); } catch (e) { say('#local-status', 'checklist.json beside this page is not valid JSON (' + e.message + ').'); return; }
+  if (!isObject(data) || !Array.isArray(data.tasks)) {
+    say('#local-status', 'checklist.json beside this page is not a legacy preview configuration (an object with tasks). A story checklist array is never edited through /api/draft.');
+    return;
+  }
+  const lg = {data, draft: null, draftError: '', saving: false, editing: new Set(), message: ''};
+  try { lg.draft = await draftRequest(); } catch (e) { lg.draftError = e.message; }
+  lg.problems = legacyDraftProblems(lg);
+  lg.blocked = lg.problems.some(p => p.includes('Saving is disabled'));
+  state.legacy = lg; state.checkView = 'legacy';
+  if (!state.loaded) { state.loaded = true; $('#bar').hidden = false; }
+  say('#local-status', lg.draftError ? 'Saved draft opened. Saving is unavailable because the draft server did not respond.' : 'Saved draft opened.');
+  renderAll(); showTab('checklist');
+}
+function exportLink(label, name, payload) {
+  const href = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2) + '\n'], {type: 'application/json'}));
+  return el('a', {class: 'button', href, download: name}, label);
+}
+function renderLegacy(panel) {
+  const lg = state.legacy;
+  const tasks = legacyTasks(lg);
+  const fields = legacyFields(lg.data);
+  let previous = null;
+  try { previous = JSON.parse(localStorage.getItem('checklist-draft:v1:' + lg.data.source) || 'null'); } catch { /* ignore */ }
+  const header = el('div', {class: 'card stack', id: 'legacy-header'},
+    el('h2', {}, lg.data.title || 'Saved checklist draft'),
+    el('p', {}, 'Baseline: ', el('code', {}, String(lg.data.source || 'checklist.json')), ' · ', String(lg.data.tasks.length), ' rows. Edits are saved by row number to ', el('code', {}, 'checklist-draft.json'), ' through ', el('code', {}, '/api/draft'), '. This is not the story checklist, and its edits are never applied to it.'),
+    lg.draftError ? el('div', {class: 'notice error'}, 'Save unavailable: ' + lg.draftError) : null,
+    lg.problems.length ? el('div', {class: 'notice warn'}, el('ul', {class: 'plain'}, lg.problems.map(p => el('li', {}, p)))) : null,
+    el('p', {class: 'row'}, lg.draft ? exportLink('Download draft JSON', 'checklist-draft.json', {...lg.data, tasks}) : null,
+      previous?.export && Object.keys(previous.changes || {}).length ? exportLink('Download previous browser draft', 'checklist-browser-draft.json', previous.export) : null),
+    el('p', {id: 'legacy-status', role: 'status', 'aria-live': 'polite'}, lg.message || ''));
+  const list = el('div', {class: 'detail-list', style: 'margin-top:12px', id: 'legacy-list'});
+  tasks.forEach((task, index) => list.append(legacyCard(lg, task, index, fields, tasks)));
+  panel.append(header, list);
+}
+function refreshLegacy(openIndex) {
+  const lg = state.legacy;
+  const panel = $('#panel-checklist');
+  const oldHeader = $('#legacy-header');
+  const list = $('#legacy-list');
+  if (!oldHeader || !list) return;
+  const scratch = el('div');
+  const editing = lg.editing; lg.editing = new Set();
+  renderLegacy(scratch);
+  lg.editing = editing;
+  oldHeader.replaceWith(scratch.querySelector('#legacy-header'));
+  const fresh = [...scratch.querySelector('#legacy-list').children];
+  [...list.children].forEach((card, i) => {
+    if (lg.editing.has(i) || !fresh[i]) return;
+    if (i === openIndex || card.open) fresh[i].open = true;
+    card.replaceWith(fresh[i]);
+  });
+  void panel;
+}
+function legacyCard(lg, task, index, fields, tasks) {
+  const canEdit = lg.draft && !lg.draftError && !lg.blocked;
+  const editBtn = el('button', {type: 'button', disabled: !canEdit || null, title: canEdit ? null : 'Save is unavailable'}, 'Edit task');
+  const actions = el('p', {class: 'row'}, editBtn);
+  const card = taskCard(task, fields, tasks, {artifacts: lg.data.artifacts || {}, idPrefix: 'legacy-', before: actions});
+  editBtn.addEventListener('click', () => {
+    card.open = true;
+    const form = legacyForm(lg, task, index, fields, () => { lg.editing.delete(index); refreshLegacy(index); });
+    card.querySelector('.item-body').replaceChildren(form);
+    lg.editing.add(index);
+    form.querySelector('input,textarea,select')?.focus();
+  });
+  return card;
+}
+function legacyForm(lg, task, index, fields, done) {
+  const controls = new Map();
+  const grid = el('div', {class: 'fields'});
+  const editTitle = el('textarea', {'aria-label': 'Task'}, task.task || '');
+  const taskField = [...(lg.data.columns || [])].find(f => f?.key === 'task');
+  if (!taskField || taskField.editable !== false) { controls.set('task', {control: editTitle, field: {key: 'task', label: 'Task', maxWords: taskField?.maxWords}}); grid.append(el('label', {class: 'wide'}, 'Task', editTitle)); }
+  for (const f of fields) {
+    if (!f.editable || Array.isArray(task[f.key])) continue;
+    let control;
+    if (f.kind === 'bool') {
+      control = el('input', {type: 'checkbox'}); control.checked = task[f.key] === true; control.indeterminate = task[f.key] == null;
+      control.addEventListener('change', () => { control.indeterminate = false; });
+    } else if (Array.isArray(f.options)) {
+      control = el('select', {}, [...new Set(['', ...f.options, task[f.key]].filter(v => v != null))].map(o => el('option', {value: o}, o || 'Unassigned')));
+      control.value = task[f.key] ?? '';
+    } else if (f.kind === 'github' || f.style) {
+      control = el('input', {type: f.kind === 'github' ? 'url' : 'text', placeholder: f.kind === 'github' ? 'https://github.com/…/blob/…' : null});
+      control.value = task[f.key] ?? '';
+    } else {
+      control = el('textarea'); control.value = task[f.key] ?? '';
+    }
+    control.addEventListener('input', () => control.setCustomValidity(''));
+    controls.set(f.key, {control, field: f});
+    grid.append(el('label', {class: f.kind === 'bool' ? null : 'wide'}, f.label + (f.maxWords ? ' (max ' + f.maxWords + ' words)' : ''), control, f.help ? el('span', {class: 'field-help'}, f.help) : null));
+  }
+  const counter = el('span', {class: 'muted', 'aria-live': 'polite'});
+  const limit = lg.data.taskWordLimit;
+  const count = () => {
+    if (!limit?.fields) return;
+    const n = limit.fields.reduce((sum, k) => sum + words(controls.has(k) ? controls.get(k).control.value : task[k]), 0);
+    say(counter, n + ' / ' + limit.maxWords + ' words');
+  };
+  const controlValue = control => control.type === 'checkbox'
+    ? (control.indeterminate ? undefined : control.checked) : control.value;
+  const initial = new Map([...controls].map(([key, {control}]) => [key, controlValue(control)]));
+  controls.forEach(({control}) => control.addEventListener('input', count)); count();
+  const status = el('p', {role: 'status', 'aria-live': 'polite'});
+  const save = el('button', {type: 'submit', class: 'primary'}, 'Save draft');
+  const cancel = el('button', {type: 'button', onclick: done}, 'Cancel');
+  const reload = el('button', {type: 'button', hidden: true, onclick: async () => {
+    try { lg.draft = await draftRequest(); lg.problems = legacyDraftProblems(lg); refreshLegacy(); say(status, 'Latest draft loaded. Your unsaved edits are still in this form; review them and save again.'); reload.hidden = true; }
+    catch (e) { say(status, 'Could not load the latest draft: ' + e.message); }
+  }}, 'Load latest draft');
+  const form = el('form', {class: 'edit-form stack', novalidate: true, 'aria-label': 'Edit ' + (task.stepId || 'task')},
+    el('p', {class: 'muted'}, 'Status, step ID and list fields are read only. Changes are saved only when you choose Save draft.'),
+    grid, el('p', {class: 'row'}, save, cancel, reload, counter), status);
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (lg.saving) { say(status, 'A save is in progress. Try again when it finishes.'); return; }
+    const original = lg.data.tasks[index];
+    const changes = {...(lg.draft.changes[index] || {})};
+    for (const [key, {control, field}] of controls) {
+      if (field.kind === 'github') {
+        control.value = control.value.trim();
+        const u = control.value && safeHttps(control.value);
+        control.setCustomValidity(control.value && !(u && u.hostname === 'github.com' && u.pathname.split('/')[3] === 'blob') ? 'Enter an https link to a GitHub file (…/blob/…).' : '');
+      } else if (field.maxWords && words(control.value) > Number(field.maxWords)) {
+        control.setCustomValidity('Use no more than ' + field.maxWords + ' words.');
+      }
+      if (!control.reportValidity()) return;
+      const value = controlValue(control);
+      if (value === initial.get(key)) continue;
+      const before = control.type === 'checkbox' ? original[key] : String(original[key] ?? '');
+      if (value === before) delete changes[key]; else changes[key] = value;
+    }
+    const candidate = {...original, ...changes};
+    if (limit?.fields && words(limit.fields.map(k => candidate[k])) > limit.maxWords) {
+      say(status, 'This task is over its ' + limit.maxWords + '-word limit. Shorten it before saving.'); return;
+    }
+    lg.saving = true; save.disabled = cancel.disabled = true; say(status, 'Saving draft…');
+    try {
+      lg.draft = await draftRequest({method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({index, changes, revision: lg.draft.revision})});
+      lg.message = 'Saved ' + (task.stepId || 'row ' + (index + 1)) + ' to checklist-draft.json.';
+      lg.saving = false; done();
+    } catch (err) {
+      const conflict = err.status === 409 || /revision|conflict|stale|changed/i.test(err.message);
+      say(status, (conflict ? 'Not saved: the draft changed since it was loaded. ' : 'Not saved: ') + err.message + ' Your edits are still in this form.');
+      reload.hidden = !conflict;
+    } finally {
+      lg.saving = false; save.disabled = cancel.disabled = false;
+    }
+  });
+  return form;
+}
+
+// ───────────────────────── wiring ─────────────────────────
+$('#source-choice').addEventListener('change', e => {
+  const fromFiles = e.target.value === 'files';
+  $('#load-github').hidden = fromFiles;
+  $('#story-files-form').hidden = !fromFiles;
+});
+$('#load-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  if ($('#load-github').hidden) return;
+  try { await loadSource(parseStoryLink($('#story-link').value)); }
+  catch (err) { setLoadStatus(err.message); $('#story-link').focus(); }
+});
+$('#example-btn').addEventListener('click', () => { $('#story-link').value = EXAMPLE_LINK; $('#load-form').requestSubmit(); });
+const storyFilesForm = $('#story-files-form');
+const storyFileInputs = [...storyFilesForm.querySelectorAll('input[type=file]')];
+const openStoryFiles = $('#open-story-files');
+const fileFeedback = $('#story-files-status');
+const storyFilesReady = () => storyFileInputs.every(input => input.files.length === 1);
+storyFilesForm.addEventListener('change', e => {
+  const input = e.target;
+  const file = input.files[0];
+  let message = '';
+  if (file && file.name !== input.name) message = 'Choose ' + input.name + ' here.';
+  else if (file?.size > MAX_BYTES) message = file.name + ' is larger than 2 MB.';
+  if (message) input.value = '';
+  fileFeedback.hidden = false;
+  say(fileFeedback, message);
+  openStoryFiles.disabled = !storyFilesReady();
+});
+storyFilesForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  if (storyFilesForm.hidden || !storyFilesReady()) return;
+  const selected = new Map(storyFileInputs.map(input => [input.name, input.files[0]]));
+  const status = fileFeedback;
+  status.hidden = false;
+  say(status, 'Opening files…');
+  openStoryFiles.disabled = true;
+  try {
+    const loaded = await loadSource({kind:'files', storyFile:'story.md', label:'Files from your computer'}, selected);
+    if (loaded) say(status, 'Story opened from your computer.');
+  } catch (error) {
+    say(status, 'Could not open the story. ' + error.message);
+  } finally {
+    openStoryFiles.disabled = !storyFilesReady();
+  }
+});
+window.addEventListener('hashchange', route);
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#id="], a[href^="#tab="]');
+  if (a && a.getAttribute('href') === location.hash) { e.preventDefault(); route(); }
+});
+
+(function init() {
+  const params = new URLSearchParams(location.search);
+  const link = params.get('story');
+  if (link) {
+    $('#story-link').value = link;
+    try { loadSource(parseStoryLink(link)).catch(err => setLoadStatus('Could not display the story: ' + err.message)); } catch (err) { setLoadStatus(err.message); }
+  } else {
+    setLoadStatus('');
+  }
+})();
+</script>
+</body>
+</html>
