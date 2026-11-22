@@ -247,7 +247,7 @@ pre { white-space:pre-wrap; background:#e7f0ef; padding:10px; border-radius:6px;
       <label><input type="radio" name="story-source" value="files"> Files from your computer</label>
     </fieldset>
     <div class="load-github" id="load-github">
-      <p id="story-link-help" class="muted">Paste the public GitHub link to your <code>story.md</code> file. Follow the <a href="https://github.com/aispanda/Reusable-Delivery/blob/a5c85c452d7bd6c275f927618caae3f118b63161/DELIVERY.md#copyable-story" target="_blank" rel="noopener noreferrer">reusable templates</a> and keep the three required files in the same folder. Add <code>blockers.json</code> when needed.</p>
+      <p id="story-link-help" class="muted">Paste the public GitHub link to your <code>story.md</code> file. Follow the <a href="https://github.com/aispanda/Reusable-Delivery/blob/ad50a754aeb8d420c7295c98f709f55ad9a5eb99/DELIVERY.md#copyable-story" target="_blank" rel="noopener noreferrer">reusable templates</a> and keep the three required files in the same folder. Add <code>blockers.json</code> when needed.</p>
       <form id="load-form" novalidate>
         <label class="sr-only" for="story-link">GitHub story link</label>
         <input id="story-link" type="url" inputmode="url" autocomplete="off" spellcheck="false" aria-describedby="story-link-help" placeholder="GitHub link to your story file">
@@ -306,7 +306,7 @@ pre { white-space:pre-wrap; background:#e7f0ef; padding:10px; border-radius:6px;
 
 // ───────────────────────── constants and embedded guidance ─────────────────────────
 const MAX_BYTES = 2000000;
-const EXAMPLE_LINK = 'https://github.com/aispanda/B2B-Commerce/blob/2c8ba28c7b1bdcdd634b55eee4426d5d2827e925/epics/e05-procurement/stories/medical-supply-bid-discovery/story.md';
+const EXAMPLE_LINK = 'https://github.com/aispanda/B2B-Commerce/blob/c5f9e4db8fb04868a63f16262dbd8da8c47f5bb7/epics/e05-procurement/stories/medical-supply-bid-discovery/story.md';
 const ID_RE = /\b[A-Z][A-Z0-9]*-[A-Za-z0-9.]*[A-Za-z0-9]\b/g;
 const URL_RE = /https:\/\/[^\s<>()"'\]]*[^\s<>()"'\].,;:!?]/g;
 const SURFACES = [['desktopUi', 'Desktop UI'], ['mobileUi', 'Mobile UI'], ['backend', 'Backend']];
@@ -1200,8 +1200,8 @@ function renderBlockers() {
     const documentation = entry.documentationUrl
       ? extLink(entry.documentationUrl, 'Documentation') : null;
     panel.append(el('article', {class: 'card stack'},
-      ids.length || entry.status ? el('div', {class: 'row'},
-        ids.map(id => idLink(id)), entry.status ? badge(entry.status) : null) : null,
+      el('div', {class: 'row'},
+        ids.map(id => idLink(id)), badge(entry.status || 'Status not recorded')),
       el('dl', {class: 'kv task-fields task-column'},
         kv('Goal', inline(entry.goal)),
         kv('Blocker', inline(entry.blocker)),
