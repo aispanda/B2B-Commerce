@@ -5,7 +5,7 @@
       "title": "Screen bids for the open-bid queue.",
       "given": "a public solicitation has been submitted for intake.",
       "when": "its relevance and current status are checked against the agreed relevance rules and the buyer’s official portal.",
-      "then": "it enters the open-bid queue only if it meets those rules, the portal confirms it is open, and its verified response deadline is in the future. And expired, closed, irrelevant, or unverifiable bids stay out of the queue with a recorded reason.",
+      "then": "it enters the open-bid queue only if it meets those rules, the portal confirms it is open, and its verified response deadline is in the future. And expired, closed, irrelevant, or unverifiable bids stay out of the queue. And for every screened notice, intake records whether it was admitted or excluded and why.",
       "scenarioId": "QA-01",
       "version": 2,
       "actor": "sales_reviewer",
