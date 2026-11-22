@@ -3,7 +3,7 @@
     "stepId": "S-16",
     "task": "Define the pilot scope and acceptance boundary.",
     "ownerType": "Human",
-    "status": "Closed",
+    "status": "In progress",
     "inputs": "Business goal, candidate documents, and intended destination.",
     "outputs": "Pilot scope and acceptance criteria.",
     "completion": "Confirm document family, reviewer, destination, and test boundary.",
@@ -11,7 +11,7 @@
     "direction": "Record business intent and boundaries with the human owner.",
     "guardrails": "Separate pilot evidence from production readiness.",
     "evidence": "BID-01 story records the pilot scope and acceptance boundary.",
-    "comments": "Pilot scope and acceptance boundary were recorded in the BID-01 story.",
+    "comments": "Pilot scope and acceptance boundary were recorded in the BID-01 story. Owner and designated reviewer confirmation remain pending.",
     "githubPublish": false,
     "value": "The team can align work with the intended business outcome.",
     "supports": [
@@ -21,7 +21,7 @@
       "AC-04",
       "AC-05"
     ],
-    "result": "Pass"
+    "result": "Pending"
   },
   {
     "stepId": "S-17",
@@ -374,9 +374,8 @@
     "result": "NOT RUN"
   },
   {
-    "status": "In progress",
+    "status": "Open",
     "task": "Rerun the pilot document and compare results with the baseline and source.",
-    "evidence": "Full zero-training run completed. Retest returned page 6 policy for blank page 4 payment terms; item groups intact.",
     "stepId": "S-07",
     "ownerType": "Automation",
     "assignee": "Pending assignment",
@@ -388,14 +387,17 @@
     "scope": "One pilot document using the updated test version.",
     "direction": "Run verified test version, keep JSON, compare values and page anchors.",
     "guardrails": "Use authorized PDF only; flag unsupported, missing, or conflicting values.",
-    "comments": "Later payment_terms retest did not reverify other fields; remaining field and source checks stay open.",
+    "comments": "Historical context, not evidence for this rerun: S-01 full 22-page zero-training run returned both item groups; S-02 payment_terms retest returned page 6 policy for blank page 4.",
     "value": "Reviewers can identify improvements and remaining extraction errors.",
     "reuseOpportunity": "Source-comparison template: saves rebuilding expected, observed, page-reference, and discrepancy tables.",
     "supports": [
       "QA-02"
     ],
     "githubPublish": true,
-    "result": "Pending"
+    "result": "NOT RUN",
+    "requires": [
+      "S-06"
+    ]
   },
   {
     "status": "Open",
@@ -425,7 +427,7 @@
   },
   {
     "status": "Open",
-    "task": "Review source disagreements and extraction quality with the user.",
+    "task": "Review already-observed source disagreements and extraction quality with the user.",
     "stepId": "S-09",
     "ownerType": "Human",
     "assignee": "Rajeev",
@@ -433,7 +435,7 @@
     "outputs": "Recorded human review decisions",
     "completion": "Reviewer identifies correct source values and resolves or records remaining uncertainty.",
     "direction": "Neither model result is automatically accepted as ground truth.",
-    "scope": "Resolve discrepancies between source evidence and extracted values.",
+    "scope": "Resolve discrepancies observed in the S-01 and S-02 runs. Sign-off for the S-07 rerun is in S-29.",
     "guardrails": "Keep original evidence; neither model is ground truth; block unsupported time zones or p6 policy in RFQ fields.",
     "comments": "Human sign-off on source disagreements remains pending.",
     "githubPublish": false,
@@ -443,6 +445,24 @@
       "QA-03"
     ],
     "result": "NOT RUN"
+  },
+  {
+    "stepId": "S-29",
+    "task": "Review the S-07 rerun comparison with the user and record sign-off.",
+    "status": "Open",
+    "ownerType": "Human",
+    "outputs": "Recorded human decisions on the rerun’s supported values and discrepancies.",
+    "completion": "Reviewer confirms supported values against the source and records each remaining discrepancy or uncertainty for the S-07 run.",
+    "guardrails": "Keep original evidence. Neither model result is ground truth.",
+    "supports": [
+      "QA-02",
+      "QA-03"
+    ],
+    "result": "NOT RUN",
+    "githubPublish": false,
+    "requires": [
+      "S-07"
+    ]
   },
   {
     "status": "Open",
@@ -674,13 +694,56 @@
     "githubPublish": false
   },
   {
+    "stepId": "S-28",
+    "task": "Implement the reviewed intake, Solicitation Document and View document slices.",
+    "status": "Open",
+    "ownerType": "AI",
+    "outputs": "Reviewed code and metadata revisions for bounded intake, child-document history and signed-link access.",
+    "completion": "Local checks and the recorded review sequence pass on the exact revision.",
+    "guardrails": "Test-org deployment and writes require separate authorization in S-30.",
+    "supports": [
+      "QA-02",
+      "QA-03",
+      "QA-03a",
+      "QA-04"
+    ],
+    "result": "NOT RUN",
+    "githubPublish": false,
+    "requires": [
+      "LEG-02A"
+    ],
+    "comments": "The story blocker requires implementation before the pilot."
+  },
+  {
+    "stepId": "S-30",
+    "task": "Authorize, deploy and read back the reviewed S-28 revision in the test org.",
+    "status": "Open",
+    "ownerType": "Human",
+    "outputs": "Recorded authorization, deployed revision identifier and test-org readback.",
+    "completion": "Authorization names scope and approver; readback shows the reviewed S-28 revision’s metadata and permissions in the test org.",
+    "guardrails": "Deploy only the reviewed revision in the designated test org.",
+    "supports": [
+      "QA-02",
+      "QA-03",
+      "QA-03a",
+      "QA-04"
+    ],
+    "result": "NOT RUN",
+    "githubPublish": false,
+    "requires": [
+      "S-28",
+      "LEG-01"
+    ]
+  },
+  {
     "stepId": "LEG-03",
     "task": "Run the authorized bounded intake pilot and verify test drafts.",
     "status": "Open",
     "ownerType": "Automation",
     "outputs": "Batch evidence and test drafts available for scenario review.",
-    "completion": "Verify draft intake, document history, replay, amendment review and Opportunity linking on the tested build.",
+    "completion": "Verify eligibility screening, draft intake, document history, replay, amendment review and Opportunity linking on the tested build.",
     "supports": [
+      "QA-01",
       "QA-02",
       "QA-03",
       "QA-03a",
@@ -691,9 +754,8 @@
     "result": "NOT RUN",
     "githubPublish": false,
     "requires": [
-      "LEG-01",
       "LEG-02",
-      "LEG-02A"
+      "S-30"
     ]
   },
   {
