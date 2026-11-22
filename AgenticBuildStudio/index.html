@@ -74,7 +74,9 @@ label { font-weight:600; }
 .notice.error { border-left-color:var(--fail); }
 .notice.warn { border-left-color:var(--warn); }
 .bar { position:sticky; top:0; z-index:5; background:var(--paper); border-bottom:1px solid var(--line); }
+nav.tabs { display:flex; align-items:center; flex-wrap:wrap; column-gap:8px; }
 nav.tabs ul { list-style:none; margin:0; padding:8px 0; display:flex; flex-wrap:wrap; gap:6px; }
+nav.tabs > button { margin:4px 0 4px auto; font-size:.9rem; }
 nav.tabs a { display:block; padding:7px 13px; border-radius:6px; text-decoration:none; font-weight:650; }
 nav.tabs a[aria-current=page] { background:var(--white); color:var(--ink); font-weight:750; }
 .count { font-weight:500; color:var(--muted); font-size:.85rem; }
@@ -283,6 +285,7 @@ pre { white-space:pre-wrap; background:#e7f0ef; padding:10px; border-radius:6px;
       <li><a href="#tab=story" data-tab="story">User Story <span class="count" id="count-story"></span></a></li>
       <li><a href="#tab=checklist" data-tab="checklist">Agentic Workflow <span class="count" id="count-checklist"></span></a></li>
     </ul>
+    <button type="button" id="toggle-story-details" aria-controls="panel-story" hidden>Expand all</button>
   </nav>
 </div>
 
@@ -910,7 +913,26 @@ function showTab(tab) {
   document.querySelectorAll('nav.tabs a').forEach(a => {
     if (a.dataset.tab === tab) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
+  syncDetailsToggle();
 }
+function verificationDetails() {
+  return [...document.querySelectorAll('#panel-story details.record-item')];
+}
+function syncDetailsToggle() {
+  const details = verificationDetails();
+  const button = $('#toggle-story-details');
+  button.hidden = state.tab !== 'story' || !details.length;
+  button.textContent = details.length && details.every(item => item.open) ? 'Collapse all' : 'Expand all';
+}
+$('#toggle-story-details').addEventListener('click', () => {
+  const details = verificationDetails();
+  const open = !details.every(item => item.open);
+  for (const item of details) item.open = open;
+  syncDetailsToggle();
+});
+$('#panel-story').addEventListener('toggle', event => {
+  if (event.target.matches('details.record-item')) syncDetailsToggle();
+}, true);
 function route() {
   if (!state.loaded) return;
   let hash = location.hash.slice(1);
