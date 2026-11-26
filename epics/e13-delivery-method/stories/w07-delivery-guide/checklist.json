@@ -1,0 +1,58 @@
+[
+  {
+    "stepId": "C-01",
+    "task": "Inventory the branch delivery files at the tip commit.",
+    "status": "In progress",
+    "ownerType": "AI",
+    "comments": "This transfer listed README, delivery, and reusable-delivery-model. File bodies were not fully compared.",
+    "inputs": "Read-only access to {{IMPL_REPO}} branch docs/portable-ai-delivery-guide.",
+    "outputs": "File inventory, tip commit SHA, date, and message.",
+    "completion": "Tip commit, dates, and paths are recorded, and any listing gap is explicit.",
+    "supports": [
+      "A-01"
+    ],
+    "reusableArtifact": {
+      "planned": false,
+      "description": "Local inventory in this story package."
+    },
+    "evidence": "list_commits and directory listing were read; full document comparison is still open.",
+    "scope": "Read-only inventory. No GitHub or ClickUp writes.",
+    "agent": "Pending assignment"
+  },
+  {
+    "stepId": "C-02",
+    "task": "Compare this branch with Reusable-Delivery at the recorded SHA.",
+    "status": "Open",
+    "ownerType": "Human",
+    "requires": [
+      "C-01"
+    ],
+    "comments": "Supersession is unverified. Owner Pending. Do not merge or delete either copy from this task.",
+    "inputs": "Branch documents at c3d23a499f3f28806de6d335d673dd04ef487045 and Reusable-Delivery at 45a5e6653f202e37f181dce8c14e6bc0d34278b7.",
+    "outputs": "Written comparison of route, templates, and material differences, with a proposed label.",
+    "completion": "A named reviewer records whether the branch is current, historical, or divergent.",
+    "supports": [
+      "A-03"
+    ],
+    "agent": "Pending confirmation"
+  },
+  {
+    "stepId": "C-03",
+    "task": "Decide whether a ClickUp pointer or pull request is needed.",
+    "status": "Open",
+    "ownerType": "Human",
+    "requires": [
+      "C-02"
+    ],
+    "comments": "No ClickUp story and no PR were observed. This package will not create them.",
+    "inputs": "Comparison result and a named accountable owner.",
+    "outputs": "An explicit decision to add, skip, or defer a ClickUp pointer or PR.",
+    "completion": "The owner records the decision. No write is made until a later explicit yes.",
+    "supports": [
+      "A-02",
+      "A-03"
+    ],
+    "guardrails": "Do not create or edit ClickUp tasks or GitHub PRs from this package.",
+    "agent": "Pending confirmation"
+  }
+]

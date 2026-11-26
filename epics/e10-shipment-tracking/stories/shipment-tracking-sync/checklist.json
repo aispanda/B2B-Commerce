@@ -1,0 +1,123 @@
+[
+  {
+    "stepId": "S-01",
+    "task": "Reconcile ClickUp and sanitized GitHub story and design.",
+    "status": "In progress",
+    "ownerType": "AI",
+    "comments": "Branch table says Complete; actual result also says In progress. ClickUp DOC-01 and DOC-02 reported complete for initial capture. Not re-verified here.",
+    "inputs": "the tracking-item description and branch user-story and design files.",
+    "outputs": "Reconciled sanitized story and design with conflicts kept visible.",
+    "completion": "Source and sanitized docs match on scope, schedule, carriers, and criteria; remaining conflicts are recorded, not hidden.",
+    "supports": [
+      "AC-01",
+      "AC-08"
+    ],
+    "reusableArtifact": {
+      "planned": false,
+      "description": "Sanitized story already on the draft branch."
+    },
+    "evidence": "This transfer read the branch story; Task AC was not re-run.",
+    "scope": "Documentation only. No Salesforce writes or live carrier calls.",
+    "guardrails": "Do not invent owners, results, or a timezone resolution.",
+    "agent": "Pending assignment"
+  },
+  {
+    "stepId": "S-02",
+    "task": "Publish sanitized documentation on a reviewable branch.",
+    "status": "In progress",
+    "ownerType": "AI",
+    "requires": [
+      "S-01"
+    ],
+    "comments": "Draft PR 2 exists on docs/shipment-tracking-poc. Publication quality was not independently re-checked here.",
+    "inputs": "Reconciled sanitized package and repository access.",
+    "outputs": "Reviewable branch and draft pull request with sanitized documentation.",
+    "completion": "Sanitized docs are on the agreed private repo branch, secret-scanned, and reviewable.",
+    "supports": [
+      "AC-08"
+    ],
+    "reusableArtifact": {
+      "planned": false,
+      "description": "Draft PR 2 already opened."
+    },
+    "evidence": "PR 2 and branch files were observed; Task AC not re-verified.",
+    "scope": "Documentation only. Main is not claimed to contain this work.",
+    "guardrails": "No credentials, org URLs, or real records in committed files.",
+    "agent": "Pending assignment"
+  },
+  {
+    "stepId": "S-03",
+    "task": "Recheck changed story evidence with Jev when authorized.",
+    "status": "Open",
+    "ownerType": "AI",
+    "requires": [
+      "S-02"
+    ],
+    "comments": "ClickUp DOC-03 reported a limited jev-1.14.0 review of revision 0.1. Branch says a later recheck is Pending. Not re-run here.",
+    "inputs": "Current story version and explicit permission to transmit.",
+    "outputs": "Recorded Jev verdict, version, and limits of what was reviewed.",
+    "completion": "A focused recheck of changed requirements is recorded, or the Pending reason is explicit.",
+    "supports": [
+      "AC-07"
+    ],
+    "agent": "Pending assignment"
+  },
+  {
+    "stepId": "S-04",
+    "task": "Establish contracts and implement bounded jobs.",
+    "status": "Open",
+    "ownerType": "Human",
+    "requires": [
+      "S-02"
+    ],
+    "comments": "ClickUp IMP-01 remains Pending. Owner and executor Pending. No implementation is authorized by this package.",
+    "inputs": "Source and carrier interfaces, sandbox, and authorized credentials.",
+    "outputs": "Bounded Job A and Job B implementation with recorded contracts.",
+    "completion": "Jobs meet AC-02 and AC-03 on an authorized target with recoverable failures.",
+    "supports": [
+      "AC-02",
+      "AC-03",
+      "AC-04",
+      "AC-05"
+    ],
+    "scope": "Implementation starts only after an explicit yes and a named owner.",
+    "guardrails": "No Salesforce writes, production deployment, or live shipment activity without an explicit yes.",
+    "agent": "Pending assignment"
+  },
+  {
+    "stepId": "S-05",
+    "task": "Run synthetic failure and access tests.",
+    "status": "Open",
+    "ownerType": "Automation",
+    "requires": [
+      "S-04"
+    ],
+    "comments": "ClickUp QA-01 remains Pending. Test runner and operator Pending.",
+    "inputs": "Implemented jobs, synthetic fixtures, and approved test access.",
+    "outputs": "Recorded synthetic failure, replay, and access-isolation results.",
+    "completion": "Synthetic tests for failures, replay, and isolation are recorded against the named revision.",
+    "supports": [
+      "AC-05",
+      "AC-07"
+    ],
+    "agent": "Pending assignment"
+  },
+  {
+    "stepId": "S-06",
+    "task": "Independently verify results and record human acceptance.",
+    "status": "Open",
+    "ownerType": "Human",
+    "requires": [
+      "S-05"
+    ],
+    "comments": "Independent checker and human acceptance owner are Pending. NOT RUN.",
+    "inputs": "S-05 evidence, approved fixtures, and the current criteria.",
+    "outputs": "Independent verification record and a human acceptance decision, or an explicit Pending.",
+    "completion": "An independent checker records results, and the named human accepts, waives, or leaves criteria open.",
+    "supports": [
+      "AC-06",
+      "AC-07"
+    ],
+    "agent": "Pending confirmation"
+  }
+]

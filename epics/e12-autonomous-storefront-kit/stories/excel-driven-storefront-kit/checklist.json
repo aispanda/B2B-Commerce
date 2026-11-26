@@ -1,0 +1,100 @@
+[
+  {
+    "stepId": "DOC-01",
+    "task": "Preserve and index published documentation.",
+    "status": "In progress",
+    "ownerType": "AI",
+    "comments": "Branch revision 3 reports the documentation candidate is published. This transfer did not re-hash the package files.",
+    "inputs": "Existing branch, revision-2 record, and published file index.",
+    "outputs": "Indexed documentation package on the draft branch.",
+    "completion": "Tracked files are indexed, criteria are preserved, and no source-customer data is in reusable files.",
+    "supports": [
+      "AC-07"
+    ],
+    "reusableArtifact": {
+      "planned": false,
+      "description": "Documentation package already on the draft branch."
+    },
+    "evidence": "Branch story and ClickUp revision 3 were read; hashes were not re-verified here.",
+    "scope": "Documentation only. Runtime build is out of scope for this task.",
+    "agent": "Pending assignment"
+  },
+  {
+    "stepId": "ACCESS-01",
+    "task": "Verify platform access before platform-dependent work.",
+    "status": "Open",
+    "ownerType": "Automation",
+    "comments": "Branch reports GitHub and ClickUp access were verified for a documentation update. Salesforce access is NOT RUN and gates R17 and later.",
+    "inputs": "Intended account, environment, and existing authority.",
+    "outputs": "Recorded access result for each required platform, including Salesforce when authorized.",
+    "completion": "Required platforms are reachable with recorded versions, or the unmet target is explicit.",
+    "supports": [
+      "AC-03",
+      "AC-04",
+      "AC-05"
+    ],
+    "scope": "Salesforce and later platform operations remain gated until a target is identified and authorized.",
+    "guardrails": "Do not probe or write to a Salesforce org without an explicit yes.",
+    "agent": "Pending assignment"
+  },
+  {
+    "stepId": "R-03",
+    "task": "Version the workbook input contract using synthetic data.",
+    "status": "Open",
+    "ownerType": "AI",
+    "comments": "Roadmap ID R03 is recorded as R-03 to satisfy the checklist ID pattern. Named owner and model are Pending. NOT RUN.",
+    "inputs": "Baseline workbook, discovery guide, and field dictionary. Synthetic data only.",
+    "outputs": "Versioned parser contract for headers, keys, blank, zero, Unknown, Proposed, N/A, and empty rows.",
+    "completion": "Contract matches all workbook sheets and specifies one valid record and one missing-key diagnostic. No Salesforce adapters in this step.",
+    "supports": [
+      "AC-01"
+    ],
+    "scope": "Local documentation and fixtures on the working branch. Runtime parsing belongs to later roadmap steps.",
+    "guardrails": "No Salesforce writes, external model spending, or live client input. Stop if a semantic conflict needs a business decision.",
+    "agent": "Pending assignment"
+  },
+  {
+    "stepId": "C-01",
+    "task": "Build runtime importer, adapters, and controller.",
+    "status": "Open",
+    "ownerType": "Human",
+    "requires": [
+      "R-03"
+    ],
+    "comments": "Runtime build is pending. Exact executor is Pending. Not authorized by this transfer.",
+    "inputs": "Versioned contract, approved fixtures, and a named implementation executor.",
+    "outputs": "Implemented importer, routing adapters, and controller with readback and recovery.",
+    "completion": "Runtime components exist and support AC-01 through AC-06 on synthetic inputs before any fresh-org run.",
+    "supports": [
+      "AC-01",
+      "AC-02",
+      "AC-05",
+      "AC-06"
+    ],
+    "scope": "No fresh-org writes until ACCESS-01 and an authorized disposable org are in place.",
+    "guardrails": "No Salesforce writes or spending without an explicit yes.",
+    "agent": "Pending assignment"
+  },
+  {
+    "stepId": "C-02",
+    "task": "Run integrated acceptance on a fresh authorized org.",
+    "status": "Open",
+    "ownerType": "Human",
+    "requires": [
+      "ACCESS-01",
+      "C-01"
+    ],
+    "comments": "Fresh-org acceptance is pending. Disposable org is not supplied.",
+    "inputs": "Working controller, new completed workbook, and an identified authorized disposable org.",
+    "outputs": "Integrated run evidence, intervention log, and isolation and recovery results.",
+    "completion": "AC-03 through AC-06 have independent evidence on the fresh org, and a named human records acceptance or leaves them open.",
+    "supports": [
+      "AC-03",
+      "AC-04",
+      "AC-05",
+      "AC-06"
+    ],
+    "guardrails": "No org writes without an explicit yes and a named target.",
+    "agent": "Pending confirmation"
+  }
+]

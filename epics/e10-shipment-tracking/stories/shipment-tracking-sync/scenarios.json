@@ -1,0 +1,152 @@
+{
+  "criteria": [
+    {
+      "id": "AC-01",
+      "title": "Proposed: foundation model and permissions",
+      "version": 1,
+      "actor": "integration_operator",
+      "environment": "poc_org",
+      "startingState": "Proposed. Documentation exists; target org metadata, picklists, permissions, and existing-data impact are unverified. Implementation and acceptance are NOT RUN.",
+      "actions": [
+        "Inspect supported Shipment-to-order linkage on the target org.",
+        "Inspect requested provider and status picklists, unique case-insensitive External_Tracking_Id__c Text 255, safe tracking link, and permissions, including existing-data impact.",
+        "Record any Order-only fallback and whether it is proven."
+      ],
+      "expectedResult": "Supported linkage, fields, unique external id, safe link, and permissions are verified, including existing-data impact. Any Order-only fallback is proven. NOT RUN.",
+      "surfaces": {
+        "desktopUi": false,
+        "mobileUi": false,
+        "backend": true
+      }
+    },
+    {
+      "id": "AC-02",
+      "title": "Proposed: Job A dispatch upserts",
+      "version": 1,
+      "actor": "integration_operator",
+      "environment": "poc_org",
+      "startingState": "Proposed. Job A is documented to run at 07:00 and 19:00. Timezone is conflicting in the sources. Implementation is NOT RUN.",
+      "actions": [
+        "Run or simulate Job A against staged ERP changes, including a replay of already processed packages.",
+        "Confirm each change resolves to exactly one parent and upserts in collections of at most 200.",
+        "Inspect failed rows for recoverability and confirm replay creates no duplicate packages."
+      ],
+      "expectedResult": "Job A pages and stages ERP changes, resolves exactly one parent, upserts in collections of at most 200, never duplicates packages on replay, and leaves failures recoverable. NOT RUN.",
+      "surfaces": {
+        "desktopUi": false,
+        "mobileUi": false,
+        "backend": true
+      }
+    },
+    {
+      "id": "AC-03",
+      "title": "Proposed: Job B carrier updates",
+      "version": 1,
+      "actor": "integration_operator",
+      "environment": "poc_org",
+      "startingState": "Proposed. Job B is documented to run at 07:15 and 19:15. Approved carrier mappings and a Delivered-event correction policy are still open. Implementation is NOT RUN.",
+      "actions": [
+        "Run or simulate Job B against approved carriers, including an older transit scan after a newer Delivered event.",
+        "Confirm approved mappings are applied and changed shipments update in collections of at most 200.",
+        "Record whether a reliable delivery time is stored and whether a correction policy exists."
+      ],
+      "expectedResult": "Job B polls approved carriers, applies approved mappings, updates changed shipments in collections of at most 200, and records a reliable delivery time. Older transit scans do not overwrite newer Delivered events. Correction policy still needs a decision. NOT RUN.",
+      "surfaces": {
+        "desktopUi": false,
+        "mobileUi": false,
+        "backend": true
+      }
+    },
+    {
+      "id": "AC-04",
+      "title": "Proposed: five-request efficiency target",
+      "version": 1,
+      "actor": "integration_operator",
+      "environment": "poc_org",
+      "startingState": "Proposed. The user requires no more than five Salesforce REST requests per run for up to 800 active shipments: one query plus four update chunks. The target is unresolved and is not waived. Implementation is NOT RUN.",
+      "actions": [
+        "Count actual Salesforce REST requests for a run of up to 800 active shipments, including pagination, authentication, retries, and parent resolution.",
+        "Compare the count with the five-request target and record any exception policy."
+      ],
+      "expectedResult": "Actual request counts are measured. Accounting and any exception policy are resolved without silently waiving the five-request target. NOT RUN.",
+      "surfaces": {
+        "desktopUi": false,
+        "mobileUi": false,
+        "backend": true
+      }
+    },
+    {
+      "id": "AC-05",
+      "title": "Proposed: failed SaveResult operations",
+      "version": 1,
+      "actor": "integration_operator",
+      "environment": "poc_org",
+      "startingState": "Proposed. Alert destination is unset. Implementation is NOT RUN.",
+      "actions": [
+        "Force or simulate a failed SaveResult inside an HTTP 200 collection response.",
+        "Inspect retained record id, protected payload or reference, status code, and message.",
+        "Confirm a summary is sent to the selected Slack, email, Linear, or Sentry destination, and that retries, uncertain commits, and quarantined records can be recovered and reconciled."
+      ],
+      "expectedResult": "Each failed SaveResult retains record id, protected payload or reference, status code, and message. A summary reaches the selected destination. Retries, uncertain commits, and quarantined records are recoverable, and source and destination can be reconciled. NOT RUN.",
+      "surfaces": {
+        "desktopUi": false,
+        "mobileUi": false,
+        "backend": true
+      }
+    },
+    {
+      "id": "AC-06",
+      "title": "Proposed: buyer-visible shipment details",
+      "version": 1,
+      "actor": "b2b_buyer",
+      "environment": "poc_org",
+      "startingState": "Proposed. Standard UI support for package-level data is unverified. Implementation and acceptance are NOT RUN.",
+      "actions": [
+        "Desktop UI: open order details as an authorized buyer and as a buyer from another account.",
+        "Confirm each correct shipment, carrier, tracking, status, and dates, with a safe link and truthful empty or stale states.",
+        "Prove the standard UI can present package-level data before selecting it, and confirm cross-account isolation."
+      ],
+      "expectedResult": "Authorized buyers see each correct shipment, carrier, tracking, status, and dates, with a safe link and truthful empty or stale states. Cross-account isolation holds. Standard UI support for package-level data is proven before it is selected. NOT RUN.",
+      "surfaces": {
+        "desktopUi": true,
+        "mobileUi": false,
+        "backend": false
+      }
+    },
+    {
+      "id": "AC-07",
+      "title": "Proposed: security and evidence",
+      "version": 1,
+      "actor": "independent_checker",
+      "environment": "poc_org",
+      "startingState": "Proposed. Independent checker and human acceptance owner are Pending. Implementation and acceptance are NOT RUN.",
+      "actions": [
+        "Test least privilege, secret handling, multiple packages, replay, out-of-order events, failures, and access isolation.",
+        "Record independent verification separately from human acceptance."
+      ],
+      "expectedResult": "Least privilege, secrets, multiple packages, replay, out-of-order events, failures, and access isolation are tested with evidence. Independent verification and human acceptance remain pending. NOT RUN.",
+      "surfaces": {
+        "desktopUi": true,
+        "mobileUi": false,
+        "backend": true
+      }
+    },
+    {
+      "id": "AC-08",
+      "title": "Proposed: reusable checkout without secrets",
+      "version": 1,
+      "actor": "integration_operator",
+      "startingState": "Proposed. Added after revision 0.1. A local POC build plan exists. No working integration was observed in this transfer. NOT RUN.",
+      "actions": [
+        "From a clean checkout, follow the documented setup using only permitted synthetic configuration.",
+        "Inspect configuration and staged content for real environment values."
+      ],
+      "expectedResult": "Configurable jobs can be set up without real environment values in committed files. Configuration and staged content confirm that result. NOT RUN.",
+      "surfaces": {
+        "desktopUi": false,
+        "mobileUi": false,
+        "backend": true
+      }
+    }
+  ]
+}
