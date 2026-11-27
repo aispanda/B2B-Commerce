@@ -1,0 +1,127 @@
+{
+  "criteria": [
+    {
+      "id": "AC-01",
+      "title": "Workbook provenance and value states",
+      "version": 1,
+      "actor": "delivery_operator",
+      "startingState": "Agreed wording from tracking revision 2. Parser fixtures and exact-cell diagnostics are not executed in this package. NOT RUN. A workbook and input contract exist.",
+      "actions": [
+        "Parse authorized synthetic workbook fixtures, including blank, zero, Unknown, Proposed, N/A, and empty-row cases.",
+        "Compare diagnostics to exact source cells and recorded provenance."
+      ],
+      "expectedResult": "Workbook preserves source-cell provenance and distinguishes blank, zero, Unknown, Proposed and N/A. NOT RUN.",
+      "surfaces": {
+        "desktopUi": false,
+        "mobileUi": false,
+        "backend": true
+      }
+    },
+    {
+      "id": "AC-02",
+      "title": "Supported capability routes and checks",
+      "version": 1,
+      "actor": "delivery_operator",
+      "startingState": "Agreed wording from tracking revision 2. R09 and R18 capability evidence is NOT RUN.",
+      "actions": [
+        "For each selected capability, record the supported route and the fixed positive and negative checks.",
+        "Run those checks on the authorized evidence set when it exists."
+      ],
+      "expectedResult": "Every selected capability has a supported route and fixed positive/negative checks. NOT RUN.",
+      "surfaces": {
+        "desktopUi": false,
+        "mobileUi": false,
+        "backend": true
+      }
+    },
+    {
+      "id": "AC-03",
+      "title": "Noncharging order and isolation",
+      "version": 1,
+      "actor": "b2b_buyer",
+      "environment": "fresh_org",
+      "startingState": "Agreed wording from tracking revision 2. Disposable org is not supplied. R22\u2013R32 execution is NOT RUN.",
+      "actions": [
+        "Place one noncharging order with correct SKU, unit, quantity, and price.",
+        "Desktop UI: prove guest, buyer, and account isolation with readback."
+      ],
+      "expectedResult": "Correct SKU, unit, quantity and price reach one noncharging order; guest/buyer/account isolation is proven. NOT RUN.",
+      "surfaces": {
+        "desktopUi": true,
+        "mobileUi": false,
+        "backend": true
+      }
+    },
+    {
+      "id": "AC-04",
+      "title": "Agreed catalog and storefront capabilities",
+      "version": 1,
+      "actor": "delivery_operator",
+      "environment": "fresh_org",
+      "startingState": "Agreed wording from tracking revision 2. R33\u2013R44 scenario evidence is NOT RUN.",
+      "actions": [
+        "Exercise applicable catalog, variants, pricing or promotions, search, facets, sort, inventory, pages, media, and B2B extensions on the authorized target.",
+        "Record pass or gap evidence for each agreed capability."
+      ],
+      "expectedResult": "Applicable catalog, variants, pricing/promotions, search/facets/sort, inventory, pages, media and B2B extensions pass. NOT RUN.",
+      "surfaces": {
+        "desktopUi": true,
+        "mobileUi": false,
+        "backend": true
+      }
+    },
+    {
+      "id": "AC-05",
+      "title": "Fresh-org integrated controller run",
+      "version": 1,
+      "actor": "delivery_operator",
+      "environment": "fresh_org",
+      "startingState": "Agreed wording from tracking revision 2. Controller and fresh-org acceptance are unimplemented. R52 is NOT RUN.",
+      "actions": [
+        "From a clean checkout and a new completed workbook, run the integrated controller against a fresh authorized org.",
+        "Record every intervention and confirm no undocumented manual configuration substitutes for automation."
+      ],
+      "expectedResult": "A clean checkout and new completed workbook drive the integrated controller to a complete scoped POC on a fresh org. All interventions are recorded; no undocumented manual configuration substitutes for automation. NOT RUN.",
+      "surfaces": {
+        "desktopUi": false,
+        "mobileUi": false,
+        "backend": true
+      }
+    },
+    {
+      "id": "AC-06",
+      "title": "Rerun, reconcile, and recovery",
+      "version": 1,
+      "actor": "delivery_operator",
+      "environment": "fresh_org",
+      "startingState": "Agreed wording from tracking revision 2. R46\u2013R47 and R53 evidence is NOT RUN.",
+      "actions": [
+        "Rerun the scoped automation against the same target.",
+        "Inspect for duplicates, reconcile uncertain writes before retry, and verify recovery and handover."
+      ],
+      "expectedResult": "Reruns avoid duplicates; uncertain writes reconcile before retry; recovery and handover pass. NOT RUN.",
+      "surfaces": {
+        "desktopUi": false,
+        "mobileUi": false,
+        "backend": true
+      }
+    },
+    {
+      "id": "AC-07",
+      "title": "No source-customer data in reusable files",
+      "version": 1,
+      "actor": "delivery_operator",
+      "startingState": "Agreed wording from tracking revision 2. The branch records a historical documentation-package pass; each publication rechecks. This package does not re-run that check.",
+      "actions": [
+        "Inspect reusable files and new history with the allowlist, diff, links, and publication-history checks.",
+        "Confirm the absence of source-customer data, private identifiers, credentials, screenshots, and machine paths."
+      ],
+      "expectedResult": "Reusable files and new history contain no source-customer data, private identifiers, credentials, screenshots or machine paths. Historical documentation-package pass only; not re-run here. Each publication rechecks.",
+      "surfaces": {
+        "desktopUi": false,
+        "mobileUi": false,
+        "backend": true
+      }
+    }
+  ]
+}

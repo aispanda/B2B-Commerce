@@ -1,0 +1,55 @@
+{
+  "criteria": [
+    {
+      "id": "A-01",
+      "title": "Proposed: pinned guide is complete enough to author",
+      "version": 1,
+      "actor": "delivery_operator",
+      "startingState": "Proposed. Branch tip commit c3d23a499f3f28806de6d335d673dd04ef487045 contains delivery and reusable-delivery-model copies of DELIVERY.md and VALIDATION.md. Bodies were not fully compared here. NOT RUN.",
+      "actions": [
+        "Resolve the branch guide at the pinned commit and list the route, story template, and any templates it requires.",
+        "Record missing or incomplete required files without substituting another repository silently."
+      ],
+      "expectedResult": "The pinned guide can be resolved, and any missing template or route content is reported as a gap. A story can be authored from what is present, or the gap is explicit. NOT RUN.",
+      "surfaces": {
+        "desktopUi": false,
+        "mobileUi": false,
+        "backend": true
+      }
+    },
+    {
+      "id": "A-02",
+      "title": "Proposed: migrate existing work without invented facts",
+      "version": 1,
+      "actor": "delivery_operator",
+      "startingState": "Proposed. This local transfer is documentation only. NOT RUN as a formal check.",
+      "actions": [
+        "Follow the migrate route on an existing piece of work using the pinned guide.",
+        "Confirm unknown owners and unverified results stay explicit, and that GitHub and ClickUp are unchanged unless a later explicit yes authorizes a write."
+      ],
+      "expectedResult": "Existing work can be migrated into the story format without inventing owners, results, or unauthorized writes. NOT RUN.",
+      "surfaces": {
+        "desktopUi": false,
+        "mobileUi": false,
+        "backend": true
+      }
+    },
+    {
+      "id": "A-03",
+      "title": "Proposed: relationship to Reusable-Delivery is documented",
+      "version": 1,
+      "actor": "delivery_operator",
+      "startingState": "Proposed. aispanda/Reusable-Delivery currently hosts new and migrate guides at SHA 45a5e6653f202e37f181dce8c14e6bc0d34278b7. Supersession of this branch is unverified. NOT RUN.",
+      "actions": [
+        "Compare the branch delivery documents at the pinned branch commit with the Reusable-Delivery guides at the recorded SHA.",
+        "Record whether the branch is current, historical, or divergent, without merging or deleting either copy."
+      ],
+      "expectedResult": "The relationship between this branch and aispanda/Reusable-Delivery is documented, and any superseded or divergent copy is labeled. NOT RUN.",
+      "surfaces": {
+        "desktopUi": false,
+        "mobileUi": false,
+        "backend": true
+      }
+    }
+  ]
+}
